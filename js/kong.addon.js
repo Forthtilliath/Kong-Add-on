@@ -1,15 +1,3 @@
-/*!
- * Kong Addon for www.kongregate.com v1.5
- * https://github.com/Forthtilliath/Kong-Addon
- *
- * Copyright 2020 Forth
- * Released under the MIT license
- * 
- * @fileoverview List of functions used
- * @author Forth
- * @version 1
- */
-
 (function ($) {
     // Usable with $.function
     $.extend({
@@ -76,105 +64,12 @@
                 expires: time,
                 path: path
             });
-        },
-        /** Return the value of a cookie, if this one doesn't exist, this return default value
-         *  @param name {string} set the name of the cookie
-         *  @param defaultValue {string|number|boolean} set the value returned if the cookie doesn't exist
-         *  @return {string} Value of the cookie or defaultValue
-         */
-        getCookie: function (name, defaultValue) {
-            if (typeof defaultValue == "boolean")
-                return !!$.cookie(name) ? ($.cookie(name) === 'true') : defaultValue;
-            return !!$.cookie(name) ? $.cookie(name) : defaultValue;
-        },
-        execScript: function (code) {
-            let script = document.createElement('script');
-            script.textContent = `${ code };`;
-            (document.head || document.documentElement).appendChild(script);
-            script.remove();
-        },
-        /** Change the text size in the chat box
-         *  @param val {number} set the text size for chat, timestamp and input
-         */
-        changeTextSize: function (val) {
-            // Add a cssrule to dynamise the text size
-            jCSSRule(".chat_message_window_username", "font-size", val + "px"); // Username
-            jCSSRule(".chat_message_window_undecorated_username", "font-size", val + "px"); // Kong bot
-            jCSSRule(".chat_message_window p .message", "font-size", val + "px"); // Message
-            jCSSRule(".chat_input", "font-size", val + "px"); // Chat input
-            jCSSRule(".chat_message_window p .timestamp", "font-size", (val - 2) + "px !important"); // Timestamp
-        },
-        /** Remove elements from html */
-        removeElements: function (a) {
-            a.forEach(function (b) {
-                if ($(b).length) $(b).remove();
-            });
-        },
-        /** Resize the game box
-         *  @param {number} set the width of the box
-         */
-        setWidthGame: function (w) {
-            $("#maingame").css("width", w);
-            $("#maingamecontent").css("width", w);
-            $("#flashframecontent").css("width", w);
-        },
-        /** Transform an array ['a','b','c'] to [['a',0],['b',0],['c',0]] usable in script function
-         *  @param a {array} set the array to become a double array 
-         *  @param d {number} set the default value
-         */
-        getArrayDoubleToString: function (a, d) {
-            let s = "";
-            if (typeof (d) == 'undefined') d = 0;
-            a.forEach(function (v, i) {
-                s += i > 0 ? "," : "";
-                s += `['${v}', ${d}]`;
-            });
-
-            return `[${s}]`;
-        },
-        /** Transform an url to html url
-         *  @param type {string} set the type of link (wiki, game or account)
-         *  @param value {array} set the regexp result
-         *  @return {string} link ready to display in the chat
-         */
-        getHtmlLink: function (type, value) {
-            if (type == 'wiki') {
-                let urlOut = `<a href="${value[0]}" target="_blank">[Wiki`;
-                // If not main page
-                if ((value[2] != "Idle_Grindia_Wiki") && (value[2] != "Idle_Grindia")) {
-                    // If there are an anchor with his id
-                    if (value[3] && (value[3].length > 1)) {
-                        urlOut += ` - ${value[3].substr(1).replaceAll("_", " ")}`;
-                    } else {
-                        urlOut += ` - ${value[2].replaceAll("_", " ")}`;
-                    }
-                }
-                urlOut += ']</a>';
-
-                return urlOut;
-            }
-            if (type == 'game') {
-                let titleGame = "";
-                let aTitleGame = value[2].split("-");
-                // We uppercase the first letter of each word of the game name
-                for (let i = 0; i < aTitleGame.length; i++) {
-                    titleGame += aTitleGame[i].substring(0, 1).toUpperCase() + aTitleGame[i].substring(1).toLowerCase() + " ";
-                }
-
-                return `>[Game - ${titleGame}]<`;
-            }
-            if (type == 'account') {
-                return `>[Account - ${value[2]}]<`;
-            }
-        },
-        log: function (nLevel, text) {
-            if (debugLevel >= nLevel) console.log(text);
         }
     });
 
     // Usable with $(selector).function
     $.fn.extend({
-        /** Set a button with new value and new title
+        /** Setting a button with new value and new title
          *  @param {string} set the value
          *  @param {string} set the title
          */
@@ -182,88 +77,10 @@
             this.html(value);
             this.prop('title', title);
         },
-        /** Center an element in the middle of the screen  */
+        /** Center an element in the middle of the screen
+         */
         centrerElementAbsolu: function () {
             this.css('top', ($(window).height() - this.height()) / 2 + $(window).scrollTop());
-        },
-        /** Scroll down an element */
-        scrollBottom: function () {
-            if (this.length) {
-                try {
-                    this.animate({
-                        scrollTop: this.prop("scrollHeight")
-                    }, 'slow');
-                } catch (e) {
-                    console.log(e);
-                }
-            } else {
-                $.log(1, `Selector [${this}] not found`);
-            }
-        },
-        /** The function will return a title for the Location object. With $(location), the function will return
-         *  le title of the current page
-         *  return {string} title of the page
-         */
-        getIdCurrentPage: function() {
-            let m = regURL.exec(this.attr('href'));
-
-            if (m[2] != null) {
-
-                let aUrl = m[2].substr(1).split("/");
-                $.log(1, aUrl);
-
-                let nSplitUrl = aUrl.length;
-
-                if (nSplitUrl == 1) {
-                    if (aUrl[0] == 'my_favorites') return 'allgames';
-                    if (aUrl[0] == 'recommended-badges') return 'badges';
-                    if (aUrl[0] == 'badges') return 'badges';
-                    if (aUrl[0] == 'minus') return 'minus';
-                    if (aUrl[0] == 'forums') return 'forums';
-                    if (aUrl[0] == 'community') return 'accounts';
-                    if (aUrl[0] == 'cookie-policy') return 'privacy';
-                    if (aUrl[0] == 'privacy') return 'privacy';
-                    if (aUrl[0] == 'user-agreement') return 'privacy';
-                    if (aUrl[0] == 'kreds') return 'kreds';
-                    if (aUrl[0] == 'posts') return 'posts';
-                    if (aUrl[0] == 'games_for_your_site') return 'gamesexport';
-                    if (aUrl[0] == 'search') return 'search';
-                    if (aUrl[0] == 'stickers') return ''; // Not done yet https://www.kongregate.com/stickers/#sticker-pack-27
-                    return 'allgames';
-                }
-
-                if (nSplitUrl == 2) {
-                    if ((aUrl[0] == 'badge_quests') && (aUrl[1] == 'your_first')) return 'badges';
-                    if ((aUrl[0] == 'accounts') && (aUrl[1] == 'new')) return 'newaccount';
-                    if (aUrl[0] == 'pages') {
-                        if (aUrl[1] == 'bartender-ballerina') return ''; // Full bugged page
-                        if (aUrl[1] == 'luck-of-the-draw-sweeps') return 'spellstone';
-                        if (aUrl[1] == 'luck-of-the-draw-sweeps-rules') return 'spellstone';
-                        if (aUrl[1] == 'about') return 'about';
-                        if (aUrl[1] == 'kongregate-ad-specs') return 'adspecs';
-                        if (aUrl[1].substr(0, 7) == 'conduct') return 'conduct';
-                        if (aUrl[1] == 'logos-and-branding') return 'logos';
-                        if (aUrl[1] == 'jobs') return 'jobs';
-                    }
-                    if (aUrl[0] == 'forums') return 'forums';
-                    if (aUrl[0] == 'feedbacks') return 'feedbacks';
-                    if (aUrl[0] == 'games') return 'allgames'; // dev pages
-                }
-
-                if (nSplitUrl == 3) {
-                    if ((aUrl[0] == 'accounts') && (aUrl[2] == 'awards')) return 'awards';
-                    if ((aUrl[0] == 'pages') && (aUrl[2].substr(0, 7) == 'conduct')) return 'conduct';
-                }
-
-                if (nSplitUrl == 4) {
-                    if ((aUrl[0] == 'forums') && (aUrl[2] == 'topics')) return 'topics';
-                    if ((aUrl[0] == 'games') && (aUrl[3] == 'comments')) return 'comments';
-                }
-
-                if (aUrl[0] == 'games') return 'games';
-                if (aUrl[0] == 'accounts') return 'accounts';
-            }
-            return 'accueil';
         }
     });
 

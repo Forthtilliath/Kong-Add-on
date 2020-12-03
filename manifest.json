@@ -1,45 +1,42 @@
 {
-	"manifest_version": 2,
-	"name": "Kongregate update",
-	"version": "1.3.7.3",
-	"author": "Forth",
+    "manifest_version": 2,
+    "name": "Kongregate update",
+    "version": "1.5",
+    "author": "Forth",
 
-	"description": "This add-on works only on www.kongregate.com !",
-	"icons": {
-		"16": "icons/icon_16.png",
-		"48": "icons/icon_48.png",
-		"128": "icons/icon_128.png"
-	},
-	"content_scripts": [
-		{
-			"matches": [
-				"*://www.kongregate.com/",
-				"*://*.kongregate.com/games/*",
-				"*://*.kongregate.com/accounts/*",
-				"*://www.kongregate.com/findyourfriends" ],
-			"run_at": "document_end",
-			"js": [
+    "description": "This add-on works only on www.kongregate.com !",
+    "icons": {
+        "16": "icons/icon_16.png",
+        "48": "icons/icon_48.png",
+        "128": "icons/icon_128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [ "*://www.kongregate.com/*" ],
+            "run_at": "document_end",
+            "css": [
+                "css/all.min.css" ],
+            "js": [
 				"js/jquery-3.5.1.min.js",
 				"js/jquery-cssrule.js",
-				"js/jcssrule.js",
 				"js/jquery.cookie.js",
-				"js/content_css.js",
-				"js/fontawesome.js",
-				"js/fontawesome-solid.js"
-			]
+                "js/kong.addon.js",
+                "js/functions.js",
+                "js/vars.js",
+				"js/jcssrule.js",
+                "js/all.min.js",
+				"js/content_css.js" ]
 		},
-		{
-			"matches": [
-				"*://www.kongregate.com/",
-				"*://*.kongregate.com/games/*",
-				"*://*.kongregate.com/accounts/*",
-				"*://www.kongregate.com/findyourfriends" ],
-			"js": [ "js/content.js" ]
+        {
+            "matches": [ "*://www.kongregate.com/games/*" ],
+            "js": [
+                "js/kongregate.js",
+                "js/content.js"]
 		}
 	],
-	"web_accessible_resources": [
+    "web_accessible_resources": [
 		"webfonts/*"
 	],
 
-	"permissions": [ "activeTab" ]
+    "permissions": ["activeTab"]
 }

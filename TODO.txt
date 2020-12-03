@@ -1,0 +1,43 @@
+TODAY
+- select option pour volume ping
+    
+!!! VOLUME !!!
+https://fontawesome.com/icons/volume-off?style=solid
+    <i class="fas fa-volume-off"></i>
+https://fontawesome.com/icons/volume-down?style=solid
+    <i class="fas fa-volume-down"></i>
+https://fontawesome.com/icons/volume-up?style=solid
+    <i class="fas fa-volume-up"></i>
+    
+    
+Height game box dynamique !!!!
+#maingame {
+    height: 640px !important;
+}
+maingame
+maingamecontent
+flashframecontent
+width:1203px;height:726px
+prop style => split(";") => width & height
+jQuery("#maingame").css('width')
+jQuery("#maingame").css('height')
+
+gameholder => width of game [width:900px;]
+
+
+Optimisation du code
+Optimisation des codes couleurs
+
+Cookies :
+- DM pour tout le site
+- tous les autres, seulement pour /games
+
+CSS :
+- https://www.kongregate.com/
+- Connecter vous en bas du chat (via FF)
+- fenetre login quand on va sur la page d'un jeu
+
+Volume :
+- changer l'icone en fonction du volume
+- cliquer sur l'icone pour muter ou démuter
+- nouvelle variable pour conserver valeur avant mute

@@ -1,15 +1,3 @@
-/*!
- * Kong Addon for www.kongregate.com v1.5
- * https://github.com/Forthtilliath/Kong-Addon
- *
- * Copyright 2020 Forth
- * Released under the MIT license
- * 
- * @fileoverview Script injected to modify kong script and be able to block bots and add a ping when someone post a message
- * @author Forth
- * @version 1
- */
-
 // We create a new script block
 var s = document.createElement("script");
 s.type = "text/javascript";
@@ -20,10 +8,9 @@ s.id = "script_kong";
 /**********************************************************/
 /******************** Forth Code Start ********************/
 /**********************************************************/
-s.append("var websitesBlocked = " + $.getArrayDoubleToString(aBots) + ";");
-//s.append("var songMsg = new Audio('" + songUrl + "');");
-s.append("var songMsg = new Audio('" + chrome.runtime.getURL(songUrl) + "');");
-s.append("songMsg.volume = " + volumeValue + ";");
+s.append("var websitesBlocked = " + aBotsToScript() + ";");
+s.append("var songMsg = new Audio('" + songUrl + "');");
+s.append("songMsg.volume = " + songVolume + ";");
 /**********************************************************/
 /********************* Forth Code End *********************/
 /**********************************************************/
@@ -48,8 +35,8 @@ s.append("        for( var i = 0 ; i  < websitesBlocked.length ; i++ ) {");
 // If YES
 s.append("            if( b.search(websitesBlocked[i][0]) >= 0 ) {");
 // We log in the console
-if (debugLevel >= 50) {
-    s.append("                console.log(`${d.formatted_timestamp} : Bot detected [${a}] with the pattern [${websitesBlocked[i][0]}]`);");
+if(debug) {
+s.append("                console.log(`${d.formatted_timestamp} : Bot detected [${a}] with the pattern [${websitesBlocked[i][0]}]`);");
 }
 // We count it
 //s.append("                aBotsBlocked[i]++;");
@@ -90,5 +77,17 @@ s.append("        });");
 s.append("        this._messages_count++");
 s.append("    }");
 s.append("}");
+
+/*s.append("function showBots() {");
+s.append("    for( var i = 0 ; i < aBotsBlocked.length ; i++ ) {");
+s.append("        if( aBotsBlocked[i] > 0 )");
+s.append("        {");
+s.append("            var s = 's';");
+s.append("            if( aBotsBlocked[i] ) s = '';");
+s.append("            console.log(`The pattern ${websitesBlocked[i]} blocked ${aBotsBlocked[i]} bot${s}.`);");
+s.append("        }");
+s.append("    }");
+s.append("}");*/
+
 
 $("head").append(s);
