@@ -16,11 +16,7 @@ $(function () {
 
     /* Check if each button already exist and delete them to avoid any double
      * when the extension is updated while running (had this issue on FF) */
-    var aNameElements = ['#bt_showquicklinks', '#forth_lockscreen', '#forth_onlineplayers', '#forth_hideChat', '#forth_fontsize', '#forth_darkmode', '#forth_brightness', '#forth_volume'];
-    aNameElements.forEach(function (name) {
-        // jQuery because $ doesn't work (idk why)
-        if (jQuery(name).length) jQuery(name).remove();
-    });
+    $.removeElements(['#bt_showquicklinks', '#forth_lockscreen', '#forth_onlineplayers', '#forth_hideChat', '#forth_fontsize', '#forth_darkmode', '#forth_brightness', '#forth_volume']);
 
     /* We add the button to show the quick links */
     $("#quicklinks").prepend($.addButton('li', '', 'bt_showquicklinks', 'Show quick links', $.addIcon(icon_quicklinks_off)));
@@ -65,7 +61,7 @@ $(function () {
         sOptionsSize += `<option value="${i}"${sSelected}>${i}px</option>`;
     }
     $.addSelect('div', 'forth_fontsize', 'slt_fontsize', 'Select the text size of your choice', $.addIcon(icon_font), sOptionsSize).insertBefore("#forth_hideChat");
-    changeTextSize($.cookie('forth_fontsize'));
+    $.changeTextSize($.cookie('forth_fontsize'));
 
     /* We add the button to change the brightness of the game */
     var sOptionsBrightness = '';
@@ -86,7 +82,6 @@ $(function () {
         (i == volumeValue * 100) ? sSelected = ' selected': sSelected = '';
         sOptionsVolume += `<option value="${i/100}"${sSelected}>${i}%</option>`;
     }
-    //$.addSelect('div', 'forth_volume', 'slt_volume', 'Select the volume of your choice', $.addIcon(icon_volume_on), sOptionsVolume).insertBefore("#forth_brightness");
     let iconVolume = (volumeValue == 0) ? icon_volume_off : (volumeValue < 0.5) ? icon_volume_down : icon_volume_up;
     $.addSelect('div', 'forth_volume', 'slt_volume', '', $.addIcon(iconVolume), sOptionsVolume, 'Click to mute', 'Select the volume of your choice').insertBefore("#forth_brightness");
     /* Initialisation end */
@@ -103,7 +98,6 @@ $(function () {
         $("#forth_volume > span").setButton($.addIcon(iconVolume), textVolume);
         // Update the new volume
         $.execScript(`songMsg.volume = ${ volumeValue };`);
-
         // Update the cookie to save setting after refreshs
         $.addCookie('forth_volume', volumeValue, 30, '/');
     });
@@ -123,7 +117,6 @@ $(function () {
         $("#forth_volume > span").setButton($.addIcon(iconVolume), textVolume);
         // Update the new volume
         $.execScript(`songMsg.volume = ${ volumeValue };`);
-
         // Update the cookie to save setting after refreshs
         $.addCookie('forth_volume', volumeValue, 30, '/');
     });
@@ -158,16 +151,17 @@ $(function () {
         $(".chat_room_template > .users_in_room").toggle(500, function () {
             if (jQuery(".chat_room_template > .users_in_room").css("display") == "none") {
                 // Hide
-                $(this).html($.addIcon(icon_onlinep_off));
+                $('#bt_onlineplayers').html($.addIcon(icon_onlinep_off));
                 $("#bt_lockscreen").prop('title', 'Show online players');
                 // Update the cookie to save setting after refreshs
                 $.addCookie('forth_showPlayers', 'false', 30, '/');
             } else { // Show
-                $(this).html($.addIcon(icon_onlinep_on));
+                $('#bt_onlineplayers').html($.addIcon(icon_onlinep_on));
                 $("#bt_lockscreen").prop('title', 'Hide online players');
                 // Update the cookie to save setting after refreshs
                 $.addCookie('forth_showPlayers', 'true', 30, '/');
             }
+            $("#chat_rooms_container .chat_message_window").scrollBottom();
         });
     });
     /* Evenement show or hide online players end */
@@ -175,7 +169,7 @@ $(function () {
     /* Evenement change size of text start */
     $('#slt_fontsize').change(function () {
         // Add a cssrule to dynamise the text size
-        changeTextSize($(this).val());
+        $.changeTextSize($(this).val());
         // Update the cookie to save setting after refreshs
         $.addCookie('forth_fontsize', $(this).val(), 30, '/');
     });
@@ -226,10 +220,7 @@ $(function () {
             $("#bt_lockscreen").prop('title', 'Hide chat');
             jQuery("#quicklinks").show();
             $("#chat_container_cell").toggle();
-            let newWidth = `calc( ${maingameWidth} + ${chatWidth} )`;
-            $("#maingame").css("width", newWidth);
-            $("#maingamecontent").css("width", newWidth);
-            $("#flashframecontent").css("width", newWidth);
+            $.setWidthGame(`calc( ${maingameWidth} + ${chatWidth} )`);
             $("#forth_fontsize").toggle();
         } else // Hide
         {
@@ -237,18 +228,13 @@ $(function () {
             $("#bt_lockscreen").prop('title', 'Show chat');
             jQuery("#quicklinks").hide();
             $("#chat_container_cell").toggle();
-            let newWidth = `calc( ${maingameWidth} - ${chatWidth} )`;
-            $("#maingame").css("width", newWidth);
-            $("#maingamecontent").css("width", newWidth);
-            $("#flashframecontent").css("width", newWidth);
-
-            if ($("#forth_fullscreen").css("display") == "block") {
+            $.setWidthGame(`calc( ${maingameWidth} - ${chatWidth} )`);
+            if ($("#forth_fullscreen").css("display") == "block")
                 $("#floating_game_holder").centrerElementAbsolu();
-            }
-
             $("#forth_fontsize").toggle();
         }
-        scrollBottom("#chat_rooms_container .chat_message_window");
+        //scrollBottom("#chat_rooms_container .chat_message_window");
+        $("#chat_rooms_container .chat_message_window").scrollBottom();
     });
     /* Evenement hide chat end */
 
@@ -264,18 +250,17 @@ $(function () {
     /* Evenement show quick links end */
 });
 
-/*
-    We rewrite the official function to be able to block bots before they posts
-    and add a song when other users post a message in the chat
-*/
+/** Each time the window is resized, we keep the game centered */
 $(window).resize(function () {
     if ($("#forth_fullscreen").css("display") == "block") {
         $("#floating_game_holder").centrerElementAbsolu();
     }
 });
 
+/** After each new message in the chat, call this evenement to check if there are links in message to
+ *  replace them by html link with better title.
+ */
 var iNbPost = 0;
-
 $('body').on('DOMSubtreeModified', '#chat_rooms_container .chat_message_window', function () {
     var msg = $("#chat_rooms_container .chat_message_window .chat-message:last-child .message").html();
     // When we are using html() later, there are a phase where this function is recall and msg is empty
@@ -283,7 +268,6 @@ $('body').on('DOMSubtreeModified', '#chat_rooms_container .chat_message_window',
         iNbPost = $("#chat_rooms_container .chat_message_window .chat-message .message").length;
         return;
     }
-
     // When room changed
     if (iNbPost > $("#chat_rooms_container .chat_message_window .chat-message .message").length) {
         iNbPost = $("#chat_rooms_container .chat_message_window .chat-message .message").length;
@@ -292,7 +276,6 @@ $('body').on('DOMSubtreeModified', '#chat_rooms_container .chat_message_window',
     if (iNbPost < $("#chat_rooms_container .chat_message_window .chat-message .message").length) {
         var m;
         var msgOut = msg;
-
         // For each wiki's link in the msg
         while ((m = regWiki.exec(msg)) !== null) {
             var urlOut = "";
@@ -301,7 +284,6 @@ $('body').on('DOMSubtreeModified', '#chat_rooms_container .chat_message_window',
             }
             msgOut = msgOut.replace(m[0], urlWikiToHtml(m));
         }
-
         // For each game's link in the msg
         while ((m = regGame.exec(msg)) !== null) {
             var urlOut = "";
@@ -310,7 +292,6 @@ $('body').on('DOMSubtreeModified', '#chat_rooms_container .chat_message_window',
             }
             msgOut = msgOut.replace(m[0], urlGameToHtml(m[2]));
         }
-
         // For each account's link in the msg
         while ((m = regAccount.exec(msg)) !== null) {
             var urlOut = "";
@@ -320,7 +301,6 @@ $('body').on('DOMSubtreeModified', '#chat_rooms_container .chat_message_window',
 
             msgOut = msgOut.replace(m[0], urlAccountToHtml(m[2]));
         }
-
         // We fixe some issues after replace games link (because there are already html links)
         msgOut = msgOut.replace(/( ]<\/a>)([#])?/g, ']</a>');
         // We replace the message

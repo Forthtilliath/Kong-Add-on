@@ -47,7 +47,7 @@ s.append("        for( var i = 0 ; i  < websitesBlocked.length ; i++ ) {");
 // If YES
 s.append("            if( b.search(websitesBlocked[i][0]) >= 0 ) {");
 // We log in the console
-if(debug) {
+if(debugLevel >= 50) {
 s.append("                console.log(`${d.formatted_timestamp} : Bot detected [${a}] with the pattern [${websitesBlocked[i][0]}]`);");
 }
 // We count it

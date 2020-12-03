@@ -9,7 +9,7 @@
  * @author Forth
  * @version 1
  */
-let debug = false;
+//let debug = false;
 let debugLevel = 10;
 
 // Links to block
@@ -65,6 +65,7 @@ let color_black = "#000000";
 let color_white = "#ffffff";
 let color_red_00 = "#e2062c";
 let color_red_01 = "#ff6161";
+let color_red_02 = "#8c0000";
 let color_blue_00 = "#86b4db";
 let color_green = "#2da432";
 let color_yellow = "#ece0b9";

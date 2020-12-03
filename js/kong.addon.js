@@ -92,7 +92,33 @@
             script.textContent = `${ code };`;
             (document.head || document.documentElement).appendChild(script);
             script.remove();
+        },
+        /** Change the text size in the chat box
+         *  @param val {number} set the text size for chat, timestamp and input
+         */
+        changeTextSize: function(val) {
+            // Add a cssrule to dynamise the text size
+            jCSSRule(".chat_message_window_username", "font-size", val + "px"); // Username
+            jCSSRule(".chat_message_window_undecorated_username", "font-size", val + "px"); // Kong bot
+            jCSSRule(".chat_message_window p .message", "font-size", val + "px"); // Message
+            jCSSRule(".chat_input", "font-size", val + "px"); // Chat input
+            jCSSRule(".chat_message_window p .timestamp", "font-size", (val - 2) + "px !important"); // Timestamp
+        },
+        /** Remove elements from html */
+        removeElements: function(a) {
+            a.forEach(function (b) {
+                if ($(b).length) $(b).remove();
+            });
+        },
+        /** Resize the game box
+         *  @param {number} set the width of the box
+         */
+        setWidthGame: function(w) {
+            $("#maingame").css("width", w);
+            $("#maingamecontent").css("width", w);
+            $("#flashframecontent").css("width", w);
         }
+        
     });
 
     // Usable with $(selector).function
@@ -105,10 +131,23 @@
             this.html(value);
             this.prop('title', title);
         },
-        /** Center an element in the middle of the screen
-         */
+        /** Center an element in the middle of the screen  */
         centrerElementAbsolu: function () {
             this.css('top', ($(window).height() - this.height()) / 2 + $(window).scrollTop());
+        },
+        /** Scroll down an element */
+        scrollBottom: function () {
+            if (this.length) {
+                try {
+                    this.animate({
+                        scrollTop: this.prop("scrollHeight")
+                    }, 'slow');
+                } catch (e) {
+                    console.log(e);
+                }
+            } else {
+                console.log(`Selector [${this}] not found`);
+            }
         }
     });
 

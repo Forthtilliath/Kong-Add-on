@@ -225,8 +225,10 @@ function loadCSS() {
         jCSSRule(".upper_gamepage", "background-color", bgColor_grey_00); // Bg of top of the page
         jCSSRule("#maingamecontent #gameholder", "filter", "brightness(" + brightnessValue + ")"); // Game div
 
-        // Chat
-        jCSSRule("#kong_game_ui .tabpane", "background-color", bgColor_grey_01); //Conturn chat
+        // Chat        
+        jCSSRule("#kong_game_ui .user_row .rank_icon, #kong_game_ui .user_row .friend_icon, #kong_game_ui .user_row .mobile_icon", "filter", "invert(1)"); // Icon in online players
+        jCSSRule("#kong_game_ui .user_row.muted .username", "color", color_red_00); // Users muter in online players
+        jCSSRule("#kong_game_ui .tabpane", "background-color", bgColor_grey_01); // Conturn chat
         jCSSRule("#kong_game_ui .room_name_container", "color", color_grey_03); // Room name
         jCSSRule("#kong_game_ui .room_name_container .room_name", "color", color_grey_03); // Room name
         //jCSSRule("#kong_game_ui .chat_actions_container", "filter", "invert(0.9)"); // Settings menu
@@ -252,6 +254,8 @@ function loadCSS() {
         jCSSRule("#kong_game_ui .chat_message_window p .message a", "color", linkColor_yellow); //Links in chat
         jCSSRule("#kong_game_ui .chat_message_window p .message a", "text-decoration", "none");
         jCSSRule("#kong_game_ui .chat_message_window .chat_message_window_undecorated_username[username='Kong Bot']", "color", color_green); // Kong bot
+        jCSSRule("#kong_game_ui .chat_message_window .error_msg", "color", color_red_02); // Error message (spam)
+        jCSSRule("#kong_game_ui .chat_message_window .error_msg", "background-color", bgColor_grey_05);
         jCSSRule("body:not(.no-flexbox) #chat_rooms_container .chat_message_window", "border", "2px double");
         jCSSRule("body:not(.no-flexbox) #chat_rooms_container .chat_message_window", "border-color", color_grey_01);
         jCSSRule("body:not(.no-flexbox) #chat_rooms_container .chat_message_window", "border-radius", "2px");

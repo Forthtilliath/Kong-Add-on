@@ -14,28 +14,8 @@ function consoleDebug(nLevel, text) {
     if (debugLevel >= nLevel) console.log(text);
 }
 
-// Center an element in the middle of the screen
-/*function centrerElementAbsolu(element) {
-    var hauteur_fenetre = $(window).height();
-
-    var haut = (hauteur_fenetre - element.height()) / 2 + $(window).scrollTop();
-    element.css({
-        top: haut
-    });
-}*/
-
-// Change the size of the text in the chat box
-function changeTextSize(val) {
-    /* Add a cssrule to dynamise the text size */
-    jCSSRule(".chat_message_window_username", "font-size", val + "px"); /* Username */
-    jCSSRule(".chat_message_window_undecorated_username", "font-size", val + "px"); /* Kong bot */
-    jCSSRule(".chat_message_window p .message", "font-size", val + "px"); /* Message */
-    jCSSRule(".chat_input", "font-size", val + "px"); /* Chat input */
-    jCSSRule(".chat_message_window p .timestamp", "font-size", (val - 2) + "px !important"); /* Timestamp */
-}
-
 // Scroll down an element
-function scrollBottom(selector) {
+/*function scrollBottom(selector) {
     if ($(selector).length) {
         try {
             $(selector).animate({
@@ -47,7 +27,8 @@ function scrollBottom(selector) {
     } else {
         console.log(`Selector [${selector}] not found`);
     }
-}
+}*/
+
 
 // Transform an url to html url
 function urlWikiToHtml(url) {
