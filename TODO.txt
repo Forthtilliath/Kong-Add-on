@@ -24,6 +24,9 @@ jQuery("#maingame").css('height')
 
 gameholder => width of game [width:900px;]
 
+recupérer height, ajouter +20px height
+recupérer width, reduire taille chat width
+
 
 Optimisation du code
 Optimisation des codes couleurs
@@ -36,9 +39,5 @@ CSS :
 - https://www.kongregate.com/
 - Connecter vous en bas du chat (via FF)
 - fenetre login quand on va sur la page d'un jeu
-- menus select
-
-Volume :
-- changer l'icone en fonction du volume
-- cliquer sur l'icone pour muter ou démuter
-- nouvelle variable pour conserver valeur avant mute
+- https://www.kongregate.com/accounts/Blondasse
+- bouton recherche game

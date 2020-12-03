@@ -93,30 +93,35 @@ $(function () {
 
     /* Evenement change volume start */
     $('#slt_volume').change(function () {
+        // We save our last volume
         volumeValueOld = volumeValue;
         volumeValue = $(this).val();
 
+        // Update the button with new icon & title
         let iconVolume = (volumeValue == 0) ? icon_volume_off : (volumeValue < 0.5) ? icon_volume_down : icon_volume_up;
         let textVolume = (volumeValue == 0) ? 'Click to unmute' : 'Click to mute';
         $("#forth_volume > span").setButton($.addIcon(iconVolume), textVolume);
+        // Update the new volume
         $.execScript(`songMsg.volume = ${ volumeValue };`);
 
         // Update the cookie to save setting after refreshs
         $.addCookie('forth_volume', volumeValue, 30, '/');
     });
     $('#forth_volume > span').click(function () {
+        // Swap old volume to new if mute
         if (volumeValue == 0) {
             volumeValue = volumeValueOld;
-        } else {
+        } else { // Swap current volume to old then mute
             volumeValueOld = volumeValue;
             volumeValue = 0;
         }
-        //$(`#slt_volume[value="${volumeValue*100}"]`).prop('selected', true);
         $('#slt_volume').val(volumeValue);
 
+        // Update the button with new icon & title
         let iconVolume = (volumeValue == 0) ? icon_volume_off : (volumeValue < 0.5) ? icon_volume_down : icon_volume_up;
         let textVolume = (volumeValue == 0) ? 'Click to unmute' : 'Click to mute';
         $("#forth_volume > span").setButton($.addIcon(iconVolume), textVolume);
+        // Update the new volume
         $.execScript(`songMsg.volume = ${ volumeValue };`);
 
         // Update the cookie to save setting after refreshs
@@ -213,14 +218,18 @@ $(function () {
 
     /* Evenement hide chat start */
     $('#bt_hideChat').click(function () {
-        if (jQuery("#chat_container_cell").css("display") == "none") { // Show
+        let chatWidth = $("#chat_container").css("width");
+        let maingameWidth = $("#maingame").css("width");
+        
+        if ($("#chat_container_cell").css("display") == "none") { // Show
             $(this).html($.addIcon(icon_chat_on));
             $("#bt_lockscreen").prop('title', 'Hide chat');
             jQuery("#quicklinks").show();
             $("#chat_container_cell").toggle();
-            $("#maingame").css("width", "1103px");
-            $("#maingamecontent").css("width", "1103px");
-            $("#flashframecontent").css("width", "1103px");
+            let newWidth = `calc( ${maingameWidth} + ${chatWidth} )`;
+            $("#maingame").css("width", newWidth);
+            $("#maingamecontent").css("width", newWidth);
+            $("#flashframecontent").css("width", newWidth);
             $("#forth_fontsize").toggle();
         } else // Hide
         {
@@ -228,9 +237,10 @@ $(function () {
             $("#bt_lockscreen").prop('title', 'Show chat');
             jQuery("#quicklinks").hide();
             $("#chat_container_cell").toggle();
-            $("#maingame").css("width", "800px");
-            $("#maingamecontent").css("width", "800px");
-            $("#flashframecontent").css("width", "800px");
+            let newWidth = `calc( ${maingameWidth} - ${chatWidth} )`;
+            $("#maingame").css("width", newWidth);
+            $("#maingamecontent").css("width", newWidth);
+            $("#flashframecontent").css("width", newWidth);
 
             if ($("#forth_fullscreen").css("display") == "block") {
                 $("#floating_game_holder").centrerElementAbsolu();

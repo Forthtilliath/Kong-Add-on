@@ -73,7 +73,6 @@ let color_kartridge_Sec_op = "#651fd6";
 let color_kartridge_Sec_tr = "#dac5ff";
 
 /* URL Pages start */
-//let regURL = /(http[s]?:\/\/www\.kongregate\.com)((\/[\-\w]+)(\/[\-\w]+)?(\/[\-\w]+)?)?/ig;
 let regURL = /(http[s]?:\/\/www\.kongregate\.com)((\/[\-\w]+)(\/[\-\w]+)?(\/[\-\w]+)?(\/[\-\w]+)?)?/ig;
 let regVolume = /(songMsg.volume = )([01]{1})(\.{1}\d{1})?(;)/i;
 
@@ -83,7 +82,7 @@ consoleDebug(10, `PAGE EN COURS : ${namePage}`);
 /* URL Pages end */
 
 /* Game page */
-let windowGameHeight = "640px"; // 630px per default
+let menuButtonsHeight = "40px";
 
 let icon_quicklinks_on  = "fa fa-toggle-on";
 let icon_quicklinks_off = "fa fa-toggle-off";
@@ -108,18 +107,13 @@ let regAccount = /[^<a href="]{1}(http[s]?:\/\/www\.kongregate\.com\/accounts\/)
 
 // Song chat
 let songUrl = 'https://proxy.notificationsounds.com/message-tones/pristine-609/download/file-sounds-1150-pristine.mp3';
-//let songVolume = 0.1;
-//let songVolume = !!$.cookie('forth_volume') ? $.cookie('forth_volume')/100 : 0;
 let volumeValue = $.getCookie('forth_volume',0.1);
-let volumeValueOld = 0.1;
+let volumeValueOld = 0.1; // Usefull when mute
 
-//let brightnessValue = !!$.cookie('forth_brightness') ? $.cookie('forth_brightness') : '80%';
 let brightnessValue = $.getCookie('forth_brightness','80%');
 let fontsizeValue = $.getCookie('forth_fontsize','12');
 
 /* Display modes */
-// We load darkmode value from cookie
-//let darkMode = !!$.cookie('forth_darkmode') ? ($.cookie('forth_darkmode') === 'true') : true;
 let darkMode = $.getCookie('forth_darkmode',true);
 let title_darkmode_on = 'Disable dark mode';
 let title_darkmode_off = 'Activate dark mode';

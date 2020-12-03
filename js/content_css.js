@@ -195,10 +195,17 @@ function loadCSS() {
 
     if (namePage == 'games') {
         // Window game
-        jCSSRule("#maingame", "height", windowGameHeight + " !important");
-        jCSSRule("#maingamecontent", "height", windowGameHeight + " !important");
-        jCSSRule("#flashframecontent", "height", windowGameHeight + " !important");
-        jCSSRule("#flashframecontent .game_table > tbody > tr:first-child", "height", "calc(" + windowGameHeight + " - 600px)");
+        let chatHeight = $("#chat_container").css("height");
+        let gameHeight = `calc( ${chatHeight} + ${menuButtonsHeight} )`;
+        let newHeight = `calc( ${chatHeight} + ${menuButtonsHeight} )`;
+        $("#maingame").css("height", newHeight);
+        $("#maingamecontent").css("height", newHeight);
+        $("#flashframecontent").css("height", newHeight);
+        jCSSRule("#maingame", "height", gameHeight + " !important");
+        consoleDebug(1, `maingame.height = ${$("#maingame").css("height")}`);
+        jCSSRule("#maingamecontent", "height", gameHeight + " !important");
+        jCSSRule("#flashframecontent", "height", gameHeight + " !important");
+        jCSSRule("#flashframecontent .game_table > tbody > tr:first-child", "height", menuButtonsHeight);
 
         // Title of the game
         jCSSRule("#play .gamepage_header_outer h1", "width", "100%");
