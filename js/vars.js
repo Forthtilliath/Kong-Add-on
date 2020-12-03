@@ -9,7 +9,7 @@
  * @author Forth
  * @version 1
  */
-//let debug = false;
+
 let debugLevel = 10;
 
 // Links to block
@@ -75,6 +75,7 @@ let linkColor_white = "#ffffff";
 let linkColor_red = "#e2062c";
 let linkColor_red_01 = "#a7001d";
 let linkColor_red_02 = "#ff3b5d";
+let linkColor_red_invert = "#1df9d3";
 let linkColor_yellow = "#ffc107";
 
 /* Kratridge colors */
@@ -123,7 +124,7 @@ let volumeValue = $.getCookie('forth_volume', 0.1);
 let volumeValueOld = 0.1; // Usefull when mute
 
 let brightnessValue = $.getCookie('forth_brightness', '80%');
-let fontsizeValue = $.getCookie('forth_fontsize', '12');
+let fontsizeValue = $.getCookie('forth_fontsize', '11');
 
 /* Display modes */
 let darkMode = $.getCookie('forth_darkmode', true);
@@ -132,6 +133,6 @@ let title_darkmode_off = 'Activate dark mode';
 
 // jcssrule.js vars
 // Properties we don't want to change when darkmode is off
-var aPropRefused = ['color', 'background', 'background-color', 'background-image', 'border-color', 'border-color-top', 'border-color-right', 'border-color-bottom', 'border-color-left', 'filter', 'box-shadow'];
+let aPropRefused = ['color', 'background', 'background-color', 'background-image', 'border-color', 'border-color-top', 'border-color-right', 'border-color-bottom', 'border-color-left', 'filter', 'box-shadow'];
 // Properties we want to always change even when darkmode is off
-var aElemAlways = ["#forth_fullscreen", "#forth_messagebox", "#forth_messagebox #forth_messagetitle", "#forth_messagebox #forth_messagedesc", "#forth_fontsize > span, #forth_brightness > span, #forth_volume > span"];
+let aElemAlways = ["#forth_fullscreen", "#forth_messagebox", "#forth_messagebox #forth_messagetitle", "#forth_messagebox #forth_messagedesc", "#forth_fontsize > span, #forth_brightness > span, #forth_volume > span"];

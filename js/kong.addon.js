@@ -87,8 +87,8 @@
                 return !!$.cookie(name) ? ($.cookie(name) === 'true') : defaultValue;
             return !!$.cookie(name) ? $.cookie(name) : defaultValue;
         },
-        execScript: function(code) {
-            var script = document.createElement('script');
+        execScript: function (code) {
+            let script = document.createElement('script');
             script.textContent = `${ code };`;
             (document.head || document.documentElement).appendChild(script);
             script.remove();
@@ -96,7 +96,7 @@
         /** Change the text size in the chat box
          *  @param val {number} set the text size for chat, timestamp and input
          */
-        changeTextSize: function(val) {
+        changeTextSize: function (val) {
             // Add a cssrule to dynamise the text size
             jCSSRule(".chat_message_window_username", "font-size", val + "px"); // Username
             jCSSRule(".chat_message_window_undecorated_username", "font-size", val + "px"); // Kong bot
@@ -105,7 +105,7 @@
             jCSSRule(".chat_message_window p .timestamp", "font-size", (val - 2) + "px !important"); // Timestamp
         },
         /** Remove elements from html */
-        removeElements: function(a) {
+        removeElements: function (a) {
             a.forEach(function (b) {
                 if ($(b).length) $(b).remove();
             });
@@ -113,12 +113,26 @@
         /** Resize the game box
          *  @param {number} set the width of the box
          */
-        setWidthGame: function(w) {
+        setWidthGame: function (w) {
             $("#maingame").css("width", w);
             $("#maingamecontent").css("width", w);
             $("#flashframecontent").css("width", w);
+        },
+        /** Transform an array ['a','b','c'] to [['a',0],['b',0],['c',0]] usable in script function
+         *  @param a {array} set the array to become a double array 
+         *  @param d {number} set the default value
+         */
+        getArrayDoubleToString: function (a, d) {
+            let s = "";
+            if (typeof (d) == 'undefined') d = 0;
+            a.forEach(function (v, i) {
+                s += i > 0 ? "," : "";
+                s += `['${v}', ${d}]`;
+            });
+
+            return `[${s}]`;
         }
-        
+
     });
 
     // Usable with $(selector).function
@@ -146,7 +160,7 @@
                     console.log(e);
                 }
             } else {
-                console.log(`Selector [${this}] not found`);
+                consoleDebug(1, `Selector [${this}] not found`);
             }
         }
     });

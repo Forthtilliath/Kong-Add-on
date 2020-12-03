@@ -14,25 +14,9 @@ function consoleDebug(nLevel, text) {
     if (debugLevel >= nLevel) console.log(text);
 }
 
-// Scroll down an element
-/*function scrollBottom(selector) {
-    if ($(selector).length) {
-        try {
-            $(selector).animate({
-                scrollTop: document.querySelector(selector).scrollHeight
-            }, 500);
-        } catch (e) {
-            console.log(e);
-        }
-    } else {
-        console.log(`Selector [${selector}] not found`);
-    }
-}*/
-
-
 // Transform an url to html url
 function urlWikiToHtml(url) {
-    var urlOut = `<a href="${url[0]}" target="_blank">[Wiki`;
+    let urlOut = `<a href="${url[0]}" target="_blank">[Wiki`;
     // If not main page
     if ((url[2] != "Idle_Grindia_Wiki") && (url[2] != "Idle_Grindia")) {
         // If there are an anchor with his id
@@ -48,10 +32,10 @@ function urlWikiToHtml(url) {
 }
 
 function urlGameToHtml(name) {
-    var titleGame = "";
-    var aTitleGame = name.split("-");
+    let titleGame = "";
+    let aTitleGame = name.split("-");
     // We uppercase the first letter of each word of the game name
-    for (var i = 0; i < aTitleGame.length; i++) {
+    for (let i = 0; i < aTitleGame.length; i++) {
         titleGame += aTitleGame[i].substring(0, 1).toUpperCase() + aTitleGame[i].substring(1).toLowerCase() + " ";
     }
 
@@ -71,16 +55,16 @@ function cleanPages() {
 
 // Return the id of the current page
 function getIdCurrentPage() {
-    var url = $(location).attr('href');
+    let url = $(location).attr('href');
 
-    var m = regURL.exec(url);
+    let m = regURL.exec(url);
 
     if (m[2] != null) {
 
-        var aUrl = m[2].substr(1).split("/");
+        let aUrl = m[2].substr(1).split("/");
         consoleDebug(1, aUrl);
 
-        var nSplitUrl = aUrl.length;
+        let nSplitUrl = aUrl.length;
 
         if (nSplitUrl == 1) {
             if (aUrl[0] == 'my_favorites') return 'allgames';
@@ -129,29 +113,6 @@ function getIdCurrentPage() {
         if (aUrl[0] == 'accounts') return 'accounts';
     }
     return 'accueil';
-}
-
-// Transform an array to [ 'val1', 'val2', 'val3' ]
-function arrayToScript(a) {
-    var s = "[";
-    a.forEach(function (v, i) {
-        s += i > 0 ? "," : "";
-        s += `'${v}'`;
-    });
-    s += "]";
-    return s;
-}
-
-// Transform aBots array to [['website_1',0],['website_2',0],['website_3',0]] usable in script function
-function aBotsToScript() {
-    var s = "";
-
-    aBots.forEach(function (v, i) {
-        s += i > 0 ? "," : "";
-        s += `['${v}',0]`;
-    });
-
-    return `[${s}]`;
 }
 
 function addButtonDarkMode() {

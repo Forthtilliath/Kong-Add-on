@@ -273,6 +273,8 @@ function loadCSS() {
         jCSSRule("#user_mini_profile_contents #user_info ul li span", "color", color_grey_00); // Member since date
         jCSSRule("#user_mini_profile_contents h5", "color", color_white); // Favorite Games
         jCSSRule("#user_description a", "color", linkColor_red); // Favorite Games
+        jCSSRule("#user_mini_profile_contents #user_info ul.user_actions li", "filter", "invert(1)"); // Icons Unfriend / Mute / Report
+        jCSSRule("#user_mini_profile_contents #user_info ul.user_actions li a", "color", linkColor_red_invert); // Labels Unfriend / Mute / Report
 
         // Input
         jCSSRule("#kong_game_ui .chat_controls .chat_input", "background-color", bgColor_grey_00);
@@ -407,7 +409,6 @@ function loadCSS() {
         jCSSRule("ul.pagination li", "color", color_grey_00);
         jCSSRule("ul.pagination li.current", "color", color_white);
         jCSSRule("ul.pagination li a", "color", linkColor_red);
-        /**********************************************************************************************/
 
         // Tab High scores
         jCSSRule("div#high_scores_container a, div#high_scores_container a:link, div#high_scores_container a:active", "color", linkColor_red);
