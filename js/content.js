@@ -83,29 +83,44 @@ $(function () {
     sSelected = '';
     //var val = !!$.cookie('forth_volume') ? $.cookie('forth_volume') : "10";
     for (let i = min_volume; i <= max_volume; i += 10) {
-        (i == volumeValue*100) ? sSelected = ' selected': sSelected = '';
+        (i == volumeValue * 100) ? sSelected = ' selected': sSelected = '';
         sOptionsVolume += `<option value="${i/100}"${sSelected}>${i}%</option>`;
     }
     //$.addSelect('div', 'forth_volume', 'slt_volume', 'Select the volume of your choice', $.addIcon(icon_volume_on), sOptionsVolume).insertBefore("#forth_brightness");
-    $.addSelect('div', 'forth_volume', 'slt_volume', '', $.addIcon(icon_volume_on), sOptionsVolume, 'Click to mute', 'Select the volume of your choice').insertBefore("#forth_brightness");
+    let iconVolume = (volumeValue == 0) ? icon_volume_off : (volumeValue < 0.5) ? icon_volume_down : icon_volume_up;
+    $.addSelect('div', 'forth_volume', 'slt_volume', '', $.addIcon(iconVolume), sOptionsVolume, 'Click to mute', 'Select the volume of your choice').insertBefore("#forth_brightness");
     /* Initialisation end */
 
     /* Evenement change volume start */
     $('#slt_volume').change(function () {
+        volumeValueOld = volumeValue;
         volumeValue = $(this).val();
 
-        var script = document.createElement('script');
-        script.textContent = `songMsg.volume = ${ volumeValue };`;
-        (document.head||document.documentElement).appendChild(script);
-        script.remove();
-        
+        let iconVolume = (volumeValue == 0) ? icon_volume_off : (volumeValue < 0.5) ? icon_volume_down : icon_volume_up;
+        let textVolume = (volumeValue == 0) ? 'Click to unmute' : 'Click to mute';
+        $("#forth_volume > span").setButton($.addIcon(iconVolume), textVolume);
+        $.execScript(`songMsg.volume = ${ volumeValue };`);
+
         // Update the cookie to save setting after refreshs
         $.addCookie('forth_volume', volumeValue, 30, '/');
     });
     $('#forth_volume > span').click(function () {
-        if( volumeValue == 0 ) {
-            
+        if (volumeValue == 0) {
+            volumeValue = volumeValueOld;
+        } else {
+            volumeValueOld = volumeValue;
+            volumeValue = 0;
         }
+        //$(`#slt_volume[value="${volumeValue*100}"]`).prop('selected', true);
+        $('#slt_volume').val(volumeValue);
+
+        let iconVolume = (volumeValue == 0) ? icon_volume_off : (volumeValue < 0.5) ? icon_volume_down : icon_volume_up;
+        let textVolume = (volumeValue == 0) ? 'Click to unmute' : 'Click to mute';
+        $("#forth_volume > span").setButton($.addIcon(iconVolume), textVolume);
+        $.execScript(`songMsg.volume = ${ volumeValue };`);
+
+        // Update the cookie to save setting after refreshs
+        $.addCookie('forth_volume', volumeValue, 30, '/');
     });
     /* Evenement change volume end */
 

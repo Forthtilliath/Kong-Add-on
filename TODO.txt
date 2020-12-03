@@ -36,6 +36,7 @@ CSS :
 - https://www.kongregate.com/
 - Connecter vous en bas du chat (via FF)
 - fenetre login quand on va sur la page d'un jeu
+- menus select
 
 Volume :
 - changer l'icone en fonction du volume

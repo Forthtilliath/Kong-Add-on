@@ -93,8 +93,9 @@ let icon_onlinep_on     = "fa fa-users";
 let icon_onlinep_off    = "fa fa-user";
 let icon_chat_on        = "fa fa-comment";
 let icon_chat_off       = "fas fa-comment-slash";
-let icon_volume_on      = "fa fa-volume-up";
-let icon_volume_off     = "fa fa-volume-off";
+let icon_volume_down    = "fas fa-volume-down";
+let icon_volume_up      = "fas fa-volume-up";
+let icon_volume_off     = "fas fa-volume-off";
 let icon_darkmode_on    = "fas fa-moon";
 let icon_darkmode_off   = "fas fa-sun";
 let icon_font           = "fas fa-font";
@@ -109,8 +110,8 @@ let regAccount = /[^<a href="]{1}(http[s]?:\/\/www\.kongregate\.com\/accounts\/)
 let songUrl = 'https://proxy.notificationsounds.com/message-tones/pristine-609/download/file-sounds-1150-pristine.mp3';
 //let songVolume = 0.1;
 //let songVolume = !!$.cookie('forth_volume') ? $.cookie('forth_volume')/100 : 0;
-let volumeValue = $.getCookie('forth_volume',0);
-let volumeValueOld = 0;
+let volumeValue = $.getCookie('forth_volume',0.1);
+let volumeValueOld = 0.1;
 
 //let brightnessValue = !!$.cookie('forth_brightness') ? $.cookie('forth_brightness') : '80%';
 let brightnessValue = $.getCookie('forth_brightness','80%');
