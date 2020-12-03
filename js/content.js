@@ -1,13 +1,13 @@
 /*!
- * Kongregate Update for www.kongregate.com v0.9.4
+ * Kong Addon for www.kongregate.com v1.5
  * https://github.com/Forthtilliath/kongregate_update
  *
  * Copyright 2020 Forth
  * Released under the MIT license
  * 
- * @fileoverview Add a button to hide/show online users and a slider to change the size of the text
+ * @fileoverview List of functions which are only executed on game pages. Among this function, there are buttons which show/hide quick links, dark mode, lock screen, hide online players, change text size, change brightless and change volume of ding when someone post a message in the chat
  * @author Forth
- * @version 0.1
+ * @version 2
  */
 
 /* When page is loaded */

@@ -1,13 +1,13 @@
 /*!
- * Kongregate Update for www.kongregate.com v0.9.4
+ * Kong Addon for www.kongregate.com v1.5
  * https://github.com/Forthtilliath/kongregate_update
  *
  * Copyright 2020 Forth
  * Released under the MIT license
  * 
- * @fileoverview Modifie le CSS de plusieurs parties du site
+ * @fileoverview All the CSS partitioned by page
  * @author Forth
- * @version 0.4
+ * @version 5
  */
 "use strict";
 

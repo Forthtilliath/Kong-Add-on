@@ -5,6 +5,7 @@
 /** @fileoverview A simple jQuery plugin to manipulate CSS styleSheet
  *	@see {@link https://www.w3.org/wiki/Dynamic_style_-_manipulating_CSS_with_JavaScript }
  *  @author  Jean-Marc VIGLINO
+ *  @contributor Forth : setSheet()
  *  @version 1.0
  */
 (function () {
@@ -39,25 +40,10 @@
     }
 
     // Create the stylesheet
-    /*function setSheet() {
-      var css = '\n';	
-      rules.forEach(function(r) {
-        css += r.selector+' {'+r.property+':'+r.value+'; }\n';
-      });
-      stylesheet.innerHTML = css;
-    }*/
     // Forth modifications
     function setSheet() {
         var css = '\n';
         var lastSelector = "";
-        // Properties we don't want to change when darkmode is off
-        var aPropRefused = ['color',
-                        'background', 'background-color', 'background-image',
-                        'border-color', 'border-color-top', 'border-color-right', 'border-color-bottom', 'border-color-left',
-                        'filter',
-                        'box-shadow'];
-        // Properties we want to always change even when darkmode is off
-        var aElemAlways = ["#forth_fullscreen", "#forth_messagebox", "#forth_messagebox #forth_messagetitle", "#forth_messagebox #forth_messagedesc", "#forth_fontsize > span", "#forth_fontsize > span, #forth_brightness > span"]
         rules.forEach(function (r) {
             if ((!darkMode && ($.inArray(r.property, aPropRefused) == -1)) || darkMode || ($.inArray(r.selector, aElemAlways) != -1)) {
                 if (lastSelector != r.selector) { // If different selector

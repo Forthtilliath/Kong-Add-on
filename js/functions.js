@@ -1,3 +1,15 @@
+/*!
+ * Kong Addon for www.kongregate.com v1.5
+ * https://github.com/Forthtilliath/kongregate_update
+ *
+ * Copyright 2020 Forth
+ * Released under the MIT license
+ * 
+ * @fileoverview List of functions used
+ * @author Forth
+ * @version 2
+ */
+
 function consoleDebug(nLevel, text) {
     if (debugLevel >= nLevel) console.log(text);
 }

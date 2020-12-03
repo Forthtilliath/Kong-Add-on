@@ -1,3 +1,15 @@
+/*!
+ * Kong Addon for www.kongregate.com v1.5
+ * https://github.com/Forthtilliath/kongregate_update
+ *
+ * Copyright 2020 Forth
+ * Released under the MIT license
+ * 
+ * @fileoverview Script injected to modify kong script and be able to block bots and add a song when someone post a message
+ * @author Forth
+ * @version 1
+ */
+
 // We create a new script block
 var s = document.createElement("script");
 s.type = "text/javascript";

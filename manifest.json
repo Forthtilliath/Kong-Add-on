@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
-    "name": "Kongregate update",
-    "version": "1.5",
+    "name": "Kong Addon",
+    "version": "1.5.0.5",
     "author": "Forth",
 
     "description": "This add-on works only on www.kongregate.com !",
