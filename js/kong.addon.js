@@ -64,6 +64,16 @@
                 expires: time,
                 path: path
             });
+        },
+        /** Return the value of a cookie, if this one doesn't exist, this return default value
+         *  @param name {string} set the name of the cookie
+         *  @param defaultValue {string|number|boolean} set the value returned if the cookie doesn't exist
+         *  @return {string} Value of the cookie or defaultValue
+         */
+        getCookie: function (name, defaultValue) {
+            if (typeof defaultValue == "boolean")
+                return !!$.cookie(name) ? ($.cookie(name) === 'true') : defaultValue;
+            return !!$.cookie(name) ? $.cookie(name) : defaultValue;
         }
     });
 

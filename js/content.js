@@ -59,9 +59,9 @@ $(function () {
     /* We add the button to change the size of the text */
     var sOptionsSize = '';
     var sSelected = '';
-    var val = !!$.cookie('forth_fontsize') ? $.cookie('forth_fontsize') : "12";
+    //var val = !!$.cookie('forth_fontsize') ? $.cookie('forth_fontsize') : "12";
     for (let i = min_fontsize; i <= max_fontsize; i += 2) {
-        (i == val) ? sSelected = ' selected': sSelected = '';
+        (i == fontsizeValue) ? sSelected = ' selected': sSelected = '';
         sOptionsSize += `<option value="${i}"${sSelected}>${i}px</option>`;
     }
     $.addSelect('div', 'forth_fontsize', 'slt_fontsize', 'Select the text size of your choice', $.addIcon(icon_font), sOptionsSize).insertBefore("#forth_hideChat");
@@ -70,9 +70,9 @@ $(function () {
     /* We add the button to change the brightness of the game */
     var sOptionsBrightness = '';
     sSelected = '';
-    var val = !!$.cookie('forth_brightness') ? $.cookie('forth_brightness') : "100%";
+    //var val = !!$.cookie('forth_brightness') ? $.cookie('forth_brightness') : "100%";
     for (let i = min_brightness; i <= max_brightness; i += step_brightness) {
-        ((i + "%") == val) ? sSelected = ' selected': sSelected = '';
+        ((i + "%") == brightnessValue) ? sSelected = ' selected': sSelected = '';
         sOptionsBrightness += `<option value="${i}%"${sSelected}>${i}%</option>`;
     }
     $.addSelect('div', 'forth_brightness', 'slt_brightness', 'Select the brightness of your choice', $.addIcon(icon_brightness), sOptionsBrightness).insertBefore("#forth_fontsize");
@@ -81,9 +81,9 @@ $(function () {
     /* We add the button to change the volume of pings */
     var sOptionsVolume = '';
     sSelected = '';
-    var val = !!$.cookie('forth_volume') ? $.cookie('forth_volume') : "10";
+    //var val = !!$.cookie('forth_volume') ? $.cookie('forth_volume') : "10";
     for (let i = min_volume; i <= max_volume; i += 10) {
-        (i == val) ? sSelected = ' selected': sSelected = '';
+        (i == volumeValue*100) ? sSelected = ' selected': sSelected = '';
         sOptionsVolume += `<option value="${i/100}"${sSelected}>${i}%</option>`;
     }
     //$.addSelect('div', 'forth_volume', 'slt_volume', 'Select the volume of your choice', $.addIcon(icon_volume_on), sOptionsVolume).insertBefore("#forth_brightness");
@@ -92,19 +92,21 @@ $(function () {
 
     /* Evenement change volume start */
     $('#slt_volume').change(function () {
-        songVolume = $(this).val();
+        volumeValue = $(this).val();
 
         var script = document.createElement('script');
-        script.textContent = `songMsg.volume = ${ songVolume };`;
+        script.textContent = `songMsg.volume = ${ volumeValue };`;
         (document.head||document.documentElement).appendChild(script);
         script.remove();
         
         // Update the cookie to save setting after refreshs
-        $.addCookie('forth_volume', songVolume, 30, '/');
+        $.addCookie('forth_volume', volumeValue, 30, '/');
     });
     $('#forth_volume > span').click(function () {
-        if( songVolume == 0 )
-    }
+        if( volumeValue == 0 ) {
+            
+        }
+    });
     /* Evenement change volume end */
 
     /* Evenement darkmode start */

@@ -10,7 +10,7 @@ s.id = "script_kong";
 /**********************************************************/
 s.append("var websitesBlocked = " + aBotsToScript() + ";");
 s.append("var songMsg = new Audio('" + songUrl + "');");
-s.append("songMsg.volume = " + songVolume + ";");
+s.append("songMsg.volume = " + volumeValue + ";");
 /**********************************************************/
 /********************* Forth Code End *********************/
 /**********************************************************/

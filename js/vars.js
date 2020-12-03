@@ -108,13 +108,17 @@ let regAccount = /[^<a href="]{1}(http[s]?:\/\/www\.kongregate\.com\/accounts\/)
 // Song chat
 let songUrl = 'https://proxy.notificationsounds.com/message-tones/pristine-609/download/file-sounds-1150-pristine.mp3';
 //let songVolume = 0.1;
-let songVolume = !!$.cookie('forth_volume') ? $.cookie('forth_volume')/100 : 0;
-let songOldVolume = 0;
+//let songVolume = !!$.cookie('forth_volume') ? $.cookie('forth_volume')/100 : 0;
+let volumeValue = $.getCookie('forth_volume',0);
+let volumeValueOld = 0;
 
-let brightnessValue = !!$.cookie('forth_brightness') ? $.cookie('forth_brightness') : '80%';
+//let brightnessValue = !!$.cookie('forth_brightness') ? $.cookie('forth_brightness') : '80%';
+let brightnessValue = $.getCookie('forth_brightness','80%');
+let fontsizeValue = $.getCookie('forth_fontsize','12');
 
 /* Display modes */
 // We load darkmode value from cookie
-let darkMode = !!$.cookie('forth_darkmode') ? ($.cookie('forth_darkmode') === 'true') : true;
+//let darkMode = !!$.cookie('forth_darkmode') ? ($.cookie('forth_darkmode') === 'true') : true;
+let darkMode = $.getCookie('forth_darkmode',true);
 let title_darkmode_on = 'Disable dark mode';
 let title_darkmode_off = 'Activate dark mode';
