@@ -1,11 +1,11 @@
 /*!
  * Kong Addon for www.kongregate.com v1.5
- * https://github.com/Forthtilliath/kongregate_update
+ * https://github.com/Forthtilliath/Kong-Addon
  *
  * Copyright 2020 Forth
  * Released under the MIT license
  * 
- * @fileoverview Script injected to modify kong script and be able to block bots and add a song when someone post a message
+ * @fileoverview Script injected to modify kong script and be able to block bots and add a ping when someone post a message
  * @author Forth
  * @version 1
  */
@@ -47,8 +47,8 @@ s.append("        for( var i = 0 ; i  < websitesBlocked.length ; i++ ) {");
 // If YES
 s.append("            if( b.search(websitesBlocked[i][0]) >= 0 ) {");
 // We log in the console
-if(debugLevel >= 50) {
-s.append("                console.log(`${d.formatted_timestamp} : Bot detected [${a}] with the pattern [${websitesBlocked[i][0]}]`);");
+if (debugLevel >= 50) {
+    s.append("                console.log(`${d.formatted_timestamp} : Bot detected [${a}] with the pattern [${websitesBlocked[i][0]}]`);");
 }
 // We count it
 //s.append("                aBotsBlocked[i]++;");

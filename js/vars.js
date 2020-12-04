@@ -90,7 +90,7 @@ let regURL = /(http[s]?:\/\/www\.kongregate\.com)((\/[\-\w]+)(\/[\-\w]+)?(\/[\-\
 let regVolume = /(songMsg.volume = )([01]{1})(\.{1}\d{1})?(;)/i;
 
 // Id of the current page
-let namePage = getIdCurrentPage();
+let namePage = $(location).getIdCurrentPage();
 $.log(10, `CURRENT PAGE : ${namePage}`);
 /* URL Pages end */
 

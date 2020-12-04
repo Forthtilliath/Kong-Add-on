@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Kong Addon",
-    "version": "1.5.0.8",
+    "version": "1.5.0.9",
     "author": "Forth",
 
     "description": "This add-on works only on www.kongregate.com !",
@@ -12,26 +12,26 @@
     },
     "content_scripts": [
         {
-            "matches": [ "*://www.kongregate.com/*" ],
+            "matches": ["*://www.kongregate.com/*"],
             "run_at": "document_end",
             "css": [
-                "css/all.min.css" ],
+                "css/all.min.css"],
             "js": [
 				"js/jquery-3.5.1.min.js",
 				"js/jquery-cssrule.js",
 				"js/jquery.cookie.js",
                 "js/kong.addon.js",
-                "js/functions.js",
                 "js/vars.js",
 				"js/jcssrule.js",
                 "js/all.min.js",
-				"js/content_css.js" ]
+                "js/content.js",
+				"js/content_css.js"]
 		},
         {
-            "matches": [ "*://www.kongregate.com/games/*" ],
+            "matches": ["*://www.kongregate.com/games/*"],
             "js": [
                 "js/kongregate.js",
-                "js/content.js"]
+                "js/content_games.js"]
 		}
 	],
     "web_accessible_resources": [

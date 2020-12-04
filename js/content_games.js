@@ -80,6 +80,45 @@ $(function () {
 
     /**** BUTTON LOCK SCREEN END */
 
+    /**** BUTTON DARK MODE START ********************************************************************************************
+     * - Add a background we can use to only show game & chat
+     * - Add a button to lock and unlock screen
+     * - Add evenement on click
+     ****/
+
+    // Create the button
+    /*if (darkMode) {
+        $.addButton('div', 'forth_darkmode', 'bt_darkmode', title_darkmode_on, $.addIcon(icon_darkmode_on)).insertAfter("#forth_lockscreen");
+    } else {
+        $.addButton('div', 'forth_darkmode', 'bt_darkmode', title_darkmode_off, $.addIcon(icon_darkmode_off)).insertAfter("#forth_lockscreen");
+    }
+
+    // Evenement
+    $('#bt_darkmode').click(function () {
+        let keyword = '';
+        // Update the icon
+        if (darkMode) {
+            $(this).setButton($.addIcon(icon_darkmode_off), title_darkmode_off);
+            $("#bt_darkmode2").setButton($.addIcon(icon_darkmode_off), title_darkmode_off);
+            keyword = 'disable';
+        } else {
+            $(this).setButton($.addIcon(icon_darkmode_on), title_darkmode_on);
+            $("#bt_darkmode2").setButton($.addIcon(icon_darkmode_on), title_darkmode_on);
+            keyword = 'activate';
+        }
+        // Update the value
+        darkMode = !darkMode;
+        // Update the cookie
+        $.addCookie('forth_darkmode', darkMode, 30, '/');
+        // Show a message
+        $.displayMessage(1000, `You ${keyword}d the dark mode.`, '');
+        // Refresh css
+        //$('#styles_css').remove();
+        loadCSS();
+    });*/
+
+    /**** BUTTON DARK MODE END */
+
     /**** BUTTON SHOW PLAYERS START *****************************************************************************************
      * - Add a button to show or hide online players
      * - Add evenement on click
@@ -182,7 +221,6 @@ $(function () {
     }
     $.addSelect('div', 'forth_fontsize', 'slt_fontsize', 'Select the text size of your choice', $.addIcon(icon_font), sOptionsSize).insertBefore("#forth_hideChat");
     $.changeTextSize($.cookie('forth_fontsize'));
-    $("#chat_rooms_container .chat_message_window").scrollBottom();
 
     // Evenement
     $('#slt_fontsize').change(function () {

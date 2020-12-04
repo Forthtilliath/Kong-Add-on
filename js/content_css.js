@@ -1,6 +1,6 @@
 /*!
  * Kong Addon for www.kongregate.com v1.5
- * https://github.com/Forthtilliath/kongregate_update
+ * https://github.com/Forthtilliath/Kong-Addon
  *
  * Copyright 2020 Forth
  * Released under the MIT license
@@ -9,7 +9,7 @@
  * @author Forth
  * @version 5
  */
-"use strict";
+//"use strict";
 
 function loadCSS() {
     /***********************************************************************************************************************/
@@ -442,28 +442,43 @@ function loadCSS() {
     /***********************************************************************************************************************/
     /***** FORTH ADDON *****************************************************************************************************/
     /***********************************************************************************************************************/
+    if (namePage != '') {
+        jCSSRule("#div_darkmode", "top", "5px");
+        jCSSRule("#div_darkmode", "left", "5px");
+        jCSSRule("#div_darkmode", "position", "fixed");
+        jCSSRule("#div_darkmode", "z-index", "10000");
+        jCSSRule("#bt_darkmode", "width", "40px");
+        jCSSRule("#bt_darkmode", "height", "25px");
+        jCSSRule("#bt_darkmode", "padding", "5px");
+        jCSSRule("#bt_darkmode", "cursor", "pointer");
+        jCSSRule("#bt_darkmode", "border", "1px solid");
+        jCSSRule("#bt_darkmode", "border-color", color_grey_00);
+        jCSSRule("#bt_darkmode", "background-color", bgColor_grey_00);
+        jCSSRule("#bt_darkmode", "color", color_white);
+        jCSSRule("#bt_darkmode", "border-radius", "5px");
+        jCSSRule("#bt_darkmode", "box-shadow", "1px 1px 3px " + color_white);
+    }
     if (namePage == 'games') {
         jCSSRule("#maingamecontent .game_table .links_connect", "padding-top", "5px");
         // All buttons
-        jCSSRule("#forth_onlineplayers, #forth_hideChat, #forth_lockscreen, #forth_fontsize, #forth_fontsize, #forth_darkmode, #forth_brightness, #forth_volume", "float", "right");
-        jCSSRule("#forth_onlineplayers, #forth_hideChat, #forth_lockscreen, #forth_fontsize, #forth_fontsize, #forth_darkmode, #forth_brightness, #forth_volume", "margin", "0 5px");
-        jCSSRule("#forth_onlineplayers, #forth_hideChat, #forth_lockscreen, #forth_fontsize, #forth_fontsize, #forth_darkmode, #forth_brightness, #forth_volume", "height", "25px");
+        jCSSRule("#forth_onlineplayers, #forth_hideChat, #forth_lockscreen, #forth_fontsize, #forth_fontsize, #forth_brightness, #forth_volume", "float", "right");
+        jCSSRule("#forth_onlineplayers, #forth_hideChat, #forth_lockscreen, #forth_fontsize, #forth_fontsize, #forth_brightness, #forth_volume", "margin", "0 5px");
+        jCSSRule("#forth_onlineplayers, #forth_hideChat, #forth_lockscreen, #forth_fontsize, #forth_fontsize, #forth_brightness, #forth_volume", "height", "25px");
         jCSSRule("#quicklinks", "height", "25px");
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #bt_darkmode, #slt_brightness, #slt_volume", "height", "20px");
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #bt_darkmode, #slt_brightness, #slt_volume", "padding", "0 5px");
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #bt_darkmode, #slt_brightness, #slt_volume", "cursor", "pointer");
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #bt_darkmode, #slt_brightness, #slt_volume", "border", "1px solid");
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #bt_darkmode, #slt_brightness, #slt_volume", "border-color", color_grey_00);
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #bt_darkmode, #slt_brightness, #slt_volume", "background-color", bgColor_grey_00);
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #bt_darkmode, #slt_brightness, #slt_volume", "color", color_white);
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #bt_darkmode, #slt_brightness, #slt_volume", "border-radius", "5px");
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #bt_darkmode, #slt_brightness, #slt_volume, #bt_darkmode2", "width", "40px");
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #bt_darkmode, #slt_brightness, #slt_volume, #bt_darkmode2", "height", "25px");
+        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #slt_brightness, #slt_volume", "height", "25px");
+        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #slt_brightness, #slt_volume", "padding", "0 5px");
+        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #slt_brightness, #slt_volume", "cursor", "pointer");
+        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #slt_brightness, #slt_volume", "border", "1px solid");
+        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #slt_brightness, #slt_volume", "border-color", color_grey_00);
+        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #slt_brightness, #slt_volume", "background-color", bgColor_grey_00);
+        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #slt_brightness, #slt_volume", "color", color_white);
+        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #slt_brightness, #slt_volume", "border-radius", "5px");
+        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #slt_brightness, #slt_volume", "width", "40px");
+        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #slt_brightness, #slt_volume", "height", "25px");
         jCSSRule("#slt_fontsize, #slt_brightness", "width", "65px");
         jCSSRule("#slt_brightness", "width", "70px");
         jCSSRule("#slt_volume", "width", "70px");
-        jCSSRule("#slt_fontsize, #slt_brightness, #slt_volume", "height", "25px");
-        // Select Font size
+        // Select menus
         jCSSRule("#forth_fontsize > span, #forth_brightness > span, #forth_volume > span", "color", color_white);
         jCSSRule("#forth_fontsize > span, #forth_brightness > span, #forth_volume > span", "height", "25px");
         jCSSRule("#forth_fontsize > span, #forth_brightness > span, #forth_volume > span", "width", "20px");
@@ -509,21 +524,6 @@ function loadCSS() {
         jCSSRule("#forth_messagebox #forth_messagedesc", "text-align", "center");
         jCSSRule("#forth_messagebox #forth_messagedesc", "color", color_white);
         jCSSRule("#forth_messagebox #forth_messagedesc", "font-size", "12px");
-    }
-    if (namePage != '') {
-        jCSSRule("#div_darkmode2", "top", "5px");
-        jCSSRule("#div_darkmode2", "left", "5px");
-        jCSSRule("#div_darkmode2", "position", "fixed");
-        jCSSRule("#div_darkmode2", "z-index", "10000");
-        jCSSRule("#div_darkmode2, #bt_darkmode2", "height", "25px");
-        jCSSRule("#div_darkmode2, #bt_darkmode2", "width", "25px");
-        jCSSRule("#bt_darkmode2", "padding", "5px");
-        jCSSRule("#bt_darkmode2", "cursor", "pointer");
-        jCSSRule("#bt_darkmode2", "border", "1px solid");
-        jCSSRule("#bt_darkmode2", "border-color", color_grey_00);
-        jCSSRule("#bt_darkmode2", "background-color", bgColor_grey_00);
-        jCSSRule("#bt_darkmode2", "color", color_white);
-        jCSSRule("#bt_darkmode2", "border-radius", "5px");
     }
     /***********************************************************************************************************************/
     /***** ACCOUNTS PAGES **************************************************************************************************/
