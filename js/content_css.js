@@ -89,7 +89,6 @@ function loadCSS() {
         jCSSRule("#home .home_feat_roll .home_feat_nav .prev:hover, #home .home_feat_roll .home_feat_nav .next:hover", "background-color", bgColor_grey_02);
         // Box hover
         jCSSRule("#flash_messages_target .sitemessage", "border-radius", "5px"); // Message
-        //jCSSRule(".hoverbox_cont", "background-color", bgColor_grey_00);
         jCSSRule(".hoverbox_cont", "border-radius", "10px"); // Main box
         jCSSRule(".hoverbox .game_head", "background-color", bgColor_grey_00);
         jCSSRule(".hoverbox .game_head", "border-radius", "10px 10px 0 0"); // Top border-radius
@@ -201,10 +200,6 @@ function loadCSS() {
         $("#maingame").css("height", newHeight);
         $("#maingamecontent").css("height", newHeight);
         $("#flashframecontent").css("height", newHeight);
-        jCSSRule("#maingame", "height", gameHeight + " !important");
-        consoleDebug(1, `maingame.height = ${$("#maingame").css("height")}`);
-        jCSSRule("#maingamecontent", "height", gameHeight + " !important");
-        jCSSRule("#flashframecontent", "height", gameHeight + " !important");
         jCSSRule("#flashframecontent .game_table > tbody > tr:first-child", "height", menuButtonsHeight);
 
         // Title of the game
@@ -351,8 +346,6 @@ function loadCSS() {
         jCSSRule(".game_details_outer", "background", "none");
         jCSSRule(".game_details_outer", "background-color", bgColor_grey_01);
         jCSSRule(".game_details_outer", "background-image", "linear-gradient(to bottom, " + bgColor_grey_07 + ", " + bgColor_grey_01 + ")");
-        //jCSSRule(".game_details_outer", "border", "1px solid");
-        //jCSSRule(".game_details_outer", "border-color", color_grey_04);
         jCSSRule("h2 .fn", "color", color_white); // Game title
         jCSSRule(".highcontrast", "color", color_white + "!important");
         jCSSRule(".game_details_outer .game_rating_label, .game_dev_title", "color", color_grey_04);
@@ -567,6 +560,8 @@ function loadCSS() {
         jCSSRule(".follower_feed_item_container .feed_item_header", "color", color_white);
         jCSSRule(".feed_info_content, .feed_item .new_following_user_info", "border-radius", "5px"); // Feed content
         jCSSRule(".feed_item .new_following_user_info ul li:first-child a", "color", linkColor_red_01);
+        jCSSRule(".feed_item .new_following_user_info", "background-color", bgColor_grey_00);
+        /**************/
         jCSSRule(".feed_info_content > .desc, .feed_info_content > p", "color", color_grey_01);
         jCSSRule(".feed_info_content > .desc a, .feed_info_content > p a", "color", linkColor_red_01);
         jCSSRule("ul#feed_items_container > li", "background-color", bgColor_grey_07); // Bg of left block
@@ -584,8 +579,6 @@ function loadCSS() {
         jCSSRule("#following_feed h2, #forums h2, #forums h3", "color", color_white);
         jCSSRule("li.new_following_user_age", "color", color_grey_01);
         jCSSRule(".feed_item_levelup .feed_info_content > h3 > strong", "color", color_grey_00); // Level up
-        /*jCSSRule("img.green, img.icon", "background", "none");   
-        jCSSRule("img.green, img.icon", "background-color", bgColor_grey_07);*/
         jCSSRule("img.green, img.icon", "margin", "6px 5px 0 0");
         jCSSRule("img.icon", "background-image", "none");
         jCSSRule("img.grey", "filter", "opacity(0.5)");

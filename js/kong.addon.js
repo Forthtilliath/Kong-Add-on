@@ -131,8 +131,45 @@
             });
 
             return `[${s}]`;
-        }
+        },
+        /** Transform an url to html url
+         *  @param type {string} set the type of link (wiki, game or account)
+         *  @param value {array} set the regexp result
+         *  @return {string} link ready to display in the chat
+         */
+        getHtmlLink: function (type, value) {
+            if (type == 'wiki') {
+                let urlOut = `<a href="${value[0]}" target="_blank">[Wiki`;
+                // If not main page
+                if ((value[2] != "Idle_Grindia_Wiki") && (value[2] != "Idle_Grindia")) {
+                    // If there are an anchor with his id
+                    if (value[3] && (value[3].length > 1)) {
+                        urlOut += ` - ${value[3].substr(1).replaceAll("_", " ")}`;
+                    } else {
+                        urlOut += ` - ${value[2].replaceAll("_", " ")}`;
+                    }
+                }
+                urlOut += ']</a>';
 
+                return urlOut;
+            }
+            if (type == 'game') {
+                let titleGame = "";
+                let aTitleGame = value[2].split("-");
+                // We uppercase the first letter of each word of the game name
+                for (let i = 0; i < aTitleGame.length; i++) {
+                    titleGame += aTitleGame[i].substring(0, 1).toUpperCase() + aTitleGame[i].substring(1).toLowerCase() + " ";
+                }
+
+                return `>[Game - ${titleGame}]<`;
+            }
+            if (type == 'account') {
+                return `>[Account - ${value[2]}]<`;
+            }
+        },
+        log: function (nLevel, text) {
+            if (debugLevel >= nLevel) console.log(text);
+        }
     });
 
     // Usable with $(selector).function
@@ -160,7 +197,7 @@
                     console.log(e);
                 }
             } else {
-                consoleDebug(1, `Selector [${this}] not found`);
+                $.log(1, `Selector [${this}] not found`);
             }
         }
     });

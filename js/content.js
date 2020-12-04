@@ -113,6 +113,7 @@ $(function () {
         // Show a message
         $.displayMessage(1000, `You ${keyword}d the dark mode.`, '');
         // Refresh css
+        //$('#styles_css').remove();
         loadCSS();
     });
 
@@ -172,7 +173,6 @@ $(function () {
             $.setWidthGame(`calc( ${maingameWidth} + ${chatWidth} )`);
             $("#forth_fontsize").toggle();
             // Unmute pings
-            consoleDebug(1,volumeValueOld );
             if( volumeValueOld > 0 ) {
                 volumeValue = volumeValueOld;
                 volumeValueOld = 0;
@@ -340,28 +340,15 @@ $('body').on('DOMSubtreeModified', '#chat_rooms_container .chat_message_window',
         let msgOut = msg;
         // For each wiki's link in the msg
         while ((m = regWiki.exec(msg)) !== null) {
-            let urlOut = "";
-            if (m.index === regWiki.lastIndex) {
-                regWiki.lastIndex++;
-            }
-            msgOut = msgOut.replace(m[0], urlWikiToHtml(m));
+            msgOut = msgOut.replace(m[0], $.getHtmlLink('wiki',m));
         }
         // For each game's link in the msg
         while ((m = regGame.exec(msg)) !== null) {
-            let urlOut = "";
-            if (m.index === regGame.lastIndex) {
-                regGame.lastIndex++;
-            }
-            msgOut = msgOut.replace(m[0], urlGameToHtml(m[2]));
+            msgOut = msgOut.replace(m[0], $.getHtmlLink('game',m));
         }
         // For each account's link in the msg
         while ((m = regAccount.exec(msg)) !== null) {
-            let urlOut = "";
-            if (m.index === regAccount.lastIndex) {
-                regAccount.lastIndex++;
-            }
-
-            msgOut = msgOut.replace(m[0], urlAccountToHtml(m[2]));
+            msgOut = msgOut.replace(m[0], $.getHtmlLink('account',m));
         }
         // We fixe some issues after replace games link (because there are already html links)
         msgOut = msgOut.replace(/( ]<\/a>)([#])?/g, ']</a>');

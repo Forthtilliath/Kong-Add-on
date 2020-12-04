@@ -90,16 +90,4 @@ s.append("        this._messages_count++");
 s.append("    }");
 s.append("}");
 
-/*s.append("function showBots() {");
-s.append("    for( var i = 0 ; i < aBotsBlocked.length ; i++ ) {");
-s.append("        if( aBotsBlocked[i] > 0 )");
-s.append("        {");
-s.append("            var s = 's';");
-s.append("            if( aBotsBlocked[i] ) s = '';");
-s.append("            console.log(`The pattern ${websitesBlocked[i]} blocked ${aBotsBlocked[i]} bot${s}.`);");
-s.append("        }");
-s.append("    }");
-s.append("}");*/
-
-
 $("head").append(s);

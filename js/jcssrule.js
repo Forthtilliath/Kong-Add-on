@@ -13,6 +13,7 @@
     // or the <head> depending on the place of the file
     var stylesheet = document.createElement('style');
     stylesheet.setAttribute('type', 'text/css');
+    //stylesheet.setAttribute('id', 'styles_css');
     if (document.body) document.body.appendChild(stylesheet);
     else document.head.appendChild(stylesheet);
 

@@ -10,42 +10,6 @@
  * @version 2
  */
 
-function consoleDebug(nLevel, text) {
-    if (debugLevel >= nLevel) console.log(text);
-}
-
-// Transform an url to html url
-function urlWikiToHtml(url) {
-    let urlOut = `<a href="${url[0]}" target="_blank">[Wiki`;
-    // If not main page
-    if ((url[2] != "Idle_Grindia_Wiki") && (url[2] != "Idle_Grindia")) {
-        // If there are an anchor with his id
-        if (url[3] && (url[3].length > 1)) {
-            urlOut += ` - ${url[3].substr(1).replaceAll("_", " ")}`;
-        } else {
-            urlOut += ` - ${url[2].replaceAll("_", " ")}`;
-        }
-    }
-    urlOut += ']</a>';
-
-    return urlOut;
-}
-
-function urlGameToHtml(name) {
-    let titleGame = "";
-    let aTitleGame = name.split("-");
-    // We uppercase the first letter of each word of the game name
-    for (let i = 0; i < aTitleGame.length; i++) {
-        titleGame += aTitleGame[i].substring(0, 1).toUpperCase() + aTitleGame[i].substring(1).toLowerCase() + " ";
-    }
-
-    return `>[Game - ${titleGame}]<`;
-}
-
-function urlAccountToHtml(name) {
-    return `>[Account - ${name}]<`;
-}
-
 // Remove some ads contenairs
 function cleanPages() {
     if (namePage == 'allgames') $(".adcontainer").remove();
@@ -62,7 +26,7 @@ function getIdCurrentPage() {
     if (m[2] != null) {
 
         let aUrl = m[2].substr(1).split("/");
-        consoleDebug(1, aUrl);
+        $.log(1, aUrl);
 
         let nSplitUrl = aUrl.length;
 
@@ -138,7 +102,7 @@ $(function () {
     });
 
     $('#bt_darkmode2').click(function () {
-        consoleDebug(10, "bt_darkmode clicked");
+        $.log(10, "bt_darkmode clicked");
         // Update the icon
         if (darkMode) {
             $(this).setButton($.addIcon(icon_darkmode_off), title_darkmode_off);
@@ -155,6 +119,8 @@ $(function () {
         darkMode = !darkMode;
         // Update the cookie
         $.addCookie('forth_darkmode', darkMode, 30, '/');
+
+        //$('#styles_css').remove();
         loadCSS();
     });
 });

@@ -91,7 +91,7 @@ let regVolume = /(songMsg.volume = )([01]{1})(\.{1}\d{1})?(;)/i;
 
 // Id of the current page
 let namePage = getIdCurrentPage();
-consoleDebug(10, `CURRENT PAGE : ${namePage}`);
+$.log(10, `CURRENT PAGE : ${namePage}`);
 /* URL Pages end */
 
 /* Game page */
