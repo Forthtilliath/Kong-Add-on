@@ -145,10 +145,10 @@
 })();
 
 /* Forth addon */
-window.jCSSRuleAppearence = function (selector, value) {
+/*window.jCSSRuleAppearence = function (selector, value) {
     jCSSRule(selector, {
         "appearance": value,
         "-moz-appearance": value,
         "-webkit-appearance": value
     });
-};
+};*/

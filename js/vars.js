@@ -10,7 +10,7 @@
  * @version 1
  */
 
-let debugLevel = 10;
+let debugLevel = 0;
 
 // Links to block
 let aBots = ['dateforsex', 'datingfree', 'gaysdate'];

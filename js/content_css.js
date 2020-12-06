@@ -364,7 +364,7 @@ function loadCSS() {
         jCSSRule("#session_conflict_content_for_chat_tab > h4", "color", color_grey_03);
         jCSSRule(".disconnect_content .disconnect_intro", "filter", "invert(1)"); // Alert logo
         jCSSRule("#kong_game_ui ul.main_tabs li.closeable a.active .close_tab_link", "filter", "invert(1)"); // Close icon
-        //jCSSRule("div.bd", "color", color_black);
+        jCSSRule("#global .sitemessage h2, #flash_messages_target .sitemessage h2", "color", color_black);
         jCSSRule("#global .sitemessage, #flash_messages_target .sitemessage", "background-color", bgColor_grey_06);
 
         // First box under game
@@ -682,7 +682,8 @@ function loadCSS() {
         jCSSRule("#guilds_opt_out", "color", color_white);
         jCSSRule("#guilds_opt_out a", "color", linkColor_red);
         // Account Settings - Email settings
-        jCSSRuleAppearence(".settings-form input[type='checkbox']", "auto"); // Disable checkbox style
+        //jCSSRuleAppearence(".settings-form input[type='checkbox']", "auto"); // Disable checkbox style
+        jCSSRule(".settings-form input[type='checkbox']", "auto"); // Disable checkbox style
         jCSSRule(".field li label", "color", color_white); // Label checkboxes
         jCSSRule(".settings-form dd a", "color", linkColor_red); // Privacy link
         jCSSRule(".settings-form--group > dd > a", "color", linkColor_red); // Unsuscribe link
@@ -1022,6 +1023,15 @@ function loadCSS() {
         jCSSRule(".search-spotlight", "background-color", bgColor_grey_01);
         jCSSRule(".game .thumb", "background-color", bgColor_grey_00);
     }
+    if (namePage == 'findfriends') {
+        jCSSRule("body#plugs.featureform h1", "color", color_white);
+        jCSSRule("body.generic #main p, body.generic #main ul, body.generic #feature ul", "color", color_grey_05);
+        jCSSRule("body#plugs.featureform #main form .import_contacts", "color", color_white);
+        jCSSRule("body.featureform #feature #main form", "color", color_white);
+        jCSSRule("body#plugs #sidebar dt", "color", linkColor_red);
+        jCSSRule("body.generic #sidebar p, body.generic #sidebar ul, body.generic #sidebar dl", "color", color_white);
+        jCSSRule("body.featureform #feature a", "color", linkColor_red);
+    }
     /***********************************************************************************************************************/
     /***** KARTRIDGE *******************************************************************************************************/
     /***********************************************************************************************************************/
@@ -1042,18 +1052,6 @@ function loadCSS() {
     jCSSRule(".user-progress .progress-box .progress .bar--klient", "border", "1px solid");
     jCSSRule(".user-progress .progress-box .progress .bar--klient", "border-color", color_kartridge_Sec_op);
 
-    /***********************************************************************************************************************/
-    /***** FIND YOUR FRIENDS ***********************************************************************************************/
-    /***********************************************************************************************************************/
-    if (namePage == 'findfriends') {
-        jCSSRule("body#plugs.featureform h1", "color", color_white);
-        jCSSRule("body.generic #main p, body.generic #main ul, body.generic #feature ul", "color", color_grey_05);
-        jCSSRule("body#plugs.featureform #main form .import_contacts", "color", color_white);
-        jCSSRule("body.featureform #feature #main form", "color", color_white);
-        jCSSRule("body#plugs #sidebar dt", "color", linkColor_red);
-        jCSSRule("body.generic #sidebar p, body.generic #sidebar ul, body.generic #sidebar dl", "color", color_white);
-        jCSSRule("body.featureform #feature a", "color", linkColor_red);
-    }
     /***********************************************************************************************************************/
     /***********************************************************************************************************************/
     /***********************************************************************************************************************/
