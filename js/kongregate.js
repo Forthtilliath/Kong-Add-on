@@ -21,7 +21,8 @@ s.id = "script_kong";
 /******************** Forth Code Start ********************/
 /**********************************************************/
 s.append("var websitesBlocked = " + $.getArrayDoubleToString(aBots) + ";");
-s.append("var songMsg = new Audio('" + songUrl + "');");
+//s.append("var songMsg = new Audio('" + songUrl + "');");
+s.append("var songMsg = new Audio('" + chrome.runtime.getURL(songUrl) + "');");
 s.append("songMsg.volume = " + volumeValue + ";");
 /**********************************************************/
 /********************* Forth Code End *********************/

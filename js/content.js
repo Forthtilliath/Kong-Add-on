@@ -14,10 +14,12 @@ $(function () {
     // Clean pages (remove ads blocks)
     if ($(".adcontainer").length > 0) $(".adcontainer").remove();
 
-    if (darkMode) {
-        $.addButton('div', 'div_darkmode', 'bt_darkmode', title_darkmode_on, $.addIcon(icon_darkmode_on)).appendTo("body");
-    } else {
-        $.addButton('div', 'div_darkmode', 'bt_darkmode', title_darkmode_off, $.addIcon(icon_darkmode_off)).appendTo("body");
+    if (namePage != '') {
+        if (darkMode) {
+            $.addButton('div', 'div_darkmode', 'bt_darkmode', title_darkmode_on, $.addIcon(icon_darkmode_on)).appendTo("body");
+        } else {
+            $.addButton('div', 'div_darkmode', 'bt_darkmode', title_darkmode_off, $.addIcon(icon_darkmode_off)).appendTo("body");
+        }
     }
 
     $(window).resize(function () {

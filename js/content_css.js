@@ -24,6 +24,8 @@ function loadCSS() {
         jCSSRule(".welcome-user>li", "background-color", bgColor_red_00); // Links menu colors
         jCSSRule(".welcome-user>li:hover", "background-color", bgColor_grey_02);
         jCSSRule(".welcome-guest", "background-color", bgColor_red_00);
+        jCSSRule(".welcome-guest .text_field", "background-color", bgColor_grey_00);
+        jCSSRule(".welcome-guest .text_field", "color", color_grey_00);
         // Main menu
         jCSSRule(".main_nav_menu", "background-color", bgColor_grey_01); // Menu bg color
         jCSSRule(".main_nav_item:hover .main_nav_top_item, .main_nav_item:hover .main_nav_top_item.active", "background-color", bgColor_grey_01); // Menu buttons color
@@ -75,6 +77,16 @@ function loadCSS() {
         jCSSRule(".mini_profile_actions, .mini_profile_developer_meta", "background-color", bgColor_grey_00);
         jCSSRule("div.bd", "color", color_grey_04); // Date of member since
         jCSSRule(".hoverbox .game_plays .kong_ico", "color", color_white); // Icons
+
+        // Input search
+        jCSSRule("form#search dt input", "background", bgColor_grey_00);
+        jCSSRule("form#search dt input", "color", color_white);
+        jCSSRule("form#search dd input", "filter", "invert(1)"); // Icon
+        jCSSRule("#game_title_auto_complete ul li a", "background-color", bgColor_grey_00); // Results
+        jCSSRule(".main_navigation li.search a", "color", linkColor_red); // Results
+        jCSSRule("#game_title_auto_complete ul li.selected a", "background-color", bgColor_grey_01); // Results
+        jCSSRule("#game_title_auto_complete ul li.selected a", "color", linkColor_red); // Results
+        jCSSRule("#game_title_auto_complete ul li a:hover span", "color", linkColor_red); // Results
     }
     /***********************************************************************************************************************/
     /***** MAIN PAGE *******************************************************************************************************/
@@ -107,8 +119,8 @@ function loadCSS() {
         jCSSRule("#home.new_home .home-pod-header a", "color", linkColor_red); // See all links in titles
         jCSSRule("#trending_pod_holder", "border-radius", "5px");
         jCSSRule("div.home-pod-header .home-pod-title", "color", color_white); // Titles
-        jCSSRule("#home #show_more_link .large_show_more_area", "color", color_white); // Show more (bot)
-        jCSSRule("#home #show_more_link .large_show_more_area:hover", "color", color_black); // Show more (bot)
+        jCSSRule("#home #show_more_link .large_show_more_link", "color", color_white); // Show more (bot)
+        jCSSRule("#home #show_more_link .large_show_more_link:hover", "color", color_black); // Show more (bot)
         jCSSRule(".browse_rating .num_rating", "color", color_white); // Average stars
         jCSSRule(".browse_rating .num_rating", "color", color_white); // Average stars
         // Recommanded games
@@ -162,6 +174,10 @@ function loadCSS() {
         jCSSRule("#home #kongregate_social_connect_pod .twitter_container", "border-bottom", "1px solid");
         jCSSRule("#home #kongregate_social_connect_pod .twitter_container", "border-bottom-color", color_grey_11);
         jCSSRule("#twitter-widget-0 #widget .btn-o a", "color", linkColor_red);
+        jCSSRule(".horz-spotlight .horz-spotlight__link:link, .horz-spotlight .horz-spotlight__link:visited", "background-color", bgColor_grey_04); // Games onhead
+        jCSSRule(".horz-spotlight .horz-spotlight__link:link h3, .horz-spotlight .horz-spotlight__link:visited h3", "color", linkColor_red); // Games onhead title
+        jCSSRule(".horz-spotlight .horz-spotlight__link:link p, .horz-spotlight .horz-spotlight__link:visited p", "color", color_grey_00); // Games onhead desc
+        jCSSRule(".horz-spotlight .horz-spotlight__link:link span, .horz-spotlight .horz-spotlight__link:visited span", "color", color_white); // Games onhead desc
     }
     /***********************************************************************************************************************/
     /***** GAMES PAGES *****************************************************************************************************/
@@ -190,6 +206,15 @@ function loadCSS() {
         jCSSRule("#category.game_browser .category_listing .pagination li, .promotion-type--browser .category_listing .pagination li", "color", color_grey_00);
         jCSSRule("#category.game_browser .category_listing .pagination li.info, .promotion-type--browser .category_listing .pagination li.info", "color", color_white);
         jCSSRule("#category .category_listing ul.simple_pagination li a", "color", linkColor_red);
+        jCSSRule("#category.game_browser #tag_filter_autocompleter input", "background-color", bgColor_grey_07); // Search by tag
+        jCSSRule("#category.game_browser #tag_filter_autocompleter input", "color", color_grey_00); // 
+        jCSSRule("#category.game_browser .ui-autocomplete", "background-color", bgColor_grey_07); // Search by tag
+        jCSSRule("#category.game_browser .ui-autocomplete", "color", color_grey_00); // 
+        jCSSRule("#category.game_browser #game_browser_filters", "background-color", bgColor_grey_07); // Sort / filter
+        jCSSRule("#category.game_browser #game_browser_filters", "color", color_grey_00); // 
+        jCSSRule("#category.game_browser #game_browser_filters li", "background-color", bgColor_grey_08); // Sort / filter
+        jCSSRule("#category.game_browser #game_browser_filters li", "color", color_grey_00); // 
+        jCSSRule("#category.game_browser #game_browser_filters li:hover, #category.game_browser #game_browser_filters li.selected", "color", color_black); // Hover
     }
 
     if (namePage == 'games') {
@@ -286,7 +311,7 @@ function loadCSS() {
 
         // Tabs games
         jCSSRule("#kong_game_ui ul.main_tabs li.tab a.active", "background-color", bgColor_grey_01);
-        jCSSRule("#kong_game_ui ul.main_tabs li.tab a.active", "color", color_grey_02);
+        jCSSRule("#kong_game_ui ul.main_tabs li.tab a.active", "color", color_white);
         jCSSRule("#kong_game_ui ul.main_tabs li.closeable a.active .close_tab_link", "background-color", bgColor_grey_01);
         jCSSRule(".panel_handle a", "color", color_grey_03);
         jCSSRule("#kong_game_ui ul.main_tabs li.tab a:not(.active)", "background-color", bgColor_grey_09);
@@ -339,6 +364,8 @@ function loadCSS() {
         jCSSRule("#session_conflict_content_for_chat_tab > h4", "color", color_grey_03);
         jCSSRule(".disconnect_content .disconnect_intro", "filter", "invert(1)"); // Alert logo
         jCSSRule("#kong_game_ui ul.main_tabs li.closeable a.active .close_tab_link", "filter", "invert(1)"); // Close icon
+        //jCSSRule("div.bd", "color", color_black);
+        jCSSRule("#global .sitemessage, #flash_messages_target .sitemessage", "background-color", bgColor_grey_06);
 
         // First box under game
         jCSSRule(".game_details_outer", "margin", "-49px auto 10px");
@@ -379,7 +406,9 @@ function loadCSS() {
         jCSSRule(".comment.above_threshold .comment_rating_area", "color", color_green); // Counter plus
         jCSSRule("recent_comments", "border-top", "1px dotted"); // User name post
         jCSSRule("recent_comments", "border-top-color", color_white); // Most recent
-        jCSSRule(".comment_new .new_comment_avatar", "filter", "invert(0.9)"); // Avatar
+        if ($("comment_avatar_placeholder_0").textContent == "") { // If not loged
+            jCSSRule(".comment_new .new_comment_avatar", "filter", "invert(0.9)"); // Avatar
+        }
         jCSSRule(".game_comments .game_comment_form_lower, .game_discussions .game_discussions_links", "background-image", "none"); // Box bot Avatar
         jCSSRule(".game_comments .game_comment_form_lower, .game_discussions .game_discussions_links", "background-color", bgColor_grey_00); // Box bot Avatar
         // Forum post tab
@@ -387,6 +416,8 @@ function loadCSS() {
         jCSSRule(".game_discussions .game_forum_post .last_post .post_author", "color", color_white);
         jCSSRule(".game_discussions .game_forum_post .post_count", "color", color_white);
         jCSSRule(".game_comments .game_comment_form_lower a, .game_discussions .game_discussions_links a", "color", linkColor_red);
+        jCSSRule(".game_comments .comment_new textarea", "background-color", bgColor_grey_01);
+        jCSSRule(".game_comments .comment_new textarea", "color", color_white);
         // Best scores
         jCSSRule(".your_best_score", "background-color", bgColor_grey_00);
         jCSSRule(".microtabs .tab_title.active", "background-color", bgColor_grey_01);
@@ -420,6 +451,8 @@ function loadCSS() {
         jCSSRule("#high_scores_container .bucket", "background-color", bgColor_grey_00);
         jCSSRule("#high_scores_container .pagination", "background-color", bgColor_grey_00);
         jCSSRule("div#highscores_board li.current", "color", color_grey_06);
+        jCSSRule("select#statistic_id, select#stat_selector", "background-color", bgColor_grey_00);
+        jCSSRule("select#statistic_id, select#stat_selector", "color", color_white);
 
         // Tab Accomplishments
         jCSSRule("div#accomplishments_tab_content a, div#accomplishments_tab_content a:link, div#accomplishments_tab_content a:active", "color", linkColor_red);
@@ -436,8 +469,10 @@ function loadCSS() {
         jCSSRule("#normal-registration-wrapper > p.mts.mbm a", "color", linkColor_red);
         jCSSRule("#kong_game_ui .chat_message_window .history-button", "background-color", bgColor_grey_04); // Load older message
         jCSSRule("#kong_game_ui .chat_message_window .history-button:hover", "background-color", bgColor_grey_01); // Load older message
-        jCSSRule("#kong_game_ui .signup_tab_form h3", "color", color_white);
+        jCSSRule("#kong_game_ui .signup_tab_form h3", "color", color_black);
+        jCSSRule("#kong_game_ui .signup_tab_form h3", "filter", "invert(0.93)");
         jCSSRule("#kong_game_ui .signup_tab_form form input.check_box", "margin-top", "2px !important");
+        jCSSRule("signup_tab_pane", "background-color", bgColor_grey_01);
     }
     /***********************************************************************************************************************/
     /***** FORTH ADDON *****************************************************************************************************/
@@ -530,7 +565,8 @@ function loadCSS() {
     /***********************************************************************************************************************/
     if (namePage == 'accounts') {
         jCSSRule("body#new_profile #profile_masthead #user_avatar", "background-color", bgColor_grey_00); //Avatar bg
-        jCSSRule("#profile_bio textarea#user_about", "color", color_black); //Description
+        jCSSRule("#profile_bio textarea#user_about, #profile_comment_form textarea", "color", color_white); // Textarea desc & &activity feed
+        jCSSRule("#profile_bio textarea#user_about, #profile_comment_form textarea", "background-color", bgColor_grey_07);
         jCSSRule("#feature #main h2", "color", color_white); // Titles
         jCSSRule("#profile_full_user_bio", "border-radius", "5px"); // More about me
         jCSSRule("#profile_hgroup", "color", color_white); // Box right avatar
@@ -541,6 +577,7 @@ function loadCSS() {
 
         jCSSRule("#profile_user_level_info #user_points .user_metric_stat a", "color", color_white); // Box level
         jCSSRule("#profile_user_level_info #user_level .user_metric_stat a", "color", linkColor_red);
+        jCSSRule("#profile_user_level_info li h3 a", "color", color_white);
         jCSSRule("#profile_user_metrics .user_metric_stat a", "color", color_white); // Box badges, comments, etc
         jCSSRule("#profile_user_metrics li h3 a", "color", linkColor_white);
 
@@ -550,17 +587,27 @@ function loadCSS() {
         // This week's kongpanion title
         jCSSRule(".pod_heading", "color", color_white);
         jCSSRule("#feature h2 a", "color", linkColor_red);
+        jCSSRule("#new_profile .kpan_cal", "background-color", bgColor_grey_07);
+        jCSSRule("#new_profile .kpan_cal, #new_profile .kpan_cal .botd_msg, .kpan_cal .week", "background-color", bgColor_grey_07);
+        jCSSRule(".kpan_cal .cur_kpan h3", "color", color_white);
+        jCSSRule(".kpan_cal .cur_kpan .desc", "color", color_grey_00);
+        jCSSRule(".kpan_cal .botd_msg p", "color", color_grey_00);
+        jCSSRule(".kpan_cal .botd_msg p a", "color", linkColor_red);
+
+        jCSSRule(".kpan_cal .day_name", "color", color_grey_09); // Day name
+        jCSSRule(".kpan_cal .day.today .day_name", "color", color_red_00); // Current day name
+        jCSSRule(".kpan_cal .badge_info .tasks ul, .kpan_cal .badge_info .tasks p", "color", color_grey_07); // Text day kongpanion
+        jCSSRule(".kpan_cal .badge_info .title", "color", color_red_02); // Text today's badge
         // Activity feed
         jCSSRule(".comment_quote p", "color", color_grey_11); // Comment quotes
-        jCSSRule("li.new_following_user_age", "color", color_grey_00); // Member since
+        jCSSRule(".feed_item .new_following_user_info ul li:first-child a", "color", linkColor_red_01);
+        jCSSRule("li.new_following_user_age", "color", color_grey_01); // Member since
         jCSSRule("li.new_following_user_age span", "color", color_black);
         jCSSRule("li.new_following_user_age span", "font-weight", "bold");
         jCSSRule(".feed_item > h3.feed_item_header", "color", color_grey_00); // Feed title content
         jCSSRule(".feed_item_header a", "color", linkColor_red);
         jCSSRule(".follower_feed_item_container .feed_item_header", "color", color_white);
         jCSSRule(".feed_info_content, .feed_item .new_following_user_info", "border-radius", "5px"); // Feed content
-        jCSSRule(".feed_item .new_following_user_info ul li:first-child a", "color", linkColor_red_01);
-        jCSSRule(".feed_item .new_following_user_info", "background-color", bgColor_grey_00);
         /**************/
         jCSSRule(".feed_info_content > .desc, .feed_info_content > p", "color", color_grey_01);
         jCSSRule(".feed_info_content > .desc a, .feed_info_content > p a", "color", linkColor_red_01);
@@ -575,9 +622,30 @@ function loadCSS() {
         jCSSRule(".feed_item_add_comment, .feed_item_timestamp", "color", color_grey_00 + " !important");
         jCSSRule(".self_feed_items, .following_feed_items", "background-color", bgColor_grey_00);
         jCSSRule(".feed_item_user_followed .feed_item_icon, .feed_item_user_following .feed_item_icon", "filter", "invert(1)");
+        // Account page - Sidebar 
+        jCSSRule("#profile_aside .profile_pod .tab_group", "background-color", bgColor_grey_07); // Bg items
+        jCSSRule("#profile_aside .tab_see_all", "background-color", bgColor_grey_07); // Footer "See all"
+        jCSSRule("#profile_aside .tab_see_all a", "color", color_grey_06); // Footer "See all"
+        jCSSRule(".tab_index, .game_tab_index", "background-color", bgColor_grey_00); // No tabs BG
+        jCSSRule(".tab_link, .game_tab_link", "background", bgColor_grey_00); // Tab not active BG
+        //jCSSRule(".tab_index, .game_tab_index a", "color", color_grey_00); // Tabs not active        
+        jCSSRule(".tab_link.active", "background-color", bgColor_grey_07); // Tab active bg
+        jCSSRule(".tab_link.active", "border-top-color", color_grey_00); // Tab active border top
+        jCSSRule(".tab_link.active::before", "border-color", "transparent transparent " + bgColor_grey_07 + " " + bgColor_grey_07); // Tab active border right
+        jCSSRule(".tab_link:not(.active):hover", "background-color", bgColor_grey_02); // Tab not active hover bg
+        jCSSRule(".tab_link:not(.active):hover::before", "border-color", "transparent transparent " + bgColor_grey_02 + " " + bgColor_grey_02); // Tab not active border right
+        jCSSRule(".tab_link, .game_tab_link, .game_tab_link--link", "color", color_white + " !important"); // Tab title        
+        jCSSRule(".tab_group .pod_item:hover", "color", color_grey_00); // Hover Items text
+        jCSSRule("#profile_aside #friends_pod .follow_name a", "color", linkColor_red); // Items links
+        jCSSRule("#new_profile #badges_pod .badge_details a, #new_profile #mobile_badges_pod .badge_details a, #new_profile #connections_pod p a, #profile_aside .truncate_one_line a, #profile_aside a.truncate_one_line", "color", linkColor_red); // Items links
+        // Tab Kongpanions
+        jCSSRule("#Awards_pod .tab strong a", "color", color_grey_00); // Kongpanion title
+        jCSSRule("#Awards_pod .kpan:hover", "background-color", bgColor_grey_01); // Hover items
+        jCSSRule("#Awards_pod .kpan:hover", "color", color_grey_00); // Hover items
+        // Tab awards
+        jCSSRule("#profile_aside .mhm > div .tab .pod_item:hover", "background-color", bgColor_grey_01); // Hover items
         // Community
         jCSSRule("#following_feed h2, #forums h2, #forums h3", "color", color_white);
-        jCSSRule("li.new_following_user_age", "color", color_grey_01);
         jCSSRule(".feed_item_levelup .feed_info_content > h3 > strong", "color", color_grey_00); // Level up
         jCSSRule("img.green, img.icon", "margin", "6px 5px 0 0");
         jCSSRule("img.icon", "background-image", "none");
@@ -595,6 +663,9 @@ function loadCSS() {
 
         // Sidebar
         jCSSRule(".tab_group .pod_item", "color", color_grey_12); //Games sidebar
+        jCSSRule("#Stickers_pod .profile_pod .pod_item a", "color", color_white);
+        jCSSRule("#profile_aside #guilds_pod .game_title a", "color", linkColor_red); // Guild name
+        jCSSRule("#profile_aside #guilds_pod .guild strong, #profile_aside #guilds_pod .guild a", "color", color_grey_00); // Default + text
 
         // Page Favorite games
         jCSSRule(".category_games_listing .pagination > .info", "color", color_grey_11); // Page atm
@@ -642,7 +713,6 @@ function loadCSS() {
         jCSSRule(".pagination", "background-color", bgColor_grey_07);
         jCSSRule("ul.simple_pagination li.info", "color", color_white);
         jCSSRule("ul.simple_pagination li a", "color", linkColor_red);
-        /*************************************************************************************************/
         // Friends
         jCSSRule("body.friends #main form label", "color", color_white);
         jCSSRule("body.friends #main form label", "display", "inline-block"); // Align label with input
@@ -941,6 +1011,16 @@ function loadCSS() {
         jCSSRule(".forum--entry blockquote, .CodeMirror blockquote, .editor-preview-side blockquote", "background-color", bgColor_grey_04);
         jCSSRule(".forum--entry blockquote, .CodeMirror blockquote, .editor-preview-side blockquote", "border-color", color_white);
         jCSSRule(".forum--entry blockquote, .CodeMirror blockquote, .editor-preview-side blockquote", "border-left-color", color_grey_13);
+    }
+    if (namePage == 'search') {
+        jCSSRule("body.generic #main h1", "color", color_white); // Title
+        jCSSRule("ul.simple_pagination li.info", "color", color_white);
+        jCSSRule("ul.simple_pagination li a", "color", linkColor_red);
+        jCSSRule(".developer a", "color", color_white);
+        jCSSRule("body.generic #main p", "color", color_grey_00);
+        jCSSRule("#searchresults .search_result .result_title strong a, .search_result .result_title strong a", "color", linkColor_red);
+        jCSSRule(".search-spotlight", "background-color", bgColor_grey_01);
+        jCSSRule(".game .thumb", "background-color", bgColor_grey_00);
     }
     /***********************************************************************************************************************/
     /***** KARTRIDGE *******************************************************************************************************/

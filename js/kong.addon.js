@@ -227,6 +227,8 @@
                     if (aUrl[0] == 'kreds') return 'kreds';
                     if (aUrl[0] == 'posts') return 'posts';
                     if (aUrl[0] == 'games_for_your_site') return 'gamesexport';
+                    if (aUrl[0] == 'search') return 'search';
+                    if (aUrl[0] == 'stickers') return ''; // Not done yet https://www.kongregate.com/stickers/#sticker-pack-27
                     return 'allgames';
                 }
 
@@ -245,6 +247,7 @@
                     }
                     if (aUrl[0] == 'forums') return 'forums';
                     if (aUrl[0] == 'feedbacks') return 'feedbacks';
+                    if (aUrl[0] == 'games') return 'allgames'; // dev pages
                 }
 
                 if (nSplitUrl == 3) {
