@@ -1,0 +1,43 @@
+{
+    "manifest_version": 2,
+    "name": "Kong Add-on",
+    "version": "1.5.0.11",
+    "author": "Forth",
+
+    "description": "Add some features to Kongregate website like a bots's messages blocker, a dark mode, a game brightness adjustment, and more.",
+    "icons": {
+        "16": "icons/icon_16.png",
+        "48": "icons/icon_48.png",
+        "128": "icons/icon_128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://www.kongregate.com/*"],
+            "run_at": "document_end",
+            "css": [
+                "css/all.min.css"],
+            "js": [
+				"js/jquery-3.5.1.min.js",
+				"js/jquery-cssrule.js",
+				"js/jquery.cookie.js",
+                "js/kong.addon.js",
+                "js/vars.js",
+				"js/jcssrule.js",
+                "js/all.min.js",
+                "js/content.js",
+				"js/content_css.js"]
+		},
+        {
+            "matches": ["*://www.kongregate.com/games/*"],
+            "js": [
+                "js/kongregate.js",
+                "js/content_games.js"]
+		}
+	],
+    "web_accessible_resources": [
+		"webfonts/*",
+        "sound/*"
+	],
+
+    "permissions": ["activeTab"]
+}
