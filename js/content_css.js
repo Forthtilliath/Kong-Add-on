@@ -22,7 +22,7 @@ function loadCSS() {
         jCSSRule("#kong_header_link", "filter", "grayscale(0.6)"); // Logo dark
         // Menu user
         jCSSRule(".welcome-user>li", "background-color", bgColor_red_00); // Links menu colors
-        jCSSRule(".welcome-user>li:hover", "background-color", bgColor_grey_02);
+        jCSSRule(".welcome-user>li:hover, .welcome-user .messages .msg-count", "background-color", bgColor_grey_02);
         jCSSRule(".welcome-guest", "background-color", bgColor_red_00);
         jCSSRule(".welcome-guest .text_field", "background-color", bgColor_grey_00);
         jCSSRule(".welcome-guest .text_field", "color", color_grey_00);

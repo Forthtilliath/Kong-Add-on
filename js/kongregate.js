@@ -21,7 +21,6 @@ s.id = "script_kong";
 /******************** Forth Code Start ********************/
 /**********************************************************/
 s.append("var websitesBlocked = " + $.getArrayDoubleToString(aBots) + ";");
-//s.append("var songMsg = new Audio('" + songUrl + "');");
 s.append("var songMsg = new Audio('" + chrome.runtime.getURL(songUrl) + "');");
 s.append("songMsg.volume = " + volumeValue + ";");
 /**********************************************************/
@@ -52,14 +51,12 @@ if (debugLevel >= 50) {
     s.append("                console.log(`${d.formatted_timestamp} : Bot detected [${a}] with the pattern [${websitesBlocked[i][0]}]`);");
 }
 // We count it
-//s.append("                aBotsBlocked[i]++;");
 s.append("                websitesBlocked[i][1]++;");
 // And cancel the adding of the message
 s.append("                return;");
 s.append("            }"); // If end
 s.append("        }"); // For end
 // Add a song when there are a new message
-// if ( COOKIE NOTIF == ON )
 s.append("        if( !g && !d.non_user ) songMsg.play();");
 /**********************************************************/
 /********************* Forth Code End *********************/
