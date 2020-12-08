@@ -10,7 +10,7 @@
  * @version 1
  */
 
-let debugLevel = 0;
+let debugLevel = 1;
 
 // Links to block
 let aBots = ['dateforsex', 'datingfree', 'gaysdate'];
@@ -136,3 +136,48 @@ let title_darkmode_off = 'Activate dark mode';
 let aPropRefused = ['color', 'background', 'background-color', 'background-image', 'border-color', 'border-color-top', 'border-color-right', 'border-color-bottom', 'border-color-left', 'filter', 'box-shadow'];
 // Properties we want to always change even when darkmode is off
 let aElemAlways = ["#forth_fullscreen", "#forth_messagebox", "#forth_messagebox #forth_messagetitle", "#forth_messagebox #forth_messagedesc", "#forth_fontsize > span, #forth_brightness > span, #forth_volume > span"];
+
+// Features displayed
+let isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1; // Some features slowing FF 
+//let aFeatures = ['lockscreen', 'onlineplayers', 'hidechat', 'textsize', 'brightness', 'ping', 'botsblocker', 'urlrewriterv'];
+let aFeatures = new Array();
+aFeatures['lockscreen'] = {
+    'display': true,
+    'position': 0,
+    'divname':'#forth_lockscreen'
+};
+aFeatures['onlineplayers'] = {
+    'display': true,
+    'position': 1,
+    'divname':'#forth_onlineplayers'
+};
+aFeatures['hidechat'] = {
+    'display': true,
+    'position': 2,
+    'divname':'#forth_hideChat'
+};
+aFeatures['textsize'] = {
+    'display': true,
+    'position': 3,
+    'divname':'#forth_fontsize'
+};
+aFeatures['brightness'] = {
+    'display': true,
+    'position': 4,
+    'divname':'#forth_brightness'
+};
+aFeatures['ping'] = {
+    'display': true,
+    'position': 5,
+    'divname':'#forth_volume'
+};
+aFeatures['botsblocker'] = {
+    'display': true
+};
+aFeatures['urlrewriter'] = {
+    'display': !isFirefox
+};
+
+let nbFeatures = $.getNbFeatures(aFeatures);
+
+//let aFeaturesOrder = $.getFeaturesOrder(aFeatures);

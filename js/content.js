@@ -31,7 +31,6 @@ $(function () {
     });
 
     $('#bt_darkmode').click(function () {
-        $.log(10, "bt_darkmode clicked");
         // Update the icon
         if (darkMode) {
             $(this).setButton($.addIcon(icon_darkmode_off), title_darkmode_off);

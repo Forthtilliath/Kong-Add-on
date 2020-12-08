@@ -141,6 +141,7 @@ function loadCSS() {
         jCSSRule("#home.new_home .game-pod-med:hover", "border-radius", "5px");
         jCSSRule("#home.new_home .game-pod-med:hover img", "border-radius", "5px 0 0 5px");
         jCSSRule("#top_games_this_month_pod .hover_game_info", "color", linkColor_red);
+        jCSSRule("p.info.hyphenate.regtextSml", "color", color_grey_00); // Highest rate games desc while unlogged
         // Trending in your network
         jCSSRule("#home.new_home #trending_pod_holder", "background-color", bgColor_grey_01);
         jCSSRule("#trending_pod_holder h2 a", "color", color_white);
@@ -495,8 +496,12 @@ function loadCSS() {
     }
     if (namePage == 'games') {
         jCSSRule("#maingamecontent .game_table .links_connect", "padding-top", "5px");
+        // Main box
+        jCSSRule("#forth_features", "display", "flex");
+        jCSSRule("#forth_features", "justify-content", "flex-end");
+        jCSSRule("#forth_features", "float", "right");
         // All buttons
-        jCSSRule("#forth_onlineplayers, #forth_hideChat, #forth_lockscreen, #forth_fontsize, #forth_fontsize, #forth_brightness, #forth_volume", "float", "right");
+        //jCSSRule("#forth_onlineplayers, #forth_hideChat, #forth_lockscreen, #forth_fontsize, #forth_fontsize, #forth_brightness, #forth_volume", "float", "right");
         jCSSRule("#forth_onlineplayers, #forth_hideChat, #forth_lockscreen, #forth_fontsize, #forth_fontsize, #forth_brightness, #forth_volume", "margin", "0 5px");
         jCSSRule("#forth_onlineplayers, #forth_hideChat, #forth_lockscreen, #forth_fontsize, #forth_fontsize, #forth_brightness, #forth_volume", "height", "25px");
         jCSSRule("#quicklinks", "height", "25px");
