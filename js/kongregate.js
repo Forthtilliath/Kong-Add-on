@@ -21,7 +21,72 @@ if (aFeatures['ping']['display'] || aFeatures['botsblocker']['display']) {
     /**********************************************************/
     /******************** Forth Code Start ********************/
     /**********************************************************/
-    s.append("var websitesBlocked = " + $.getArrayDoubleToString(aBots) + ";");
+    if (aFeatures["urlrewriter"]["display"]) {
+        /** Transform an url to html url
+         *  @param type {string} set the type of link (wiki, game or account)
+         *  @param value {array} set the regexp result
+         *  @return {string} link ready to display in the chat
+         */
+        s.append("function getHtmlLink(type, value) {");
+        s.append("    if (type == 'wiki') {");
+        s.append("        let urlOut = '<a href=\"' + value[0] + '\" target=\"_blank\">[Wiki';");
+        // If not main page
+        s.append("        if ((value[3] != 'Idle_Grindia_Wiki') && (value[3] != 'Idle_Grindia')) {");
+        // If there are an anchor with his id
+        s.append("            if (value[4] && (value[4].length > 1)) {");
+        s.append("                urlOut += ' - ' + value[4].substr(1).replaceAll('_', ' ');");
+        s.append("            } else {");
+        s.append("                urlOut += ' - ' + value[3].replaceAll('_', ' ');");
+        s.append("            }");
+        s.append("        }");
+        s.append("        urlOut += ']</a>';");
+
+        s.append("        return urlOut;");
+        s.append("    }");
+        s.append("    if (type == 'game') {");
+        s.append("        let titleGame = '';");
+        s.append("        let aTitleGame = value[2].split('-');");
+        // We uppercase the first letter of each word of the game name
+        s.append("        for (let i = 0; i < aTitleGame.length; i++) {");
+        s.append("            titleGame += aTitleGame[i].substring(0, 1).toUpperCase() + aTitleGame[i].substring(1).toLowerCase() + ' ';");
+        s.append("        }");
+
+        s.append("        return '>[Game - ' + titleGame + ']<';");
+        s.append("    }");
+        s.append("    if (type == 'account') {");
+        s.append("        return '>[Account - ' + value[2] + ']<';");
+        s.append("    }");
+        s.append("}");
+
+        s.append("function urlRewritter(msg) {");
+        s.append("    let m;");
+        s.append("    let msgOut = msg;");
+        // For each wiki's link in the msg
+        s.append("    let regWiki = " + regWiki + ";");
+        s.append("    while ((m = regWiki.exec(msg)) !== null) {");
+        //s.append("        msgOut = msgOut.replace(m[0], getHtmlLink('wiki', m));"); // Rewrite link alrdy did
+        s.append("        msgOut = msgOut.replaceAll(m[0], getHtmlLink('wiki', m));"); 
+        s.append("    }");
+        // For each game's link in the msg
+        s.append("    let regGame = " + regGame + ";");
+        s.append("    while ((m = regGame.exec(msg)) !== null) {");
+        s.append("        msgOut = msgOut.replace(m[0], getHtmlLink('game', m));");
+        s.append("    }");
+        // For each account"s link in the msg
+        s.append("    let regAccount = " + regAccount + ";");
+        s.append("    while ((m = regAccount.exec(msg)) !== null) {");
+        s.append("        msgOut = msgOut.replace(m[0], getHtmlLink('account', m));");
+        s.append("    }");
+        // We fixe some issues after replace games link (because there are already html links)
+        s.append("    msgOut = msgOut.replace(new RegExp('( ]<\/a>)([#])?','g'), ']</a>');");
+        // We replace the message
+        s.append("    return msgOut;");
+        s.append("}");
+    }
+    
+    if (aFeatures['botsblocker']['display']) {
+        s.append("var websitesBlocked = " + $.getArrayDoubleToString(aBots) + ";");
+    }
     if (aFeatures['ping']) {
         s.append("var songMsg = new Audio('" + chrome.runtime.getURL(songUrl) + "');");
         s.append("songMsg.volume = " + volumeValue + ";");
@@ -74,6 +139,9 @@ if (aFeatures['ping']['display'] || aFeatures['botsblocker']['display']) {
     s.append("        c['class'] && h.push(c['class']);");
     s.append("        g && e.push('is_self');");
     s.append("        if (c = 'string' === typeof b ? null : b.stickerId) d.template = ChatDialogue.STICKER_MESSAGE_TEMPLATE, d.stickerId = c, d.stickerVariant = b.stickerVariant, d.stickerPackName = b.stickerPackName, d.stickerLevel = b.level, d.stickerQuality = 100 <= b.level ? b.quality + ' is-ranked' : b.quality, d.stickerUrl = this._sticker_manager.url(c, d.stickerVariant, 72);");
+    if (aFeatures["urlrewriter"]["display"]) {
+        s.append("        b = urlRewritter(b);"); // URL Rewritter
+    }
     s.append("        a = this.messageContent({");
     s.append("            prefix: l,");
     s.append("            username: a,");

@@ -114,7 +114,8 @@ let icon_font = "fas fa-font";
 let icon_brightness = "fas fa-adjust fa-w-18";
 
 // Regexp 
-let regWiki = /(http[s]?:\/\/idle-grindia\.fandom\.com\/wiki\/)(\w+)([#\w?]*)?/ig;
+//let regWiki = /(http[s]?:\/\/idle-grindia\.fandom\.com\/wiki\/)(\w+)([#\w?]*)?/ig;
+let regWiki = /((https:\/\/idle-grindia\.fandom\.com\/wiki\/)(\w+)([#\w?]*)?)(?!.+\1)/ig;
 let regGame = /[^<a href="]{1}(http[s]?:\/\/www\.kongregate\.com\/games\/\w+\/)([\-\w]+)([#\w?]*){1}[^" target="_blank">]{1}/ig;
 let regAccount = /[^<a href="]{1}(http[s]?:\/\/www\.kongregate\.com\/accounts\/)(\w+){1}[^" target="_blank">]{1}/ig;
 
@@ -139,7 +140,6 @@ let aElemAlways = ["#forth_fullscreen", "#forth_messagebox", "#forth_messagebox 
 
 // Features displayed
 let isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1; // Some features slowing FF 
-//let aFeatures = ['lockscreen', 'onlineplayers', 'hidechat', 'textsize', 'brightness', 'ping', 'botsblocker', 'urlrewriterv'];
 let aFeatures = new Array();
 aFeatures['lockscreen'] = {
     'display': true,
@@ -175,9 +175,8 @@ aFeatures['botsblocker'] = {
     'display': true
 };
 aFeatures['urlrewriter'] = {
-    'display': !isFirefox
+    //'display': !isFirefox
+    'display': true
 };
 
 let nbFeatures = $.getNbFeatures(aFeatures);
-
-//let aFeaturesOrder = $.getFeaturesOrder(aFeatures);

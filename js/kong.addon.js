@@ -132,41 +132,6 @@
 
             return `[${s}]`;
         },
-        /** Transform an url to html url
-         *  @param type {string} set the type of link (wiki, game or account)
-         *  @param value {array} set the regexp result
-         *  @return {string} link ready to display in the chat
-         */
-        getHtmlLink: function (type, value) {
-            if (type == 'wiki') {
-                let urlOut = `<a href="${value[0]}" target="_blank">[Wiki`;
-                // If not main page
-                if ((value[2] != "Idle_Grindia_Wiki") && (value[2] != "Idle_Grindia")) {
-                    // If there are an anchor with his id
-                    if (value[3] && (value[3].length > 1)) {
-                        urlOut += ` - ${value[3].substr(1).replaceAll("_", " ")}`;
-                    } else {
-                        urlOut += ` - ${value[2].replaceAll("_", " ")}`;
-                    }
-                }
-                urlOut += ']</a>';
-
-                return urlOut;
-            }
-            if (type == 'game') {
-                let titleGame = "";
-                let aTitleGame = value[2].split("-");
-                // We uppercase the first letter of each word of the game name
-                for (let i = 0; i < aTitleGame.length; i++) {
-                    titleGame += aTitleGame[i].substring(0, 1).toUpperCase() + aTitleGame[i].substring(1).toLowerCase() + " ";
-                }
-
-                return `>[Game - ${titleGame}]<`;
-            }
-            if (type == 'account') {
-                return `>[Account - ${value[2]}]<`;
-            }
-        },
         /** Display a message in the console
          *  @param nLevel {number} set the level required to display the message
          *  @param text {string} set the text to display
@@ -188,24 +153,7 @@
             };
             $.log(10, `Total value = ${i}`);
             return i;
-        },
-        /*getFeaturesOrder: function (a) {
-            let b = new Array();
-            //b.push('#cloud_save_info_template');
-            // We add all button after this element
-            b[0] = '#cloud_save_info_template';
-            $.log(10, a);
-            // For each feature
-            for (var c in a) {
-                //a[c]['divname'] && b.push(a[c]['divname']);
-                // If feature has a button (so has a position)
-                if (a[c]['position']) {
-                    //b[pos] = a[c]['divname'];
-                    b.splice(a[c]['position'] + 1, 0, a[c]['divname']);
-                }
-            };
-            return b;
-        }*/
+        }
     });
 
     // Usable with $(selector).function

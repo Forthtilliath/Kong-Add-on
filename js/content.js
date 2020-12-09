@@ -34,21 +34,14 @@ $(function () {
         // Update the icon
         if (darkMode) {
             $(this).setButton($.addIcon(icon_darkmode_off), title_darkmode_off);
-            /*if (namePage == "games") {
-                $('#bt_darkmode').setButton($.addIcon(icon_darkmode_off), title_darkmode_off);
-            }*/
         } else {
             $(this).setButton($.addIcon(icon_darkmode_on), title_darkmode_on);
-            /*if (namePage == "games") {
-                $('#bt_darkmode').setButton($.addIcon(icon_darkmode_on), title_darkmode_on);
-            }*/
         }
         // Update the value
         darkMode = !darkMode;
         // Update the cookie
         $.addCookie('forth_darkmode', darkMode, 30, '/');
 
-        //$('#styles_css').remove();
         loadCSS();
     });
 });
