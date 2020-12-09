@@ -175,7 +175,6 @@ aFeatures['botsblocker'] = {
     'display': true
 };
 aFeatures['urlrewriter'] = {
-    //'display': !isFirefox
     'display': true
 };
 

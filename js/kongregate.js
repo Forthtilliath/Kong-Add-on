@@ -96,8 +96,6 @@ if (aFeatures['ping']['display'] || aFeatures['botsblocker']['display']) {
     /**********************************************************/
 
     s.append("ChatDialogue.prototype.displayUnsanitizedMessage = function (a, b, c, d) {");
-    //s.append("songMsg.pause();");
-    //s.append("songMsg.currentTime = 0;");
     s.append("    c || (c = {});");
     s.append("    d || (d = {});");
     s.append("    allow_mutes = (active_room = this._holodeck.chatWindow().activeRoom()) && !active_room.canUserModerate(active_room.self()) || d.whisper;");
