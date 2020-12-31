@@ -9,6 +9,7 @@
  * @author Forth
  * @version 2
  */
+"use strict";
 
 /* When page is loaded */
 $(function () {
@@ -53,6 +54,20 @@ $(function () {
     }
 
     /**** BLOCK FEATURES END */
+
+    if (aFeatures['ping']['display']) {
+        function changeVolume() {
+            $('#slt_volume').val(volumeValue);
+            // Update the button with new icon & title
+            let iconVolume = (volumeValue == 0) ? icon_volume_off : (volumeValue < 0.5) ? icon_volume_down : icon_volume_up;
+            let textVolume = (volumeValue == 0) ? 'Click to unmute' : 'Click to mute';
+            $("#forth_volume > span").setButton($.addIcon(iconVolume), textVolume);
+            // Update the new volume
+            $.execScript(`songMsg.volume = ${ volumeValue };`);
+            // Update the cookie to save setting after refreshs
+            $.addCookie('forth_volume', volumeValue, 30, '/');
+        }
+    }
 
     /**** BUTTON LOCK SCREEN START ******************************************************************************************
      * - Add a background we can use to only show game & chat
@@ -226,7 +241,7 @@ $(function () {
         let pos = aFeatures['brightness']['position'];
         // Create select menu
         let sOptionsBrightness = '';
-        sSelected = '';
+        let sSelected = '';
         for (let i = min_brightness; i <= max_brightness; i += step_brightness) {
             ((i + "%") == brightnessValue) ? sSelected = ' selected': sSelected = '';
             sOptionsBrightness += `<option value="${i}%"${sSelected}>${i}%</option>`;
@@ -256,7 +271,7 @@ $(function () {
         let pos = aFeatures['ping']['position'];
         // Create the select menu
         let sOptionsVolume = '';
-        sSelected = '';
+        let sSelected = '';
         for (let i = min_volume; i <= max_volume; i += 10) {
             (i == volumeValue * 100) ? sSelected = ' selected': sSelected = '';
             let labVolume = (i == 0) ? `Muted` : `${i}%`;
@@ -264,18 +279,6 @@ $(function () {
         }
         let iconVolume = (volumeValue == 0) ? icon_volume_off : (volumeValue < 0.5) ? icon_volume_down : icon_volume_up;
         $(`#forth_feature_${pos}`).append($.addSelect('div', 'forth_volume', 'slt_volume', '', $.addIcon(iconVolume), sOptionsVolume, 'Click to mute', 'Select the volume of your choice'));
-
-        function changeVolume() {
-            $('#slt_volume').val(volumeValue);
-            // Update the button with new icon & title
-            let iconVolume = (volumeValue == 0) ? icon_volume_off : (volumeValue < 0.5) ? icon_volume_down : icon_volume_up;
-            let textVolume = (volumeValue == 0) ? 'Click to unmute' : 'Click to mute';
-            $("#forth_volume > span").setButton($.addIcon(iconVolume), textVolume);
-            // Update the new volume
-            $.execScript(`songMsg.volume = ${ volumeValue };`);
-            // Update the cookie to save setting after refreshs
-            $.addCookie('forth_volume', volumeValue, 30, '/');
-        }
 
         // Evenement when sound choose on select menu
         $('#slt_volume').change(function () {

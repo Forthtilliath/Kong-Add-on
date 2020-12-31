@@ -9,6 +9,7 @@
  * @author Forth
  * @version 1
  */
+"use strict";
 
 if (aFeatures['ping']['display'] || aFeatures['botsblocker']['display']) {
     // We create a new script block

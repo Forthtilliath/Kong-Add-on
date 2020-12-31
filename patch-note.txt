@@ -1,0 +1,10 @@
+CSS page : https://www.kongregate.com/accounts/xxx/blocked
+CSS page games : description of user
+CSS report page
+CSS Post forum - blockquote
+CSS chat input
+Ajout use script sur toutes les pages
+Modification let to const dans le fichier vars
+Correction d'erreurs (sSelected non déclarée)
+Déplacement fonction changeVolume pour éviter erreur non déclarée
+Changement des noms des fichiers de font-awesome pour qu'ils soient plus explicites

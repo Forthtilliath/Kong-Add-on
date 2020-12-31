@@ -9,6 +9,7 @@
  * @author Forth
  * @version 2
  */
+"use strict";
 
 $(function () {
     // Clean pages (remove ads blocks)

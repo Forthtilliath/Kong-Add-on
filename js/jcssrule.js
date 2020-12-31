@@ -8,6 +8,8 @@
  *  @contributor Forth : setSheet()
  *  @version 1.0
  */
+"use strict";
+
 (function () {
     // Create a new stylesheet in the bottom of the <body> 
     // or the <head> depending on the place of the file
@@ -143,12 +145,3 @@
     };
 
 })();
-
-/* Forth addon */
-/*window.jCSSRuleAppearence = function (selector, value) {
-    jCSSRule(selector, {
-        "appearance": value,
-        "-moz-appearance": value,
-        "-webkit-appearance": value
-    });
-};*/

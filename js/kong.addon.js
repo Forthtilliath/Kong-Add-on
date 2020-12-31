@@ -9,6 +9,7 @@
  * @author Forth
  * @version 1
  */
+"use strict";
 
 (function ($) {
     // Usable with $.function
@@ -149,7 +150,7 @@
                 if (a[c]['position']>=0) {
                     i++;
                 }
-                $.log(1,`i = ${i}`);
+                $.log(10,`i = ${i}`);
             };
             $.log(10, `Total value = ${i}`);
             return i;
@@ -212,6 +213,7 @@
                     if (aUrl[0] == 'posts') return 'posts';
                     if (aUrl[0] == 'games_for_your_site') return 'gamesexport';
                     if (aUrl[0] == 'search') return 'search';
+                    if (aUrl[0] == 'forum_search') return 'forum_search';
                     if (aUrl[0] == 'stickers') return ''; // Not done yet https://www.kongregate.com/stickers/#sticker-pack-27
                     return 'allgames';
                 }
