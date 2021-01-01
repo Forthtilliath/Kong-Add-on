@@ -14,6 +14,7 @@
 $(function () {
     // Clean pages (remove ads blocks)
     if ($(".adcontainer").length > 0) $(".adcontainer").remove();
+    if (isFirefox) $.removeElements(['div#div_darkmode', 'style#styles_css']);
 
     if (namePage != '') {
         if (darkMode) {

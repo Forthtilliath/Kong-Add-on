@@ -1,10 +1,8 @@
-CSS page : https://www.kongregate.com/accounts/xxx/blocked
-CSS page games : description of user
-CSS report page
-CSS Post forum - blockquote
-CSS chat input
-Ajout use script sur toutes les pages
-Modification let to const dans le fichier vars
-Correction d'erreurs (sSelected non déclarée)
-Déplacement fonction changeVolume pour éviter erreur non déclarée
-Changement des noms des fichiers de font-awesome pour qu'ils soient plus explicites
+- Correction title of buttons
+- New button to hide game
+    - The chat box is enlarged
+- New feature : Notifications
+    - When the window of the chat is not on focus, the title of the page add the number of new messages
+- Modification array aFeatures to objects
+
+- Centrage du jeu à vérifier

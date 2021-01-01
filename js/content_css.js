@@ -7,7 +7,7 @@
  * 
  * @fileoverview All the CSS partitioned by page
  * @author Forth
- * @version 5
+ * @version 6
  */
 "use strict";
 
@@ -498,20 +498,27 @@ function loadCSS() {
         jCSSRule("#forth_features", "display", "flex");
         jCSSRule("#forth_features", "justify-content", "flex-end");
         jCSSRule("#forth_features", "float", "right");
+        jCSSRule("#forth_features.onlyChat", "justify-content", "space-around");
+        jCSSRule("#forth_features.onlyChat", "flex-flow", "row wrap");
+        jCSSRule("#forth_features.onlyChat", "float", "none");
+        jCSSRule("#forth_features.onlyChat", "width", "90%");
+        jCSSRule("#forth_features.onlyChat", "margin", "0 auto");
+        // Tr with all buttons (when game hide)
+        jCSSRule("#tr_features", "height", "30px");
         // All buttons
-        jCSSRule("#forth_onlineplayers, #forth_hideChat, #forth_lockscreen, #forth_fontsize, #forth_fontsize, #forth_brightness, #forth_volume", "margin", "0 5px");
-        jCSSRule("#forth_onlineplayers, #forth_hideChat, #forth_lockscreen, #forth_fontsize, #forth_fontsize, #forth_brightness, #forth_volume", "height", "25px");
+        jCSSRule("#forth_onlineplayers, #forth_hideChat, #forth_lockscreen, #forth_fontsize, #forth_fontsize, #forth_brightness, #forth_volume, #forth_chatOnly", "margin", "0 5px");
+        jCSSRule("#forth_onlineplayers, #forth_hideChat, #forth_lockscreen, #forth_fontsize, #forth_fontsize, #forth_brightness, #forth_volume, #forth_chatOnly", "height", "25px");
         jCSSRule("#quicklinks", "height", "25px");
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #slt_brightness, #slt_volume", "height", "25px");
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #slt_brightness, #slt_volume", "padding", "0 5px");
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #slt_brightness, #slt_volume", "cursor", "pointer");
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #slt_brightness, #slt_volume", "border", "1px solid");
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #slt_brightness, #slt_volume", "border-color", color_grey_00);
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #slt_brightness, #slt_volume", "background-color", bgColor_grey_00);
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #slt_brightness, #slt_volume", "color", color_white);
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #slt_brightness, #slt_volume", "border-radius", "5px");
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #slt_brightness, #slt_volume", "width", "40px");
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #slt_brightness, #slt_volume", "height", "25px");
+        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "height", "25px");
+        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "padding", "0 5px");
+        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "cursor", "pointer");
+        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "border", "1px solid");
+        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "border-color", color_grey_00);
+        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "background-color", bgColor_grey_00);
+        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "color", color_white);
+        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "border-radius", "5px");
+        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "width", "40px");
+        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "height", "25px");
         jCSSRule("#slt_fontsize, #slt_brightness", "width", "65px");
         jCSSRule("#slt_brightness", "width", "70px");
         jCSSRule("#slt_volume", "width", "70px");

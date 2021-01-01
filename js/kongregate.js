@@ -7,7 +7,7 @@
  * 
  * @fileoverview Script injected to modify kong script and be able to block bots and add a ping when someone post a message
  * @author Forth
- * @version 1
+ * @version 2
  */
 "use strict";
 
@@ -88,9 +88,31 @@ if (aFeatures['ping']['display'] || aFeatures['botsblocker']['display']) {
     if (aFeatures['botsblocker']['display']) {
         s.append("var websitesBlocked = " + $.getArrayDoubleToString(aBots) + ";");
     }
-    if (aFeatures['ping']) {
+    if (aFeatures['ping']['display']) {
         s.append("var songMsg = new Audio('" + chrome.runtime.getURL(songUrl) + "');");
         s.append("songMsg.volume = " + volumeValue + ";");
+    }
+    
+    if (aFeatures['notifications']['display']) {
+    
+        s.append("function changeTitlePage() {");
+        s.append("    document.title = titlePage;");
+        s.append("    nbMessagesMissed = 0;");
+        s.append("}");
+
+        s.append("window.addEventListener('focus', function() {");
+        s.append("    hasFocus = true;");
+        s.append("    setTimeout(changeTitlePage, 3000);");
+s.append("console.log('focus');");
+        s.append("});");
+        s.append("window.addEventListener('blur', function() {");
+        s.append("    hasFocus = false;");
+s.append("console.log('blur');");
+        s.append("});");
+        
+        s.append("var nbMessagesMissed = 0;");
+        s.append("var hasFocus = true;");
+        s.append("var titlePage = '" + titlePage + "';");
     }
     /**********************************************************/
     /********************* Forth Code End *********************/
@@ -131,6 +153,14 @@ if (aFeatures['ping']['display'] || aFeatures['botsblocker']['display']) {
         // Add a song when there are a new message
         s.append("        if( !g && !d.non_user ) songMsg.play();");
     }
+    if (aFeatures['notifications']['display'] ) {
+        s.append("if (!hasFocus) {");
+        s.append("    nbMessagesMissed++;");
+s.append("console.log(document.title);");
+        s.append("    document.title = nbMessagesMissed + ' 🔔 - ' + titlePage;");
+s.append("console.log(document.title);");
+        s.append("}");
+    }
     /**********************************************************/
     /********************* Forth Code End *********************/
     /**********************************************************/
@@ -160,9 +190,9 @@ if (aFeatures['ping']['display'] || aFeatures['botsblocker']['display']) {
     s.append("        this.insert(a, null, {");
     s.append("            timestamp: d.timestamp");
     s.append("        });");
-    s.append("        this._messages_count++");
+    s.append("        this._messages_count++;");
     s.append("    }");
-    s.append("}");
+    s.append("};");
 
     $("head").append(s);
 }

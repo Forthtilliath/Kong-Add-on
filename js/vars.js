@@ -11,7 +11,7 @@
  */
 "use strict";
 
-const debugLevel = 10;
+const debugLevel = 0;
 
 // Links to block
 const aBots = ['dateforsex', 'datingfree', 'gaysdate'];
@@ -26,6 +26,8 @@ const step_brightness = 10;
 
 const min_volume = 0;
 const max_volume = 100;
+
+const modif_chat_width = 185;
 
 /* Background colors List */
 const bgColor_grey_00 = "#181a1b";
@@ -93,6 +95,7 @@ const regVolume = /(songMsg.volume = )([01]{1})(\.{1}\d{1})?(;)/i;
 // Id of the current page
 const namePage = $(location).getIdCurrentPage();
 $.log(10, `CURRENT PAGE : ${namePage}`);
+const titlePage = $(document).attr("title");
 /* URL Pages end */
 
 /* Game page */
@@ -106,6 +109,8 @@ const icon_onlinep_on = "fa fa-users";
 const icon_onlinep_off = "fa fa-user";
 const icon_chat_on = "fa fa-comment";
 const icon_chat_off = "fas fa-comment-slash";
+const icon_chatonly_on = "fas fa-comment-alt";
+const icon_chatonly_off = "far fa-comment-alt";
 const icon_volume_down = "fas fa-volume-down";
 const icon_volume_up = "fas fa-volume-up";
 const icon_volume_off = "fas fa-volume-off";
@@ -140,36 +145,41 @@ const aElemAlways = ["#forth_fullscreen", "#forth_messagebox", "#forth_messagebo
 
 // Features displayed
 const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1; // Some features slowing FF 
-const aFeatures = new Array();
+/*const aFeatures = new Array();
 aFeatures['lockscreen'] = {
     'display': true,
     'position': 0,
-    'divname':'#forth_lockscreen'
+    'divname': '#forth_lockscreen'
 };
 aFeatures['onlineplayers'] = {
     'display': true,
     'position': 1,
-    'divname':'#forth_onlineplayers'
+    'divname': '#forth_onlineplayers'
 };
 aFeatures['hidechat'] = {
     'display': true,
     'position': 2,
-    'divname':'#forth_hideChat'
+    'divname': '#forth_hideChat'
+};
+aFeatures['chatonly'] = {
+    'display': true,
+    'position': 3,
+    'divname': '#forth_chatOnly'
 };
 aFeatures['textsize'] = {
     'display': true,
-    'position': 3,
-    'divname':'#forth_fontsize'
+    'position': 4,
+    'divname': '#forth_fontsize'
 };
 aFeatures['brightness'] = {
     'display': true,
-    'position': 4,
-    'divname':'#forth_brightness'
+    'position': 5,
+    'divname': '#forth_brightness'
 };
 aFeatures['ping'] = {
     'display': true,
-    'position': 5,
-    'divname':'#forth_volume'
+    'position': 6,
+    'divname': '#forth_volume'
 };
 aFeatures['botsblocker'] = {
     'display': true
@@ -177,5 +187,54 @@ aFeatures['botsblocker'] = {
 aFeatures['urlrewriter'] = {
     'display': true
 };
+$.log(10, aFeatures);*/
+
+const aFeatures = {
+    'lockscreen': {
+        'display': true,
+        'position': 0,
+        'divname': '#forth_lockscreen'
+    },
+    'onlineplayers': {
+        'display': true,
+        'position': 1,
+        'divname': '#forth_onlineplayers'
+    },
+    'hidechat': {
+        'display': true,
+        'position': 2,
+        'divname': '#forth_hideChat'
+    },
+    'chatonly': {
+        'display': true,
+        'position': 3,
+        'divname': '#forth_chatOnly'
+    },
+    'textsize': {
+        'display': true,
+        'position': 4,
+        'divname': '#forth_fontsize'
+    },
+    'brightness': {
+        'display': true,
+        'position': 5,
+        'divname': '#forth_brightness'
+    },
+    'ping': {
+        'display': true,
+        'position': 6,
+        'divname': '#forth_volume'
+    },
+    'botsblocker': {
+        'display': true
+    },
+    'urlrewriter': {
+        'display': true
+    },
+    'notifications': {
+        'display': true
+    }
+};
+$.log(10, aFeatures);
 
 const nbFeatures = $.getNbFeatures(aFeatures);

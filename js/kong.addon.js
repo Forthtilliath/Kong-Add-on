@@ -7,7 +7,7 @@
  * 
  * @fileoverview List of functions used
  * @author Forth
- * @version 1
+ * @version 2
  */
 "use strict";
 
@@ -108,7 +108,7 @@
         /** Remove elements from html */
         removeElements: function (a) {
             a.forEach(function (b) {
-                if ($(b).length) $(b).remove();
+                if ($(b).length > 0) $(b).remove();
             });
         },
         /** Resize the game box
@@ -118,6 +118,21 @@
             $("#maingame").css("width", w);
             $("#maingamecontent").css("width", w);
             $("#flashframecontent").css("width", w);
+        },
+        /** Resize the game box
+         *  @param {number} set the width of the box
+         */
+        setWidthChat: function (w) {
+            let chat_container_w = $("#chat_container").css("width");
+            let tabpane_w = $("#kong_game_ui .tabpane").css("width");
+            let chat_tab_pane_w = $("#chat_tab_pane").css("width");
+            let chat_input_w = $(".chat_input").css("width");
+            let chat_char_countdown_w = $(".chat_char_countdown").css("width");
+            $("#chat_container").css("width", `calc( ${chat_container_w} + ${w}px )`);
+            $("#kong_game_ui .tabpane").css("width", `calc( ${tabpane_w} + ${w}px )`);
+            $("#chat_tab_pane").css("width", `calc( ${chat_tab_pane_w} + ${w}px )`);
+            $(".chat_input").css("width", `calc( ${chat_input_w} + ${w}px )`);
+            $(".chat_char_countdown").css("width", `calc( ${chat_char_countdown_w} + ${w}px )`);
         },
         /** Transform an array ['a','b','c'] to [['a',0],['b',0],['c',0]] usable in script function
          *  @param a {array} set the array to become a double array 
@@ -146,11 +161,11 @@
 
             // For each feature
             for (var c in a) {
-                $.log(1, a[c]['divname']+" "+a[c]['position']);
-                if (a[c]['position']>=0) {
+                $.log(1, a[c]['divname'] + " " + a[c]['position']);
+                if (a[c]['position'] >= 0) {
                     i++;
                 }
-                $.log(10,`i = ${i}`);
+                $.log(10, `i = ${i}`);
             };
             $.log(10, `Total value = ${i}`);
             return i;
@@ -250,6 +265,12 @@
                 if (aUrl[0] == 'accounts') return 'accounts';
             }
             return 'accueil';
+        },
+        removeAll: function () {
+            console.log($(this));
+            while ($(this).length >= 1) {
+                $(this).remove();
+            }
         }
     });
 
