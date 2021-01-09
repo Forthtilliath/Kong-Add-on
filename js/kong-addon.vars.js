@@ -11,7 +11,7 @@
  */
 "use strict";
 
-const debugLevel = 0;
+const debugLevel = 10;
 
 // Links to block
 const aBots = ['dateforsex', 'datingfree', 'gaysdate'];
@@ -43,6 +43,7 @@ const bgColor_grey_09 = "#4d5356";
 const bgColor_grey_10 = "#3c4143";
 const bgColor_grey_11 = "#333333";
 const bgColor_grey_12 = "#202020";
+const bgColor_grey_13 = "#5a5a5a";
 const bgColor_red_00 = "#710000";
 const bgColor_red_01 = "#490000";
 const bgColor_purple_00 = "#e0d1ff";
@@ -94,12 +95,27 @@ const regVolume = /(songMsg.volume = )([01]{1})(\.{1}\d{1})?(;)/i;
 
 // Id of the current page
 const namePage = $(location).getIdCurrentPage();
-$.log(10, `CURRENT PAGE : ${namePage}`);
+$.log(50, `CURRENT PAGE : ${namePage}`);
 const titlePage = $(document).attr("title");
+
+const iDefaultBothWidth = (namePage == 'games') ? $("#maingame").css("width") : 0;
+const iDefaultBothHeight = (namePage == 'games') ? ($("#maingame").cssNumber("height") + 9) + 'px' : 0; // +9 bc of our buttons
+const iDefaultChatWidth = (namePage == 'games') ? $("#chat_container_cell").css("width") : 0;
+const iDefaultGameWidth = (namePage == 'games') ? $("#gameholder").css("width") : 0;
+const iDefaultGameRealWidth = (namePage == 'games') ? $("#gameiframe").css("width") : 0;
+let iDefaultGameLeft = -1;
+$.log(50, `iDefaultBothWidth= ${iDefaultBothWidth}`);
+$.log(50, `iDefaultBothHeight= ${iDefaultBothHeight}`);
+$.log(50, `iDefaultChatWidth= ${iDefaultChatWidth}`);
+$.log(50, `iDefaultGameWidth= ${iDefaultGameWidth}`);
+$.log(50, `iDefaultGameRealWidth= ${iDefaultGameRealWidth}`);
+$.log(50, `iDefaultGameLeft= ${iDefaultGameLeft}`);
+
 /* URL Pages end */
 
 /* Game page */
-const menuButtonsHeight = "40px";
+const menuButtonsHeight1 = "35px";
+const menuButtonsHeight2 = "30px";
 
 const icon_quicklinks_on = "fa fa-toggle-on";
 const icon_quicklinks_off = "fa fa-toggle-off";
@@ -118,6 +134,9 @@ const icon_darkmode_on = "fas fa-moon";
 const icon_darkmode_off = "fas fa-sun";
 const icon_font = "fas fa-font";
 const icon_brightness = "fas fa-adjust fa-w-18";
+const icon_chatonly = "fas fa-comment";
+const icon_gameonly = "fas fa-gamepad";
+const icon_gameNchat = "fas fa-band-aid";
 
 // Regexp 
 const regWiki = /((https:\/\/idle-grindia\.fandom\.com\/wiki\/)(\w+)([#\w?]*)?)(?!.+\1)/ig;
@@ -131,6 +150,7 @@ let volumeValueOld = 0.1; // Usefull when mute
 
 let brightnessValue = $.getCookie('forth_brightness', '80%');
 let fontsizeValue = $.getCookie('forth_fontsize', '11');
+let displayModeValue = $.getCookie('forth_displayMode', '0');
 
 /* Display modes */
 let darkMode = $.getCookie('forth_darkmode', true);
@@ -141,7 +161,7 @@ const title_darkmode_off = 'Activate dark mode';
 // Properties we don't want to change when darkmode is off
 const aPropRefused = ['color', 'background', 'background-color', 'background-image', 'border-color', 'border-color-top', 'border-color-right', 'border-color-bottom', 'border-color-left', 'filter', 'box-shadow'];
 // Properties we want to always change even when darkmode is off
-const aElemAlways = ["#forth_fullscreen", "#forth_messagebox", "#forth_messagebox #forth_messagetitle", "#forth_messagebox #forth_messagedesc", "#forth_fontsize > span, #forth_brightness > span, #forth_volume > span"];
+const aElemAlways = ["#forth_fullscreen", "#forth_messagebox", "#forth_messagebox #forth_messagetitle", "#forth_messagebox #forth_messagedesc", "#forth_fontsize > span, #forth_brightness > span, #forth_volume > span", "span.onlyGameOrChat", "#bt_gameOnly", "#bt_gameNchat", "#bt_chatOnly"];
 
 // Features displayed
 const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1; // Some features slowing FF 
@@ -201,28 +221,33 @@ const aFeatures = {
         'divname': '#forth_onlineplayers'
     },
     'hidechat': {
-        'display': true,
+        'display': false,
         'position': 2,
         'divname': '#forth_hideChat'
     },
     'chatonly': {
-        'display': true,
+        'display': false,
         'position': 3,
         'divname': '#forth_chatOnly'
     },
+    'displayMode': {
+        'display': true,
+        'position': 2,
+        'divname': '#forth_displayMode'
+    },
     'textsize': {
         'display': true,
-        'position': 4,
+        'position': 3,
         'divname': '#forth_fontsize'
     },
     'brightness': {
         'display': true,
-        'position': 5,
+        'position': 4,
         'divname': '#forth_brightness'
     },
     'ping': {
         'display': true,
-        'position': 6,
+        'position': 5,
         'divname': '#forth_volume'
     },
     'botsblocker': {
@@ -235,6 +260,7 @@ const aFeatures = {
         'display': true
     }
 };
-$.log(10, aFeatures);
+$.log(20, aFeatures);
 
 const nbFeatures = $.getNbFeatures(aFeatures);
+let gameOrChatHided = false;

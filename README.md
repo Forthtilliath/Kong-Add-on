@@ -1,6 +1,6 @@
 # Kong Add-on
  
-List of functionalities :
+List of features :
 - Button moon/sun (top left) : enabling and disabling the dark mode on website
 - Button unlock/lock (above the game) : lock your screen to prevent any mouse scrolling while you’re playing and keep your game in the center of the window. No more accidental scrolling while playing!
 - Button user (above the game) : show the list of online players

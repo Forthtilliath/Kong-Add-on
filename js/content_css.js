@@ -219,12 +219,9 @@ function loadCSS() {
     if (namePage == 'games') {
         // Window game
         let chatHeight = $("#chat_container").css("height");
-        let gameHeight = `calc( ${chatHeight} + ${menuButtonsHeight} )`;
-        let newHeight = `calc( ${chatHeight} + ${menuButtonsHeight} )`;
-        $("#maingame").css("height", newHeight);
-        $("#maingamecontent").css("height", newHeight);
-        $("#flashframecontent").css("height", newHeight);
-        jCSSRule("#flashframecontent .game_table > tbody > tr:first-child", "height", menuButtonsHeight);
+        let menu2Height = gameOrChatHided ? menuButtonsHeight2 : "0px";
+        $.setHeightBoth(`calc( ${chatHeight} + ${menuButtonsHeight1} + ${menu2Height} )`);
+        jCSSRule("#flashframecontent .game_table > tbody > tr:first-child", "height", menuButtonsHeight1);
 
         // Title of the game
         jCSSRule("#play .gamepage_header_outer h1", "width", "100%");
@@ -232,7 +229,6 @@ function loadCSS() {
 
         // Quick links bar
         jCSSRule("#play #maingame .user_connection", "padding-top", "3.5px"); // Align pseudo logged
-        jCSSRule("#maingamecontent .game_table .links_connect", "height", "30px");
         jCSSRule("#play #maingame .user_connection .logged_in_user", "margin-top", "2px"); // Username
         jCSSRule(".user_connection #chat_connected_indicator", "margin-top", "1px"); //Green logo
 
@@ -280,6 +276,7 @@ function loadCSS() {
         jCSSRule(".chat_message_window span", "vertical-align", "middle");
         jCSSRule("#kong_game_ui .chat_message_window p span", "vertical-align", "middle");
         jCSSRule("#kong_game_ui .chat_message_window p .username span", "vertical-align", "sub");
+        jCSSRule("#kong_game_ui .chat_message_window", "max-height", "none");
         // Clicked on user
         jCSSRule(".return_to_room a", "color", linkColor_red); // Return to game
         jCSSRule("#kong_game_ui .tabpane .contents_inner", "background-color", bgColor_grey_00);
@@ -352,7 +349,6 @@ function loadCSS() {
         jCSSRule(".show_more_text_block .full_text p", "color", color_grey_00);
         jCSSRule(".show_more_text_block .truncated_text a", "color", linkColor_red);
         jCSSRule(".show_more_text_block .full_text a", "color", linkColor_red);
-
         // Log in
         jCSSRule("#registration_form .error_block", "color", linkColor_red);
         jCSSRule("#registration_form a", "color", linkColor_red);
@@ -365,6 +361,7 @@ function loadCSS() {
         jCSSRule("#kong_game_ui ul.main_tabs li.closeable a.active .close_tab_link", "filter", "invert(1)"); // Close icon
         jCSSRule("#global .sitemessage h2, #flash_messages_target .sitemessage h2", "color", color_black);
         jCSSRule("#global .sitemessage, #flash_messages_target .sitemessage", "background-color", bgColor_grey_06);
+
 
         // First box under game
         jCSSRule(".game_details_outer", "margin", "-49px auto 10px");
@@ -493,35 +490,70 @@ function loadCSS() {
         jCSSRule("#bt_darkmode", "box-shadow", "1px 1px 3px " + color_white);
     }
     if (namePage == 'games') {
-        jCSSRule("#maingamecontent .game_table .links_connect", "padding-top", "5px");
+        //jCSSRule("#maingamecontent .game_table .links_connect", "padding-top", "5px");
+        jCSSRule("#maingamecontent .game_table .links_connect", "height", "25px");
         // Main box
         jCSSRule("#forth_features", "display", "flex");
         jCSSRule("#forth_features", "justify-content", "flex-end");
         jCSSRule("#forth_features", "float", "right");
-        jCSSRule("#forth_features.onlyChat", "justify-content", "space-around");
-        jCSSRule("#forth_features.onlyChat", "flex-flow", "row wrap");
-        jCSSRule("#forth_features.onlyChat", "float", "none");
-        jCSSRule("#forth_features.onlyChat", "width", "90%");
-        jCSSRule("#forth_features.onlyChat", "margin", "0 auto");
+        jCSSRule("#forth_features.onlyGameOrChat", "justify-content", "space-around");
+        jCSSRule("#forth_features.onlyGameOrChat", "flex-flow", "row wrap");
+        jCSSRule("#forth_features.onlyGameOrChat", "float", "none");
+        jCSSRule("#forth_features.onlyGameOrChat", "width", "420px");
+        jCSSRule("#forth_features.onlyGameOrChat", "margin", "0 auto");
+        // Name of the game
+        jCSSRule("span.onlyGameOrChat", "float", "left");
+        jCSSRule("span.onlyGameOrChat", "color", color_white);
+        jCSSRule("span.onlyGameOrChat", "font", "400 17px/20px 'Open Sans', 'Helvetica Neue', Arial, sans-serif");
+        jCSSRule("span.onlyGameOrChat", "text-overflow", "ellipsis");
+        jCSSRule("span.onlyGameOrChat", "overflow", "hidden");
+        jCSSRule("span.onlyGameOrChat", "white-space", "nowrap");
+        jCSSRule("span.onlyGameOrChat", "height", "25px");
+        jCSSRule("span.onlyGameOrChat", "line-height", "25px");
+        jCSSRule("span.onlyGameOrChat", "text-align", "left");
+        jCSSRule("span.onlyGameOrChat", "display", "none");
         // Tr with all buttons (when game hide)
-        jCSSRule("#tr_features", "height", "30px");
+        jCSSRule("#tr_features", "height", menuButtonsHeight2);
+        jCSSRule("#tr_features", "display", "none");
         // All buttons
-        jCSSRule("#forth_onlineplayers, #forth_hideChat, #forth_lockscreen, #forth_fontsize, #forth_fontsize, #forth_brightness, #forth_volume, #forth_chatOnly", "margin", "0 5px");
-        jCSSRule("#forth_onlineplayers, #forth_hideChat, #forth_lockscreen, #forth_fontsize, #forth_fontsize, #forth_brightness, #forth_volume, #forth_chatOnly", "height", "25px");
+        jCSSRule("#forth_displayMode, #forth_onlineplayers, #forth_hideChat, #forth_lockscreen, #forth_fontsize, #forth_fontsize, #forth_brightness, #forth_volume, #forth_chatOnly", "margin", "0 5px");
+        jCSSRule("forth_displayMode, #forth_onlineplayers, #forth_hideChat, #forth_lockscreen, #forth_fontsize, #forth_fontsize, #forth_brightness, #forth_volume, #forth_chatOnly", "height", "25px");
         jCSSRule("#quicklinks", "height", "25px");
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "height", "25px");
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "padding", "0 5px");
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "cursor", "pointer");
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "border", "1px solid");
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "border-color", color_grey_00);
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "background-color", bgColor_grey_00);
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "color", color_white);
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "border-radius", "5px");
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "width", "40px");
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "height", "25px");
+        jCSSRule("#bt_gameOnly, #bt_gameNchat, #bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "height", "25px");
+        jCSSRule("#bt_gameOnly, #bt_gameNchat, #bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "padding", "0 5px");
+        jCSSRule("#bt_gameOnly, #bt_gameNchat, #bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "border", "1px solid");
+        jCSSRule("#bt_gameOnly, #bt_gameNchat, #bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "border-color", color_grey_00);
+        jCSSRule("#bt_gameOnly, #bt_gameNchat, #bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "background-color", bgColor_grey_00);
+        jCSSRule("#bt_gameOnly, #bt_gameNchat, #bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "border-radius", "5px");
+        jCSSRule("#bt_gameOnly, #bt_gameNchat, #bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "width", "40px");
+        jCSSRule("#bt_gameOnly, #bt_gameNchat, #bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "height", "25px");
+        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #slt_brightness, #slt_volume", "color", color_white);
+        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #slt_brightness, #slt_volume", "cursor", "pointer");
         jCSSRule("#slt_fontsize, #slt_brightness", "width", "65px");
         jCSSRule("#slt_brightness", "width", "70px");
         jCSSRule("#slt_volume", "width", "70px");
+        jCSSRule("#bt_gameOnly", "border-radius", "5px 0 0 5px");
+        jCSSRule("#bt_gameOnly", "border-right", "none");
+        jCSSRule("#bt_gameNchat", "border-radius", "0");
+        jCSSRule("#bt_gameNchat", "border-left", "1px " + color_grey_09 + " solid");
+        jCSSRule("#bt_gameNchat", "border-right", "1px " + color_grey_09 + " solid");
+        jCSSRule("#bt_chatOnly", "border-radius", "0 5px 5px 0");
+        jCSSRule("#bt_chatOnly", "border-left", "none");
+        jCSSRule("#bt_gameOnly, #bt_chatOnly, #bt_gameNchat", "width", "30px");
+        /*if (displayModeValue == 0) {
+            jCSSRule("#bt_gameOnly", "color", bgColor_grey_13);
+            jCSSRule("#bt_gameNchat", "color", color_white);
+            jCSSRule("#bt_chatOnly", "color", bgColor_grey_13);
+        } else if (displayModeValue == -1) {
+            jCSSRule("#bt_gameOnly", "color", color_white);
+            jCSSRule("#bt_gameNchat", "color", bgColor_grey_13);
+            jCSSRule("#bt_chatOnly", "color", bgColor_grey_13);
+        } else if (displayModeValue == 1) {
+            jCSSRule("#bt_gameOnly", "color", bgColor_grey_13);
+            jCSSRule("#bt_gameNchat", "color", bgColor_grey_13);
+            jCSSRule("#bt_chatOnly", "color", color_white);
+        }*/
+        $.setDisplayMode();
         // Select menus
         jCSSRule("#forth_fontsize > span, #forth_brightness > span, #forth_volume > span", "color", color_white);
         jCSSRule("#forth_fontsize > span, #forth_brightness > span, #forth_volume > span", "height", "25px");
@@ -541,8 +573,8 @@ function loadCSS() {
         jCSSRule("#forth_fullscreen", "z-index", "9999");
         jCSSRule("#forth_fullscreen", "display", "none");
         // Locked
-        jCSSRule("#forth_lockscreen > button.locked", "color", color_grey_07);
-        jCSSRule("#forth_lockscreen > button.locked", "background-color", bgColor_grey_09);
+        //jCSSRule("#button.locked", "color", color_grey_07);
+        jCSSRule("#button.locked", "background-color", bgColor_red_01);
         // Game
         jCSSRule(".game_ahead", "position", "absolute");
         jCSSRule(".game_ahead", "z-index", "10000");
@@ -591,7 +623,7 @@ function loadCSS() {
 
         jCSSRule(".points_bar_container", "color", color_white); // Leveling bar
         jCSSRule(".points_bar .points_progress", "background-color", linkColor_red);
-        
+
         // Report page
         jCSSRule(".cntrBasic", "background-color", bgColor_grey_07);
         jCSSRule("p.report_submission a", "color", linkColor_red);
@@ -680,7 +712,7 @@ function loadCSS() {
         jCSSRule(".unblock_groups_container ul strong em", "color", color_grey_00); // by
         jCSSRule(".unblock_groups_container ul strong a", "color", linkColor_red); // Games names and games editors
         jCSSRule(".unblock_groups_container ul p.bd", "color", color_white); // Date unsubscribed / blocked
- 
+
         // Sidebar
         jCSSRule(".tab_group .pod_item", "color", color_grey_12); //Games sidebar
         jCSSRule("#Stickers_pod .profile_pod .pod_item a", "color", color_white);
@@ -871,12 +903,12 @@ function loadCSS() {
         // Blockquotes
         jCSSRule(".forum--entry blockquote", "background-color", bgColor_grey_00);
         jCSSRule(".forum--entry blockquote", "border-color", color_grey_00);
-        
+
         jCSSRule("#main", "color", color_white); // Error message
-        
+
         jCSSRule("textarea ", "color", "-internal-light-dark(" + color_white + ", " + color_grey_01 + ") !important");
         jCSSRule("textarea ", "background-color", "-internal-light-dark(" + bgColor_grey_00 + ", " + bgColor_grey_01 + ") !important");
-        
+
     }
     /***********************************************************************************************************************/
     /***** DIVERS PAGES ****************************************************************************************************/

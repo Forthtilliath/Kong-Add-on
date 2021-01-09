@@ -115,14 +115,30 @@
          *  @param {number} set the width of the box
          */
         setWidthGame: function (w) {
+            $("#gameholder").css("width", w);
+            $("#game").css("width", w);
+        },
+        /** Resize the game box
+         *  @param {number} set the width of the box
+         */
+        setWidthBoth: function (w) {
             $("#maingame").css("width", w);
             $("#maingamecontent").css("width", w);
             $("#flashframecontent").css("width", w);
         },
         /** Resize the game box
-         *  @param {number} set the width of the box
+         *  @param {number} set the height of the box
          */
-        setWidthChat: function (w) {
+        setHeightBoth: function (h) {
+            $("#maingame").css("height", h);
+            $("#maingamecontent").css("height", h);
+            $("#flashframecontent").css("height", h);
+        },
+        /** Resize the chat box
+         *  @param {number} add the width of the box
+         */
+        /*setWidthChat: function (w) {
+            if (typeof (w) == 'undefined') w = iDefaultChatWidth - $("#chat_container").css("width");
             let chat_container_w = $("#chat_container").css("width");
             let tabpane_w = $("#kong_game_ui .tabpane").css("width");
             let chat_tab_pane_w = $("#chat_tab_pane").css("width");
@@ -133,6 +149,14 @@
             $("#chat_tab_pane").css("width", `calc( ${chat_tab_pane_w} + ${w}px )`);
             $(".chat_input").css("width", `calc( ${chat_input_w} + ${w}px )`);
             $(".chat_char_countdown").css("width", `calc( ${chat_char_countdown_w} + ${w}px )`);
+        },*/
+        setWidthChat: function (w) {
+            if (typeof (w) == 'undefined') w = 0;            
+            $("#chat_container").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px )`);
+            $("#kong_game_ui .tabpane").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px )`);
+            $("#chat_tab_pane").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px - 16px )`);
+            $(".chat_input").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px - 16px - 8px )`);
+            $(".chat_char_countdown").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px - 16px - 8px )`);
         },
         /** Transform an array ['a','b','c'] to [['a',0],['b',0],['c',0]] usable in script function
          *  @param a {array} set the array to become a double array 
@@ -157,18 +181,52 @@
         },
         getNbFeatures: function (a) {
             let i = 0;
-            $.log(10, `i = ${i}`);
 
             // For each feature
             for (var c in a) {
-                $.log(1, a[c]['divname'] + " " + a[c]['position']);
-                if (a[c]['position'] >= 0) {
+                $.log(20, a[c]['divname'] + " at position " + a[c]['position']);
+                if ((a[c]['display'] == true) && (a[c]['position'] >= 0)) {
                     i++;
                 }
-                $.log(10, `i = ${i}`);
             };
-            $.log(10, `Total value = ${i}`);
+            $.log(200, `Features number = ${i}`);
             return i;
+        },
+        /** Get the feature's div where a feature is 
+         * @param {string} set the name of the feature
+         *
+         */
+        getFeatureDiv: function (sName) {
+            let pos = aFeatures[sName]['position'];
+            return $(`#forth_feature_${pos}`);
+        },
+        /** Change the color of button and the cursor in function of the active mode
+         *  @param {number} set the id of the mode
+         */
+        setDisplayMode: function (i) {
+            if (typeof (i) != 'undefined') displayModeValue = i;
+            if (displayModeValue == -1) {
+                jCSSRule("#bt_gameOnly", "color", darkMode ? color_white : color_black);
+                jCSSRule("#bt_gameOnly", "cursor", "default");
+                jCSSRule("#bt_gameNchat", "color", bgColor_grey_13);
+                jCSSRule("#bt_gameNchat", "cursor", "pointer");
+                jCSSRule("#bt_chatOnly", "color", bgColor_grey_13);
+                jCSSRule("#bt_chatOnly", "cursor", "pointer");
+            } else if (displayModeValue == 0) {
+                jCSSRule("#bt_gameOnly", "color", bgColor_grey_13);
+                jCSSRule("#bt_gameOnly", "cursor", "pointer");
+                jCSSRule("#bt_gameNchat", "color", darkMode ? color_white : color_black);
+                jCSSRule("#bt_gameNchat", "cursor", "default");
+                jCSSRule("#bt_chatOnly", "color", bgColor_grey_13);
+                jCSSRule("#bt_chatOnly", "cursor", "pointer");
+            } else if (displayModeValue == 1) {
+                jCSSRule("#bt_gameOnly", "color", bgColor_grey_13);
+                jCSSRule("#bt_gameOnly", "cursor", "pointer");
+                jCSSRule("#bt_gameNchat", "color", bgColor_grey_13);
+                jCSSRule("#bt_gameNchat", "cursor", "pointer");
+                jCSSRule("#bt_chatOnly", "color", darkMode ? color_white : color_black);
+                jCSSRule("#bt_chatOnly", "cursor", "default");
+            }
         }
     });
 
@@ -185,6 +243,7 @@
         /** Center an element in the middle of the screen  */
         centrerElementAbsolu: function () {
             this.css('top', ($(window).height() - this.height()) / 2 + $(window).scrollTop());
+            this.css('left', ($(window).width() - this.width()) / 2 + $(window).scrollLeft());
         },
         /** Scroll down an element */
         scrollBottom: function () {
@@ -266,6 +325,7 @@
             }
             return 'accueil';
         },
+        /* Not working well */
         removeAll: function () {
             console.log($(this));
             while ($(this).length >= 1) {
@@ -273,5 +333,10 @@
             }
         }
     });
+    
+    jQuery.fn.cssNumber = function(prop){
+        var v = parseInt(this.css(prop),10);
+        return isNaN(v) ? 0 : v;
+    };
 
 })(jQuery);

@@ -1,8 +1,31 @@
 - Correction title of buttons
 - New button to hide game
     - The chat box is enlarged
+    - All buttons are on new row
 - New feature : Notifications
     - When the window of the chat is not on focus, the title of the page add the number of new messages
 - Modification array aFeatures to objects
+- Now center correctly the game/chat in x
+- Show game name when game or chat is hide
+- Renames of files
 
-- Centrage du jeu à vérifier
+
+
+CSS à corriger
+https://www.kongregate.com/accounts/Blondasse/points
+https://www.kongregate.com/forums/2-off-topic
+https://www.kongregate.com/users/2623156/posts
+https://www.kongregate.com/accounts/darkfang77
+Relog chat
+
+Cookies
+par jeu : son / gameonly/chatonly/both
+all regrouped at one
+
+Utiliser class Button partout
+
+cookies
+    kong_add-on on kongregate.com :
+        lockscreen=true;onlineplayers=true;textsize=11;brightness=70
+    kong_add-on_games on kongregate.com/games
+        displayMode=0;volume=10;brightness=70

@@ -66,7 +66,7 @@ if (aFeatures['ping']['display'] || aFeatures['botsblocker']['display']) {
         s.append("    let regWiki = " + regWiki + ";");
         s.append("    while ((m = regWiki.exec(msg)) !== null) {");
         //s.append("        msgOut = msgOut.replace(m[0], getHtmlLink('wiki', m));"); // Rewrite link alrdy did
-        s.append("        msgOut = msgOut.replaceAll(m[0], getHtmlLink('wiki', m));"); 
+        s.append("        msgOut = msgOut.replaceAll(m[0], getHtmlLink('wiki', m));");
         s.append("    }");
         // For each game's link in the msg
         s.append("    let regGame = " + regGame + ";");
@@ -84,7 +84,7 @@ if (aFeatures['ping']['display'] || aFeatures['botsblocker']['display']) {
         s.append("    return msgOut;");
         s.append("}");
     }
-    
+
     if (aFeatures['botsblocker']['display']) {
         s.append("var websitesBlocked = " + $.getArrayDoubleToString(aBots) + ";");
     }
@@ -92,9 +92,9 @@ if (aFeatures['ping']['display'] || aFeatures['botsblocker']['display']) {
         s.append("var songMsg = new Audio('" + chrome.runtime.getURL(songUrl) + "');");
         s.append("songMsg.volume = " + volumeValue + ";");
     }
-    
+
     if (aFeatures['notifications']['display']) {
-    
+
         s.append("function changeTitlePage() {");
         s.append("    document.title = titlePage;");
         s.append("    nbMessagesMissed = 0;");
@@ -102,14 +102,12 @@ if (aFeatures['ping']['display'] || aFeatures['botsblocker']['display']) {
 
         s.append("window.addEventListener('focus', function() {");
         s.append("    hasFocus = true;");
-        s.append("    setTimeout(changeTitlePage, 3000);");
-s.append("console.log('focus');");
+        s.append("    setTimeout(changeTitlePage, 1500);");
         s.append("});");
         s.append("window.addEventListener('blur', function() {");
         s.append("    hasFocus = false;");
-s.append("console.log('blur');");
         s.append("});");
-        
+
         s.append("var nbMessagesMissed = 0;");
         s.append("var hasFocus = true;");
         s.append("var titlePage = '" + titlePage + "';");
@@ -153,12 +151,12 @@ s.append("console.log('blur');");
         // Add a song when there are a new message
         s.append("        if( !g && !d.non_user ) songMsg.play();");
     }
-    if (aFeatures['notifications']['display'] ) {
+    if (aFeatures['notifications']['display']) {
         s.append("if (!hasFocus) {");
         s.append("    nbMessagesMissed++;");
-s.append("console.log(document.title);");
+        s.append("console.log(document.title);");
         s.append("    document.title = nbMessagesMissed + ' 🔔 - ' + titlePage;");
-s.append("console.log(document.title);");
+        s.append("console.log(document.title);");
         s.append("}");
     }
     /**********************************************************/
