@@ -12,7 +12,7 @@
 "use strict";
 
 /* When page is loaded */
-$(function () {
+$(document).ready(function () {
     /* Initialisation start */
 
     /* Check if each button already exist and delete them to avoid any double
@@ -77,7 +77,8 @@ $(function () {
     $('<div id="forth_features"></div>').insertBefore('#cloud_save_info_template');
     // Create a sub-block for each feature
     for (let i = 0; i < nbFeatures; i++) {
-        $('#forth_features').append(`<div id="forth_feature_${i}"></div>`);
+        //$('#forth_features').append(`<div id="forth_feature_${i}"></div>`);
+        $('#forth_features').append($.createDiv(`forth_feature_${i}`));
     }
 
     /**** BLOCK FEATURES END */
@@ -91,7 +92,8 @@ $(function () {
         // Update the new volume
         $.execScript(`songMsg.volume = ${ volumeValue };`);
         // Update the cookie to save setting after refreshs
-        $.addCookie('forth_volume', volumeValue, 30, '/');
+        //$.addCookie('forth_volume', volumeValue, 30, '/');
+        $.setCookieGame('VolumePing', volumeValue);
     }
 
     /**** BUTTON LOCK SCREEN START ******************************************************************************************
@@ -106,7 +108,8 @@ $(function () {
         // Add the fullscreen mode in hide
         $('<div id="forth_fullscreen"></div>').appendTo("body");
         // Create the button
-        $(`#forth_feature_${pos}`).append($.addButton('div', 'forth_lockscreen', 'bt_lockscreen', 'Lock screen', $.addIcon(icon_lockscreen_off)));
+        //$(`#forth_feature_${pos}`).append($.addButton('div', 'forth_lockscreen', 'bt_lockscreen', 'Lock screen', $.addIcon(icon_lockscreen_off)));
+        $(`#forth_feature_${pos}`).append($.createDiv('forth_lockscreen', new Button('bt_lockscreen', 'Lock screen', $.addIcon(icon_lockscreen_off)).html));
         // We remove the cinematic mode button
         $("#cinematic_mode_quicklink").remove();
 
@@ -120,6 +123,7 @@ $(function () {
                 jCSSRule("#floating_game_holder", "padding-top", "0px");
                 $(this).setButton($.addIcon(icon_lockscreen_on), 'Unlock screen');
                 $("#floating_game_holder").centrerElementAbsolu(); // Center the game
+                $.setCookieGame('LockScreen', 'true');
             } else { // Unlocked screen
                 $("#forth_fullscreen").hide(); // Background
                 $("#floating_game_holder").removeClass("game_ahead");
@@ -127,8 +131,13 @@ $(function () {
                 jCSSRule("body", "overflow", "");
                 jCSSRule("#floating_game_holder", "padding-top", "4px");
                 $(this).setButton($.addIcon(icon_lockscreen_off), 'Lock screen');
+                $.setCookieGame('LockScreen', 'false');
             }
         });
+
+        if (cookieLockScreen) {
+            $('#bt_lockscreen').trigger('click');
+        }
     }
 
     /**** BUTTON LOCK SCREEN END */
@@ -141,12 +150,17 @@ $(function () {
     if (aFeatures['onlineplayers']['display']) {
         let pos = aFeatures['onlineplayers']['position'];
         // Create the button
-        if ($.cookie('forth_showPlayers') == 'true') { // Show
-            $(`#forth_feature_${pos}`).append($.addButton('div', 'forth_onlineplayers', 'bt_onlineplayers', 'Hide online players', $.addIcon(icon_onlinep_on)));
+        let value = '';
+        //if ($.cookie('forth_showPlayers') == 'true') { // Show
+        if (cookieShowPlayers == 'true') { // Show
+            value = new Button('bt_onlineplayers', 'Hide online players', $.addIcon(icon_onlinep_on)).html;
+            //$(`#forth_feature_${pos}`).append($.addButton('div', 'forth_onlineplayers', 'bt_onlineplayers', 'Hide online players', $.addIcon(icon_onlinep_on)));
         } else { // Hide
-            $(`#forth_feature_${pos}`).append($.addButton('div', 'forth_onlineplayers', 'bt_onlineplayers', 'Show online players', $.addIcon(icon_onlinep_off)));
+            value = new Button('bt_onlineplayers', 'Show online players', $.addIcon(icon_onlinep_off)).html;
+            //$(`#forth_feature_${pos}`).append($.addButton('div', 'forth_onlineplayers', 'bt_onlineplayers', 'Show online players', $.addIcon(icon_onlinep_off)));
             jCSSRule(".chat_room_template > .users_in_room", "display", "none");
         }
+        $(`#forth_feature_${pos}`).append($.createDiv('forth_onlineplayers', value));
 
         // Evenement
         $('#bt_onlineplayers').click(function () {
@@ -156,12 +170,14 @@ $(function () {
                     $('#bt_onlineplayers').html($.addIcon(icon_onlinep_off));
                     $('#bt_onlineplayers').prop('title', 'Show online players');
                     // Update the cookie to save setting after refreshs
-                    $.addCookie('forth_showPlayers', 'false', 30, '/');
+                    //$.addCookie('forth_showPlayers', 'false', 30, '/');
+                    $.setCookieAll('ShowPlayers', 'false');
                 } else { // Show
                     $('#bt_onlineplayers').html($.addIcon(icon_onlinep_on));
                     $('#bt_onlineplayers').prop('title', 'Hide online players');
                     // Update the cookie to save setting after refreshs
-                    $.addCookie('forth_showPlayers', 'true', 30, '/');
+                    //$.addCookie('forth_showPlayers', 'true', 30, '/');
+                    $.setCookieAll('ShowPlayers', 'true');
                 }
                 $("#chat_rooms_container .chat_message_window").scrollBottom();
             });
@@ -175,7 +191,7 @@ $(function () {
      * - Add evenement on click
      ****/
 
-    if (aFeatures['hidechat']['display']) {
+    /*if (aFeatures['hidechat']['display']) {
         let pos = aFeatures['hidechat']['position'];
         // Create the button
         $(`#forth_feature_${pos}`).append($.addButton('div', 'forth_hideChat', 'bt_hideChat', 'Hide chat', $.addIcon(icon_chat_on)));
@@ -229,7 +245,7 @@ $(function () {
             }
             $("#chat_rooms_container .chat_message_window").scrollBottom();
         });
-    }
+    }*/
 
     /**** BUTTON HIDE CHAT END */
 
@@ -247,14 +263,14 @@ $(function () {
             // Add 11px option (default value of the website)
             if (i == 12) {
                 let ii = 11;
-                (ii == fontsizeValue) ? sSelected = ' selected': sSelected = '';
+                (ii == cookieFontSize) ? sSelected = ' selected': sSelected = '';
                 sOptionsSize += `<option value="${ii}"${sSelected}>${ii}px</option>`;
             }
-            (i == fontsizeValue) ? sSelected = ' selected': sSelected = '';
+            (i == cookieFontSize) ? sSelected = ' selected': sSelected = '';
             sOptionsSize += `<option value="${i}"${sSelected}>${i}px</option>`;
         }
         $(`#forth_feature_${pos}`).append($.addSelect('div', 'forth_fontsize', 'slt_fontsize', 'Select the text size of your choice', $.addIcon(icon_font), sOptionsSize));
-        $.changeTextSize($.cookie('forth_fontsize'));
+        $.changeTextSize(cookieFontSize);
         $("#chat_rooms_container .chat_message_window").scrollBottom();
 
         // Evenement
@@ -262,7 +278,8 @@ $(function () {
             // Add a cssrule to dynamise the text size
             $.changeTextSize($(this).val());
             // Update the cookie to save setting after refreshs
-            $.addCookie('forth_fontsize', $(this).val(), 30, '/');
+            //$.addCookie('forth_fontsize', $(this).val(), 30, '/');
+            $.setCookieAll('FontSize', $(this).val());
         });
     }
 
@@ -279,7 +296,7 @@ $(function () {
         let sOptionsBrightness = '';
         let sSelected = '';
         for (let i = min_brightness; i <= max_brightness; i += step_brightness) {
-            ((i + "%") == brightnessValue) ? sSelected = ' selected': sSelected = '';
+            ((i + "%") == cookieBrightness) ? sSelected = ' selected': sSelected = '';
             sOptionsBrightness += `<option value="${i}%"${sSelected}>${i}%</option>`;
         }
         $(`#forth_feature_${pos}`).append($.addSelect('div', 'forth_brightness', 'slt_brightness', 'Select the brightness of your choice', $.addIcon(icon_brightness), sOptionsBrightness));
@@ -287,11 +304,12 @@ $(function () {
         // Evenement change brightness start
         $('#slt_brightness').change(function () {
             // Add a cssrule to dynamise the text size
-            brightnessValue = $(this).val();
-            jCSSRule("#maingamecontent #gameholder", "filter", "brightness(" + brightnessValue + ")");
+            cookieBrightness = $(this).val();
+            jCSSRule("#maingamecontent #gameholder", "filter", "brightness(" + cookieBrightness + ")");
 
             // Update the cookie to save setting after refreshs
-            $.addCookie('forth_brightness', $(this).val(), 30, '/');
+            //$.addCookie('forth_brightness', $(this).val(), 30, '/');
+            $.setCookieGame('Brightness', $(this).val());
         });
     }
 
@@ -344,7 +362,7 @@ $(function () {
      * - Add evenement on click
      ****/
 
-    if (aFeatures['chatonly']['display']) {
+    /*if (aFeatures['chatonly']['display']) {
         let pos = aFeatures['chatonly']['position'];
         // Create the button
         $(`#forth_feature_${pos}`).append($.addButton('div', 'forth_chatOnly', 'bt_chatOnly', 'Show only the chat', $.addIcon(icon_chatonly_off)));
@@ -413,7 +431,7 @@ $(function () {
             }
             $("#chat_rooms_container .chat_message_window").scrollBottom(); // Scroll the chat to the bottom
         });
-    }
+    }*/
 
     /**** BUTTON CHAT ONLY END */
 
@@ -431,13 +449,8 @@ $(function () {
         $(`<span class="onlyGameOrChat">${gameName}</span>`).insertBefore("#quicklinks");
 
         // Evenements
-        /**
-        bt_gameOnly & bt_chatOnly
-            - deplace les boutons sur la ligne du bas
-        **/
-
         function showOnlyGameOrChat() {
-            if (displayModeValue == 0) {
+            if (displayMode == 0) {
                 $("#forth_features").addClass("onlyGameOrChat");
                 $("#quicklinks").hide(); // Hide quicklinks
                 $("#tr_features").show(); // Show tr_features
@@ -447,8 +460,9 @@ $(function () {
                 gameOrChatHided = true;
             }
         }
-        $('#bt_gameOnly').click(function () {
-            if (displayModeValue != -1) { // If already in gameMode, do nothing
+
+        function click_gameOnly() {
+            if (displayMode != -1) { // If already in gameMode, do nothing
                 // Hide/Show features when onlyGame
                 $.getFeatureDiv('onlineplayers').hide(); // Hide onlineplayers button
                 $.getFeatureDiv('textsize').hide(); // Hide textsize button
@@ -464,10 +478,12 @@ $(function () {
                 $.setWidthChat(); // Resize chat
                 $.setWidthGame($("#gameiframe").css("width"));
                 if (iDefaultGameLeft == -1) iDefaultGameLeft = $("#gameiframe").css("left");
+                $.log(10, "left= " + iDefaultGameLeft);
                 $("#gameiframe").css("left", 0);
 
                 // Show game name
-                let width_nameGame = $("#maingame").width() - $(".user_connection").width() - 20;
+                //let width_nameGame = $("#maingame").width() - $(".user_connection").width() - 20;
+                let width_nameGame = $("#maingame").width() - 150 - 20;
                 $("span.onlyGameOrChat").css("width", width_nameGame);
                 $("span.onlyGameOrChat").show();
 
@@ -477,11 +493,14 @@ $(function () {
                 changeVolume();
 
                 showOnlyGameOrChat();
-                $.setDisplayMode(-1); // Change display of button
+                $.setCookieGame('DisplayMode', -1);
+                $.setStyleDisplayMode(-1); // Change display of button
+                displayMode = -1;
             }
-        });
-        $('#bt_chatOnly').click(function () {
-            if (displayModeValue != 1) { // If already in chatMode, do nothing
+        }
+
+        function click_chatOnly() {
+            if (displayMode != 1) { // If already in chatMode, do nothing
                 // Hide/Show features when onlyChat
                 $.getFeatureDiv('brightness').hide(); // Hide brightness button
                 $.getFeatureDiv('onlineplayers').show(); // Show onlineplayers button
@@ -493,8 +512,7 @@ $(function () {
 
                 // Resize box
                 $.setHeightBoth(`calc(${iDefaultBothHeight} + ${menuButtonsHeight2})`);
-                let gameholderWidth = $("#gameholder").css("width");
-                $.setWidthBoth(`calc( ${iDefaultBothWidth} - ${gameholderWidth} + ${modif_chat_width}px )`); // Reduce game box
+                $.setWidthBoth(`calc( ${iDefaultChatWidth} + ${modif_chat_width}px )`); // Reduce game box
                 $.setWidthChat(modif_chat_width); // Resize chat enlarger
                 $("#gameiframe").css("left", iDefaultGameLeft);
 
@@ -511,11 +529,14 @@ $(function () {
                 }
 
                 showOnlyGameOrChat();
-                $.setDisplayMode(1); // Change display of button
+                $.setCookieGame('DisplayMode', 1);
+                $.setStyleDisplayMode(1); // Change display of button
+                displayMode = 1;
             }
-        });
-        $('#bt_gameNchat').click(function () { // Default mode
-            if (displayModeValue != 0) { // If already in bothMode, do nothing
+        }
+
+        function click_gameNchat() {
+            if (displayMode != 0) { // If already in bothMode, do nothing
                 $("#forth_features").removeClass("onlyGameOrChat");
 
                 // Remove features & quicklinks as default
@@ -532,10 +553,11 @@ $(function () {
                 $("#gameholder").show(); // Show game
                 $("#chat_container_cell").show(); // Show chat
 
+                // Resize box
                 $.setHeightBoth(iDefaultBothHeight);
-                $.setWidthBoth(iDefaultBothWidth); // Reduce game box
-                $.setWidthGame(iDefaultGameWidth); // Reduce game box
-                $.setWidthChat(); // Resize chat enlarger
+                $.setWidthBoth(iDefaultBothWidth); // Resize game box per default
+                $.setWidthGame(iDefaultGameWidth); // Resize game box per default
+                $.setWidthChat(); // Resize chat enlarger per default
                 $("#gameiframe").css("left", iDefaultGameLeft);
 
                 $("span.onlyGameOrChat").hide(); // Hide game name
@@ -548,102 +570,36 @@ $(function () {
                 }
 
                 gameOrChatHided = false;
-                $.setDisplayMode(0); // Change display of button
+                $.setCookieGame('DisplayMode', 0);
+                $.setStyleDisplayMode(0); // Change display of button
+                displayMode = 0;
             }
-        });
+        }
 
-        /*$('#bt_chatOnly').click(function () {
-            let gameholderWidth = $("#gameholder").css("width");
-            let maingameWidth = $("#maingame").css("width");
+        // Initialisation
+        if (cookieDisplayMode == '-1') {
+            $("#gameiframe").ready(function () {
+                click_gameOnly();
+            });
+        } else if (cookieDisplayMode == '1') {
+            $("#chat_rooms_container").ready(function () {
+                click_chatOnly();
+            });
 
-            if ($("#gameholder").css("display") == "none") { // Show game
-                    $(this).html($.addIcon(icon_chatonly_off)); // Change icon of the button
-                    $("#bt_chatOnly").prop('title', 'Show only the chat'); // Change title of the button
-                    $("#forth_features").removeClass("onlyChat"); //
-                    $("#quicklinks").toggle(); // Show quicklinks
-                $("#gameholder").toggle(); // Show game
-                    $("span.onlyChat").toggle(); // Hide game name
-                    $('#forth_features').insertBefore('#cloud_save_info_template'); // Move buttons in tr_features
-                    $("#tr_features").toggle(); // Hide tr_features
-                let maingame_h = jQuery("#maingame").css("height");
-                $.setHeightGame(`calc(${maingame_h} - ${menuButtonsHeight2})`);
-                $.setWidthGame(`calc( ${maingameWidth} + ${gameholderWidth} - ${modif_chat_width}px )`); // Resize gamebox per default size
-                $.setWidthChat(-modif_chat_width); // Resize chat per default size
-                    $.getFeatureDiv('brightness').toggle(); // Show brightness button
-                    $.getFeatureDiv('hidechat').toggle(); // Show hideChat button
-                gameHide = false;
-            } else { // Hide game
-                    $(this).html($.addIcon(icon_chatonly_on)); // Change icon of the button
-                    $("#bt_chatOnly").prop('title', 'Show the game'); // Change title of the button
-                    $("#forth_features").addClass("onlyChat");
-                    $("#quicklinks").toggle(); // Hide quicklinks
-                    $("#gameholder").toggle(); // Hide game
-                let maingame_h = jQuery("#maingame").css("height");
-                $.setHeightGame(`calc(${maingame_h} + ${menuButtonsHeight2})`);
-                    $("#tr_features").toggle(); // Show tr_features
-                    $('#forth_features').prependTo('#tr_features > td'); // Move buttons in tr_features
-                $.setWidthGame(`calc( ${maingameWidth} - ${gameholderWidth} + ${modif_chat_width}px )`); // Reduce game box
-                $.setWidthChat(modif_chat_width); // Resize chat enlarger
-                    if ($("#forth_fullscreen").css("display") == "block") // Center the chat if fullscreen
-                        $("#floating_game_holder").centrerElementAbsolu();
-                    $.getFeatureDiv('brightness').toggle(); // Hide brightness button
-                    $.getFeatureDiv('hidechat').toggle(); // Hide hideChat button
-                    // Show game name
-                    let width_nameGame = $(".links_connect").width() - $(".user_connection").width() - 20;
-                    $("span.onlyChat").css("width", width_nameGame);
-                    $("span.onlyChat").toggle();
-                gameHide = true;
-            }
-            $("#chat_rooms_container .chat_message_window").scrollBottom(); // Scroll the chat to the bottom
-        });
+        } else if (cookieDisplayMode == '0') {
+            click_gameNchat();
+        }
+
+        // Evenements
         $('#bt_gameOnly').click(function () {
-            let chatWidth = $("#chat_container_cell").css("width");
-            let maingameWidth = $("#maingame").css("width");
-
-            if ($("#chat_container_cell").css("display") == "none") { // Show chat
-                    $(this).html($.addIcon(icon_chat_on));
-                    $(this).prop('title', 'Hide chat');
-                    $("#quicklinks").show();
-                    $("#chat_container_cell").toggle();
-                $.setWidthGame(`calc( ${maingameWidth} + ${chatWidth} )`);
-                $("span.onlyGame").toggle(); // Hide game name
-                //$("#forth_fontsize").toggle();
-                $.getFeatureDiv('textsize').toggle();
-                $.getFeatureDiv('chatonly').toggle();
-                // Unmute pings
-                if (volumeValueOld > 0) {
-                    volumeValue = volumeValueOld;
-                    volumeValueOld = 0;
-                    changeVolume();
-                }
-            } else { // Hide chat
-                    $(this).html($.addIcon(icon_chat_off));
-                    $(this).prop('title', 'Show chat');
-                    $("#quicklinks").hide();
-                    $("#chat_container_cell").toggle();
-                $.setWidthGame(`calc( ${maingameWidth} - ${chatWidth} )`);
-                    if ($("#forth_fullscreen").css("display") == "block")
-                        $("#floating_game_holder").centrerElementAbsolu();
-                //$("#forth_fontsize").toggle();
-                $.getFeatureDiv('textsize').toggle();
-                $.getFeatureDiv('chatonly').toggle();
-                // Show game name
-                let width_nameGame = $(".links_connect").width() - $("#forth_features").width() - $(".user_connection").width() - 20;
-                $("span.onlyGame").css("width", width_nameGame);
-                $("span.onlyGame").toggle(); 
-                // Mute pings
-                if (volumeValue > 0) {
-                    volumeValueOld = volumeValue;
-                    volumeValue = 0;
-                } else {
-                    volumeValueOld = 0;
-                }
-                volumeValueOld = (volumeValue > 0) ? volumeValue : 0;
-                if (volumeValue > 0) volumeValue = 0;
-                changeVolume();
-            }
-            $("#chat_rooms_container .chat_message_window").scrollBottom();
-        });*/
+            click_gameOnly();
+        });
+        $('#bt_chatOnly').click(function () {
+            click_chatOnly();
+        });
+        $('#bt_gameNchat').click(function () { // Default mode
+            click_gameNchat();
+        });
     }
 });
 
@@ -655,12 +611,3 @@ if (aFeatures['lockscreen']['display']) {
         }
     });
 }
-
-/*
-// Good !
-jQuery("<tr id='tr_features'><td colspan=2></td></tr>").insertAfter("#flashframecontent > table.game_table > tbody > tr:nth-of-type(1)");
-jQuery('#forth_features').prependTo('#tr_features > td');
-jQuery("#forth_features").addClass("onlyChat");
-let maingame_h = jQuery("#maingame").css("height");
-jQuery("#maingame").css("height",`calc(${maingame_h} + 30px)`);
-*/

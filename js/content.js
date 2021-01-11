@@ -25,7 +25,7 @@ $(function () {
     }
 
     $(window).resize(function () {
-        if ($(window).height() < 730) {
+        if ($(window).height() < (parseInt($("#maingame").css("height"),10) + 30 /* height button */ + 20 /* padding gamebox */)) {
             $("#div_darkmode").hide();
         } else {
             $("#div_darkmode").show();
@@ -42,8 +42,8 @@ $(function () {
         // Update the value
         darkMode = !darkMode;
         // Update the cookie
-        $.addCookie('forth_darkmode', darkMode, 30, '/');
-
+        //$.addCookie('forth_darkmode', darkMode, 30, '/');
+        $.setCookieAll('DarkMode', darkMode);
         loadCSS();
     });
 });

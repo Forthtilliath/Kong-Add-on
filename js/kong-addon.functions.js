@@ -43,7 +43,9 @@
          *  @return {object} Element with button and his value
          */
         addButton: function (container, idcontainer, idbutton, title, value) {
-            return $(`<${container} id="${idcontainer}"><button id="${idbutton}" title="${title}">${value}</button></${container}>`);
+            let bt = new Button(idbutton, title, value);
+            //return $(`<${container} id="${idcontainer}"><button id="${idbutton}" title="${title}">${value}</button></${container}>`);
+            return $(`<${container} id="${idcontainer}">${bt.html}</${container}>`);
         },
         /** Generate a code to display a select
          *  @param container {string} set the element container (div, span...)
@@ -69,7 +71,7 @@
          *  @param time {number} set the time in days
          *  @param path {string} set the path
          */
-        addCookie: function (name, value, time, path) {
+        /*addCookie: function (name, value, time, path) {
             $.removeCookie(name, {
                 path: path
             });
@@ -77,16 +79,110 @@
                 expires: time,
                 path: path
             });
-        },
+
+        },*/
         /** Return the value of a cookie, if this one doesn't exist, this return default value
          *  @param name {string} set the name of the cookie
          *  @param defaultValue {string|number|boolean} set the value returned if the cookie doesn't exist
          *  @return {string} Value of the cookie or defaultValue
          */
-        getCookie: function (name, defaultValue) {
+        /*getCookie: function (name, defaultValue) {
             if (typeof defaultValue == "boolean")
                 return !!$.cookie(name) ? ($.cookie(name) === 'true') : defaultValue;
             return !!$.cookie(name) ? $.cookie(name) : defaultValue;
+        },*/
+        getCookieAll: function (name, defaultValue) {
+            return $.getCookie(name, defaultValue, 0);
+        },
+        getCookieGame: function (name, defaultValue) {
+            return $.getCookie(name, defaultValue, 1);
+        },
+        getCookie: function (name, defaultValue, iCatCookie) {
+            let sCookieName, iCookieTime, sCookiePath;
+            if (iCatCookie == 0) { // All
+                sCookieName = sCookieNameAll;
+                iCookieTime = iCookiesTimeAll;
+                sCookiePath = '/';
+            } else if (iCatCookie == 1) { // Game
+                sCookieName = sCookieNameGame;
+                iCookieTime = iCookiesTimeGame;
+                sCookiePath = window.location.pathname;
+            }
+
+            if (Cookies.get(sCookieName) === undefined) { // If global cookie doesn't exist
+                Cookies.set(sCookieName, '', { // We create it
+                    expires: iCookieTime,
+                    path: sCookiePath
+                });
+            }
+            let sValue = Cookies.get(sCookieName);
+            if (sValue.indexOf(name) != -1) {
+                let aCookiesTmp = sValue.split(';');
+                let found = aCookiesTmp.find(element => element.startsWith(name));
+                let aValue = found.split("=");
+                return aValue[1];
+            } else {
+                return defaultValue;
+            }
+        },
+        setCookieAll: function (name, value) {
+            $.setCookie(name, value, 0);
+        },
+        setCookieGame: function (name, value) {
+            $.setCookie(name, value, 1);
+        },
+        setCookie: function (name, value, iCatCookie) {
+            let sCookieName, iCookieTime, sCookiePath;
+            if (iCatCookie == 0) { // All
+                sCookieName = sCookieNameAll;
+                iCookieTime = iCookiesTimeAll;
+                sCookiePath = '/';
+            } else if (iCatCookie == 1) { // Game
+                sCookieName = sCookieNameGame;
+                iCookieTime = iCookiesTimeGame;
+                sCookiePath = window.location.pathname;
+            }
+            
+            if (Cookies.get(sCookieName) === undefined) { // If global cookie doesn't exist
+                Cookies.set(sCookieName, '', { // We create it
+                    expires: iCookieTime,
+                    path: sCookiePath
+                });
+            }
+            let oldValue = Cookies.get(sCookieName);
+            let newValue = '';
+            if (oldValue.indexOf(name) == -1) { // If cookie doesn't exist
+                if (oldValue !== '') oldValue += ';';
+                newValue = oldValue + name + "=" + value; // We add the new cookie at the end
+            } else { // If cookie exists
+                let aCookiesTmp = oldValue.split(';'); // We put all cookie in an array
+                const found = aCookiesTmp.find(element => element.startsWith(name)); // We get the cookie
+                let i = aCookiesTmp.indexOf(found); // We get the indice of the cookie to be able to replace it
+                aCookiesTmp[i] = name + '=' + value; // We replace it
+                newValue = aCookiesTmp.join(';'); // We convert it in string to make the new cookie
+            }
+            Cookies.set(sCookieName, newValue, { // We modifiy the cookie with new datas
+                expires: iCookieTime,
+                path: sCookiePath
+            });
+        },
+        /*isCookieExists: function (name) {
+            return !!$.cookie(name) ? true : false;
+        },*/
+        /** Create a block div with classes, title and contenue
+         *  @param id {string} set the id of the div
+         *  @param value {string} set the value of the div
+         *  @param classes {string} set the classes style of the div
+         *  @param title {string} set the title of the div
+         *  @return {object} Element div
+         */
+        createDiv: function (id, value, classes, title) {
+            if (typeof (value) == 'undefined') value = '';
+            if (typeof (classes) == 'undefined') classes = '';
+            if (typeof (title) == 'undefined') title = '';
+            let classHtml = (classes === '') ? '' : ` class="${classes}"`;
+            let titleHtml = (title === '') ? '' : ` title="${title}"`;
+            return $(`<div id="${id}"${classHtml}${titleHtml}>${value}</div>`)
         },
         execScript: function (code) {
             let script = document.createElement('script');
@@ -151,7 +247,7 @@
             $(".chat_char_countdown").css("width", `calc( ${chat_char_countdown_w} + ${w}px )`);
         },*/
         setWidthChat: function (w) {
-            if (typeof (w) == 'undefined') w = 0;            
+            if (typeof (w) == 'undefined') w = 0;
             $("#chat_container").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px )`);
             $("#kong_game_ui .tabpane").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px )`);
             $("#chat_tab_pane").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px - 16px )`);
@@ -203,23 +299,23 @@
         /** Change the color of button and the cursor in function of the active mode
          *  @param {number} set the id of the mode
          */
-        setDisplayMode: function (i) {
-            if (typeof (i) != 'undefined') displayModeValue = i;
-            if (displayModeValue == -1) {
+        setStyleDisplayMode: function (i) {
+            //if (typeof (i) != 'undefined') cookieDisplayMode = i;
+            if (i == -1) {
                 jCSSRule("#bt_gameOnly", "color", darkMode ? color_white : color_black);
                 jCSSRule("#bt_gameOnly", "cursor", "default");
                 jCSSRule("#bt_gameNchat", "color", bgColor_grey_13);
                 jCSSRule("#bt_gameNchat", "cursor", "pointer");
                 jCSSRule("#bt_chatOnly", "color", bgColor_grey_13);
                 jCSSRule("#bt_chatOnly", "cursor", "pointer");
-            } else if (displayModeValue == 0) {
+            } else if (i == 0) {
                 jCSSRule("#bt_gameOnly", "color", bgColor_grey_13);
                 jCSSRule("#bt_gameOnly", "cursor", "pointer");
                 jCSSRule("#bt_gameNchat", "color", darkMode ? color_white : color_black);
                 jCSSRule("#bt_gameNchat", "cursor", "default");
                 jCSSRule("#bt_chatOnly", "color", bgColor_grey_13);
                 jCSSRule("#bt_chatOnly", "cursor", "pointer");
-            } else if (displayModeValue == 1) {
+            } else if (i == 1) {
                 jCSSRule("#bt_gameOnly", "color", bgColor_grey_13);
                 jCSSRule("#bt_gameOnly", "cursor", "pointer");
                 jCSSRule("#bt_gameNchat", "color", bgColor_grey_13);
@@ -333,9 +429,9 @@
             }
         }
     });
-    
-    jQuery.fn.cssNumber = function(prop){
-        var v = parseInt(this.css(prop),10);
+
+    jQuery.fn.cssNumber = function (prop) {
+        var v = parseInt(this.css(prop), 10);
         return isNaN(v) ? 0 : v;
     };
 

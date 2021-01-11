@@ -237,7 +237,7 @@ function loadCSS() {
         jCSSRule("#quicklinks > li", "margin", "0 14px 0 0");
 
         jCSSRule(".upper_gamepage", "background-color", bgColor_grey_00); // Bg of top of the page
-        jCSSRule("#maingamecontent #gameholder", "filter", "brightness(" + brightnessValue + ")"); // Game div
+        jCSSRule("#maingamecontent #gameholder", "filter", "brightness(" + cookieBrightness + ")"); // Game div
 
         // Chat        
         jCSSRule("#kong_game_ui .user_row .rank_icon, #kong_game_ui .user_row .friend_icon, #kong_game_ui .user_row .mobile_icon", "filter", "invert(1)"); // Icon in online players
@@ -553,7 +553,7 @@ function loadCSS() {
             jCSSRule("#bt_gameNchat", "color", bgColor_grey_13);
             jCSSRule("#bt_chatOnly", "color", color_white);
         }*/
-        $.setDisplayMode();
+        $.setStyleDisplayMode(displayMode);
         // Select menus
         jCSSRule("#forth_fontsize > span, #forth_brightness > span, #forth_volume > span", "color", color_white);
         jCSSRule("#forth_fontsize > span, #forth_brightness > span, #forth_volume > span", "height", "25px");
@@ -574,7 +574,7 @@ function loadCSS() {
         jCSSRule("#forth_fullscreen", "display", "none");
         // Locked
         //jCSSRule("#button.locked", "color", color_grey_07);
-        jCSSRule("#button.locked", "background-color", bgColor_red_01);
+        jCSSRule("button.locked", "background-color", bgColor_red_01);
         // Game
         jCSSRule(".game_ahead", "position", "absolute");
         jCSSRule(".game_ahead", "z-index", "10000");
