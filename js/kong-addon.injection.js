@@ -65,7 +65,6 @@ if (aFeatures['ping']['display'] || aFeatures['botsblocker']['display']) {
         // For each wiki's link in the msg
         s.append("    let regWiki = " + regWiki + ";");
         s.append("    while ((m = regWiki.exec(msg)) !== null) {");
-        //s.append("        msgOut = msgOut.replace(m[0], getHtmlLink('wiki', m));"); // Rewrite link alrdy did
         s.append("        msgOut = msgOut.replaceAll(m[0], getHtmlLink('wiki', m));");
         s.append("    }");
         // For each game's link in the msg

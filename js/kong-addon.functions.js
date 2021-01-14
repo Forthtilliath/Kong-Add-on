@@ -65,32 +65,11 @@
             if (typeof (titleSelect) != 'undefined') b = ` title="${titleSelect}"`;
             return $(`<${container} id="${idcontainer}" title="${title}"><span${a}>${label}</span><select id="${idSelect}"${b}>${options}</select></${container}>`);
         },
-        /** Generate a cookie
-         *  @param name {string} set the id of the cookie
-         *  @param value {string} set the value
-         *  @param time {number} set the time in days
-         *  @param path {string} set the path
-         */
-        /*addCookie: function (name, value, time, path) {
-            $.removeCookie(name, {
-                path: path
-            });
-            $.cookie(name, value, {
-                expires: time,
-                path: path
-            });
-
-        },*/
         /** Return the value of a cookie, if this one doesn't exist, this return default value
          *  @param name {string} set the name of the cookie
          *  @param defaultValue {string|number|boolean} set the value returned if the cookie doesn't exist
          *  @return {string} Value of the cookie or defaultValue
          */
-        /*getCookie: function (name, defaultValue) {
-            if (typeof defaultValue == "boolean")
-                return !!$.cookie(name) ? ($.cookie(name) === 'true') : defaultValue;
-            return !!$.cookie(name) ? $.cookie(name) : defaultValue;
-        },*/
         getCookieAll: function (name, defaultValue) {
             return $.getCookie(name, defaultValue, 0);
         },
@@ -125,6 +104,10 @@
                 return defaultValue;
             }
         },
+        /** Create or modify a cookie
+         *  @param name {string} set the id of the cookie
+         *  @param value {string} set the value
+         */
         setCookieAll: function (name, value) {
             $.setCookie(name, value, 0);
         },
@@ -142,7 +125,7 @@
                 iCookieTime = iCookiesTimeGame;
                 sCookiePath = window.location.pathname;
             }
-            
+
             if (Cookies.get(sCookieName) === undefined) { // If global cookie doesn't exist
                 Cookies.set(sCookieName, '', { // We create it
                     expires: iCookieTime,
@@ -166,9 +149,6 @@
                 path: sCookiePath
             });
         },
-        /*isCookieExists: function (name) {
-            return !!$.cookie(name) ? true : false;
-        },*/
         /** Create a block div with classes, title and contenue
          *  @param id {string} set the id of the div
          *  @param value {string} set the value of the div
@@ -233,24 +213,15 @@
         /** Resize the chat box
          *  @param {number} add the width of the box
          */
-        /*setWidthChat: function (w) {
-            if (typeof (w) == 'undefined') w = iDefaultChatWidth - $("#chat_container").css("width");
-            let chat_container_w = $("#chat_container").css("width");
-            let tabpane_w = $("#kong_game_ui .tabpane").css("width");
-            let chat_tab_pane_w = $("#chat_tab_pane").css("width");
-            let chat_input_w = $(".chat_input").css("width");
-            let chat_char_countdown_w = $(".chat_char_countdown").css("width");
-            $("#chat_container").css("width", `calc( ${chat_container_w} + ${w}px )`);
-            $("#kong_game_ui .tabpane").css("width", `calc( ${tabpane_w} + ${w}px )`);
-            $("#chat_tab_pane").css("width", `calc( ${chat_tab_pane_w} + ${w}px )`);
-            $(".chat_input").css("width", `calc( ${chat_input_w} + ${w}px )`);
-            $(".chat_char_countdown").css("width", `calc( ${chat_char_countdown_w} + ${w}px )`);
-        },*/
         setWidthChat: function (w) {
             if (typeof (w) == 'undefined') w = 0;
+            $.log(10,"iDefaultChatWidth= "+iDefaultChatWidth);
+            
             $("#chat_container").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px )`);
+            $("#chat_window").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px - 16px )`);
             $("#kong_game_ui .tabpane").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px )`);
             $("#chat_tab_pane").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px - 16px )`);
+            $("#alert_tab_pane").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px - 16px )`);
             $(".chat_input").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px - 16px - 8px )`);
             $(".chat_char_countdown").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px - 16px - 8px )`);
         },
@@ -300,7 +271,6 @@
          *  @param {number} set the id of the mode
          */
         setStyleDisplayMode: function (i) {
-            //if (typeof (i) != 'undefined') cookieDisplayMode = i;
             if (i == -1) {
                 jCSSRule("#bt_gameOnly", "color", darkMode ? color_white : color_black);
                 jCSSRule("#bt_gameOnly", "cursor", "default");

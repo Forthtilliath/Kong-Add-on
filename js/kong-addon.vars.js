@@ -30,21 +30,15 @@ const step_brightness = 10;
 const min_volume = 0;
 const max_volume = 100;
 
-const modif_chat_width = 185;
+const modif_chat_width = 185; // When chat only
 
 const songUrl = 'sound/pristine.flac';
-/*let volumeValue = $.getCookie('forth_volume', 0.1);
-let volumeValueOld = 0.1; // Usefull when mute
-let brightnessValue = $.getCookie('forth_brightness', '80%');
-let fontsizeValue = $.getCookie('forth_fontsize', '11');
-let displayModeValue = $.getCookie('forth_displayMode', '0');
-let darkMode = $.getCookie('forth_darkmode', true);*/
 let volumeValue = $.getCookieGame('VolumePing', 0.1);
 let volumeValueOld = 0.1; // Usefull when mute
 
 let darkMode = $.getCookieAll('DarkMode', true);
-let cookieLockScreen = $.getCookieGame( 'LockScreen', 'false');
-let cookieShowPlayers = $.getCookieAll( 'ShowPlayers', 'false');
+let cookieLockScreen = $.getCookieGame('LockScreen', 'false');
+let cookieShowPlayers = $.getCookieAll('ShowPlayers', 'false');
 let cookieFontSize = $.getCookieAll('FontSize', '11');
 let cookieBrightness = $.getCookieGame('Brightness', '80%');
 let cookieDisplayMode = $.getCookieGame('DisplayMode', '0');
@@ -208,17 +202,6 @@ const aFeatures = {
         'display': true
     }
 };
-
-/*aFeatures['hidechat'] = {
-    'display': false,
-    'position': 2,
-    'divname': '#forth_hideChat'
-};
-aFeatures['chatonly'] = {
-    'display': false,
-    'position': 3,
-    'divname': '#forth_chatOnly'
-};*/
 $.log(20, aFeatures);
 
 const nbFeatures = $.getNbFeatures(aFeatures);

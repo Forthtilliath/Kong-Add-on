@@ -240,7 +240,7 @@ function loadCSS() {
         jCSSRule("#maingamecontent #gameholder", "filter", "brightness(" + cookieBrightness + ")"); // Game div
 
         // Chat        
-        jCSSRule("#kong_game_ui .user_row .rank_icon, #kong_game_ui .user_row .friend_icon, #kong_game_ui .user_row .mobile_icon", "filter", "invert(1)"); // Icon in online players
+        jCSSRule("#kong_game_ui .user_row .rank_icon, #kong_game_ui .user_row .friend_icon, #kong_game_ui .user_row .mobile_icon", "filter", "invert(0.9)"); // Icon in online players
         jCSSRule("#kong_game_ui .user_row.muted .username", "color", color_red_00); // Users muter in online players
         jCSSRule("#kong_game_ui .tabpane", "background-color", bgColor_grey_01); // Conturn chat
         jCSSRule("#kong_game_ui .room_name_container", "color", color_grey_03); // Room name
@@ -271,7 +271,6 @@ function loadCSS() {
         jCSSRule("body:not(.no-flexbox) #chat_rooms_container .chat_message_window", "border", "2px double");
         jCSSRule("body:not(.no-flexbox) #chat_rooms_container .chat_message_window", "border-color", color_grey_01);
         jCSSRule("body:not(.no-flexbox) #chat_rooms_container .chat_message_window", "border-radius", "2px");
-        //jCSSRule(".chat_message_window_username", "line-height", "14px");
         jCSSRule(".chat_message_window span", "line-height", "120%"); // Interline & v-align messages
         jCSSRule(".chat_message_window span", "vertical-align", "middle");
         jCSSRule("#kong_game_ui .chat_message_window p span", "vertical-align", "middle");
@@ -357,7 +356,7 @@ function loadCSS() {
         jCSSRule("#alert_tab_pane_content a", "color", linkColor_red);
         jCSSRule("#alert_tab_pane_content > h4", "color", color_grey_03);
         jCSSRule("#session_conflict_content_for_chat_tab > h4", "color", color_grey_03);
-        jCSSRule(".disconnect_content .disconnect_intro", "filter", "invert(1)"); // Alert logo
+        jCSSRule(".disconnect_content .disconnect_intro", "filter", "invert(0.96)"); // Alert logo
         jCSSRule("#kong_game_ui ul.main_tabs li.closeable a.active .close_tab_link", "filter", "invert(1)"); // Close icon
         jCSSRule("#global .sitemessage h2, #flash_messages_target .sitemessage h2", "color", color_black);
         jCSSRule("#global .sitemessage, #flash_messages_target .sitemessage", "background-color", bgColor_grey_06);
@@ -490,7 +489,6 @@ function loadCSS() {
         jCSSRule("#bt_darkmode", "box-shadow", "1px 1px 3px " + color_white);
     }
     if (namePage == 'games') {
-        //jCSSRule("#maingamecontent .game_table .links_connect", "padding-top", "5px");
         jCSSRule("#maingamecontent .game_table .links_connect", "height", "25px");
         // Main box
         jCSSRule("#forth_features", "display", "flex");
@@ -540,19 +538,6 @@ function loadCSS() {
         jCSSRule("#bt_chatOnly", "border-radius", "0 5px 5px 0");
         jCSSRule("#bt_chatOnly", "border-left", "none");
         jCSSRule("#bt_gameOnly, #bt_chatOnly, #bt_gameNchat", "width", "30px");
-        /*if (displayModeValue == 0) {
-            jCSSRule("#bt_gameOnly", "color", bgColor_grey_13);
-            jCSSRule("#bt_gameNchat", "color", color_white);
-            jCSSRule("#bt_chatOnly", "color", bgColor_grey_13);
-        } else if (displayModeValue == -1) {
-            jCSSRule("#bt_gameOnly", "color", color_white);
-            jCSSRule("#bt_gameNchat", "color", bgColor_grey_13);
-            jCSSRule("#bt_chatOnly", "color", bgColor_grey_13);
-        } else if (displayModeValue == 1) {
-            jCSSRule("#bt_gameOnly", "color", bgColor_grey_13);
-            jCSSRule("#bt_gameNchat", "color", bgColor_grey_13);
-            jCSSRule("#bt_chatOnly", "color", color_white);
-        }*/
         $.setStyleDisplayMode(displayMode);
         // Select menus
         jCSSRule("#forth_fontsize > span, #forth_brightness > span, #forth_volume > span", "color", color_white);
@@ -573,7 +558,6 @@ function loadCSS() {
         jCSSRule("#forth_fullscreen", "z-index", "9999");
         jCSSRule("#forth_fullscreen", "display", "none");
         // Locked
-        //jCSSRule("#button.locked", "color", color_grey_07);
         jCSSRule("button.locked", "background-color", bgColor_red_01);
         // Game
         jCSSRule(".game_ahead", "position", "absolute");

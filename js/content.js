@@ -25,7 +25,7 @@ $(function () {
     }
 
     $(window).resize(function () {
-        if ($(window).height() < (parseInt($("#maingame").css("height"),10) + 30 /* height button */ + 20 /* padding gamebox */)) {
+        if ($(window).height() < (parseInt($("#maingame").css("height"), 10) + 30 /* height button */ + 20 /* padding gamebox */ )) {
             $("#div_darkmode").hide();
         } else {
             $("#div_darkmode").show();
@@ -42,8 +42,21 @@ $(function () {
         // Update the value
         darkMode = !darkMode;
         // Update the cookie
-        //$.addCookie('forth_darkmode', darkMode, 30, '/');
         $.setCookieAll('DarkMode', darkMode);
         loadCSS();
     });
+
+    //The magic code to add show/hide custom event triggers
+    /*(function ($) {
+        $.each(['show', 'hide', 'fadeOut', 'fadeIn'], function (i, ev) {
+            var el = $.fn[ev];
+            $.fn[ev] = function () {
+                var result = el.apply(this, arguments);
+                result.promise().done(function () {
+                    this.triggerHandler(ev, [result]);
+                })
+                return result;
+            };
+        });
+    })(jQuery);*/
 });

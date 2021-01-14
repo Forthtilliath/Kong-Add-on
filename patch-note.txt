@@ -14,6 +14,7 @@
         darkMode/onlineplayers/textsize
     - kong_addon_games on kongregate.com/games
         lockscreen/displayMode/volume/brightness
+- Fix when DarkMode button hide
 
 
 CSS à corriger
