@@ -21,8 +21,8 @@ function loadCSS() {
         jCSSRule("#headerwrap", "background-color", bgColor_red_01); // Header bg color
         jCSSRule("#kong_header_link", "filter", "grayscale(0.6)"); // Logo dark
         // Menu user
-        jCSSRule(".welcome-user>li", "background-color", bgColor_red_00); // Links menu colors
-        jCSSRule(".welcome-user>li:hover, .welcome-user .messages .msg-count", "background-color", bgColor_grey_02);
+        jCSSRule(".welcome-user>li, .welcome-user .messages .msg-count", "background-color", bgColor_red_00); // Links menu colors
+        jCSSRule(".welcome-user>li:hover, .welcome-user>li.messages:hover  .msg-count", "background-color", bgColor_grey_02);
         jCSSRule(".welcome-guest", "background-color", bgColor_red_00);
         jCSSRule(".welcome-guest .text_field", "background-color", bgColor_grey_00);
         jCSSRule(".welcome-guest .text_field", "color", color_grey_00);
@@ -448,6 +448,7 @@ function loadCSS() {
         jCSSRule("div#highscores_board li.current", "color", color_grey_06);
         jCSSRule("select#statistic_id, select#stat_selector", "background-color", bgColor_grey_00);
         jCSSRule("select#statistic_id, select#stat_selector", "color", color_white);
+        jCSSRule("#kong_game_ui #accomplishments_pane_title", "color", color_white);
 
         // Tab Accomplishments
         jCSSRule("div#accomplishments_tab_content a, div#accomplishments_tab_content a:link, div#accomplishments_tab_content a:active", "color", linkColor_red);
@@ -473,20 +474,34 @@ function loadCSS() {
     /***** FORTH ADDON *****************************************************************************************************/
     /***********************************************************************************************************************/
     if (namePage != '') {
-        jCSSRule("#div_darkmode", "top", "5px");
-        jCSSRule("#div_darkmode", "left", "5px");
-        jCSSRule("#div_darkmode", "position", "fixed");
-        jCSSRule("#div_darkmode", "z-index", "10000");
-        jCSSRule("#bt_darkmode", "width", "40px");
-        jCSSRule("#bt_darkmode", "height", "25px");
-        jCSSRule("#bt_darkmode", "padding", "5px");
-        jCSSRule("#bt_darkmode", "cursor", "pointer");
-        jCSSRule("#bt_darkmode", "border", "1px solid");
-        jCSSRule("#bt_darkmode", "border-color", color_grey_00);
-        jCSSRule("#bt_darkmode", "background-color", bgColor_grey_00);
-        jCSSRule("#bt_darkmode", "color", color_white);
-        jCSSRule("#bt_darkmode", "border-radius", "5px");
-        jCSSRule("#bt_darkmode", "box-shadow", "1px 1px 3px " + color_white);
+        if (aFeatures['darkMode']['display']) {
+            jCSSRule("#div_darkmode", "top", "5px");
+            jCSSRule("#div_darkmode", "left", "5px");
+            jCSSRule("#div_darkmode", "position", "fixed");
+            jCSSRule("#div_darkmode", "z-index", "10000");
+        }
+        if (aFeatures['unreadMessages']['display']) {
+            jCSSRule("#div_unreadMessages", "top", "5px");
+            jCSSRule("#div_unreadMessages", "right", "5px");
+            jCSSRule("#div_unreadMessages", "position", "fixed");
+            jCSSRule("#div_unreadMessages", "z-index", "10000");
+            jCSSRule("#div_unreadMessages", "display", "none");
+        }
+        if (aFeatures['darkMode']['display'] || aFeatures['unreadMessages']['display']) {
+            jCSSRule("#bt_darkmode, #bt_unreadMessages", "width", "40px");
+            jCSSRule("#bt_darkmode, #bt_unreadMessages", "height", "25px");
+            jCSSRule("#bt_darkmode, #bt_unreadMessages", "padding", "5px");
+            jCSSRule("#bt_darkmode, #bt_unreadMessages", "cursor", "pointer");
+            jCSSRule("#bt_darkmode, #bt_unreadMessages", "border", "1px solid");
+            jCSSRule("#bt_darkmode, #bt_unreadMessages", "border-color", color_grey_00);
+            jCSSRule("#bt_darkmode, #bt_unreadMessages", "background-color", bgColor_grey_00);
+            jCSSRule("#bt_darkmode, #bt_unreadMessages", "color", color_white);
+            jCSSRule("#bt_darkmode, #bt_unreadMessages", "border-radius", "5px");
+            jCSSRule("#bt_darkmode, #bt_unreadMessages", "box-shadow", "1px 1px 3px " + color_white);
+            jCSSRule("#bt_unreadMessages", "width", "auto");
+            jCSSRule("#bt_unreadMessages", "min-width", "40px");
+            jCSSRule("#bt_unreadMessages #msg-count", "padding", "0 5px");
+        }
     }
     if (namePage == 'games') {
         jCSSRule("#maingamecontent .game_table .links_connect", "height", "25px");

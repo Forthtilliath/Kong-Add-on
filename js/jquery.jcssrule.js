@@ -112,6 +112,11 @@
         }
         setSheet();
     };
+    
+    // Add a function to remove all rules
+    window.jCSSReset = function() {
+        stylesheet.textContent = '';
+    }
 
     /** Get a darker color
      * @param {string} color color string formated as #ffffff

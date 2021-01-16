@@ -65,6 +65,9 @@
             if (typeof (titleSelect) != 'undefined') b = ` title="${titleSelect}"`;
             return $(`<${container} id="${idcontainer}" title="${title}"><span${a}>${label}</span><select id="${idSelect}"${b}>${options}</select></${container}>`);
         },
+        parseBool: function (val) {
+            return val === true || val === "true"
+        },
         /** Return the value of a cookie, if this one doesn't exist, this return default value
          *  @param name {string} set the name of the cookie
          *  @param defaultValue {string|number|boolean} set the value returned if the cookie doesn't exist
@@ -215,8 +218,8 @@
          */
         setWidthChat: function (w) {
             if (typeof (w) == 'undefined') w = 0;
-            $.log(10,"iDefaultChatWidth= "+iDefaultChatWidth);
-            
+            $.log(10, "iDefaultChatWidth= " + iDefaultChatWidth);
+
             $("#chat_container").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px )`);
             $("#chat_window").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px - 16px )`);
             $("#kong_game_ui .tabpane").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px )`);

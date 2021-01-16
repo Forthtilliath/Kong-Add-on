@@ -14,7 +14,12 @@
         darkMode/onlineplayers/textsize
     - kong_addon_games on kongregate.com/games
         lockscreen/displayMode/volume/brightness
-- Fix when DarkMode button hide
+- Added darkMode as feature to be able to unable it easily if needed
+- Reset styles instead of add new styles when darkmode change
+- Fixed when DarkMode button hide
+- Fixed resize correctly gameOnly & chatOnly
+- Fixed boolean values of cookies
+- Fixed bg hover unread message
 
 
 CSS à corriger
@@ -23,3 +28,18 @@ https://www.kongregate.com/forums/2-off-topic
 https://www.kongregate.com/users/2623156/posts
 https://www.kongregate.com/accounts/darkfang77
 Relog chat
+
+-------------------
+TO DO
+-------------------
+- New button for messagerie when new message
+    - Show the button only if > 0 message on the box & lockscreen
+    - Click on the button
+        - Open a new window
+        - Hide the button
+    - Check if new message
+        
+        
+- Private messagerie
+
+- Hide/Show check if feature active or not

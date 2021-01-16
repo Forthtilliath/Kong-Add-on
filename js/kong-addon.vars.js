@@ -36,9 +36,8 @@ const songUrl = 'sound/pristine.flac';
 let volumeValue = $.getCookieGame('VolumePing', 0.1);
 let volumeValueOld = 0.1; // Usefull when mute
 
-let darkMode = $.getCookieAll('DarkMode', true);
-let cookieLockScreen = $.getCookieGame('LockScreen', 'false');
-let cookieShowPlayers = $.getCookieAll('ShowPlayers', 'false');
+let cookieLockScreen = $.parseBool($.getCookieGame('LockScreen', 'false'));
+let cookieShowPlayers = $.parseBool($.getCookieAll('ShowPlayers', 'false'));
 let cookieFontSize = $.getCookieAll('FontSize', '11');
 let cookieBrightness = $.getCookieGame('Brightness', '80%');
 let cookieDisplayMode = $.getCookieGame('DisplayMode', '0');
@@ -146,8 +145,9 @@ const icon_brightness = "fas fa-adjust fa-w-18";
 const icon_chatonly = "fas fa-comment";
 const icon_gameonly = "fas fa-gamepad";
 const icon_gameNchat = "fas fa-band-aid";
+const icon_unreadMessage = "fas fa-envelope";
 
-// Regexp 
+// Regexp for rewriter url on chat
 const regWiki = /((https:\/\/idle-grindia\.fandom\.com\/wiki\/)(\w+)([#\w?]*)?)(?!.+\1)/ig;
 const regGame = /[^<a href="]{1}(http[s]?:\/\/www\.kongregate\.com\/games\/\w+\/)([\-\w]+)([#\w?]*){1}[^" target="_blank">]{1}/ig;
 const regAccount = /[^<a href="]{1}(http[s]?:\/\/www\.kongregate\.com\/accounts\/)(\w+){1}[^" target="_blank">]{1}/ig;
@@ -158,9 +158,9 @@ const aPropRefused = ['color', 'background', 'background-color', 'background-ima
 // Properties we want to always change even when darkmode is off
 const aElemAlways = ["#forth_fullscreen", "#forth_messagebox", "#forth_messagebox #forth_messagetitle", "#forth_messagebox #forth_messagedesc", "#forth_fontsize > span, #forth_brightness > span, #forth_volume > span", "span.onlyGameOrChat", "#bt_gameOnly", "#bt_gameNchat", "#bt_chatOnly"];
 
-// Features displayed
 const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
+// Features displayed
 const aFeatures = {
     'lockscreen': {
         'display': true,
@@ -172,7 +172,7 @@ const aFeatures = {
         'position': 1,
         'divname': '#forth_onlineplayers'
     },
-    'displayMode': {
+    'displayMode': { // gameOnly / chatOnly / both
         'display': true,
         'position': 2,
         'divname': '#forth_displayMode'
@@ -192,6 +192,14 @@ const aFeatures = {
         'position': 5,
         'divname': '#forth_volume'
     },
+    'darkMode': {
+        'display': true,
+        'divname': '#div_darkmode'
+    },
+    'unreadMessages': {
+        'display': true,
+        'divname': '#div_unreadMessages'
+    },
     'botsblocker': {
         'display': true
     },
@@ -203,6 +211,9 @@ const aFeatures = {
     }
 };
 $.log(20, aFeatures);
+
+let darkMode = aFeatures['darkMode']['display'] ? $.parseBool($.getCookieAll('DarkMode', 'true')) : false;
+$.log(20, "darkMode= "+darkMode);
 
 const nbFeatures = $.getNbFeatures(aFeatures);
 let gameOrChatHided = false;

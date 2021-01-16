@@ -7,7 +7,7 @@
  * 
  * @fileoverview List of functions which are only executed on game pages. Among this function, there are buttons which show/hide quick links, dark mode, lock screen, hide online players, change text size, change brightless and change volume of ding when someone post a message in the chat
  * @author Forth
- * @version 3
+ * @version 4
  */
 "use strict";
 
@@ -44,7 +44,22 @@ $(document).ready(function () {
 
     let gameName = $(".gamepage_title_block > h1[itemprop='name']").text();
 
-    $("#alert_tab_pane").css("width", $("#chat_tab_pane").css("width")); // Fixe the default width which is too high // DO NOT WORK
+    //$("#alert_tab_pane").css("width", $("#chat_tab_pane").css("width")); // Fixe the default width which is too high // DO NOT WORK
+
+    //if (aFeatures['lockscreen']['display'] && aFeatures['unreadMessages']['display']) { BUG WITH IT
+    // Actions did when the number of unread messages change
+    function actionUnreadMessage() {
+        $.log(10, "Call function actionUnreadMessage()");
+
+        // If message unread and lockScreen on
+        if ((parseInt($("#profile_control_unread_message_count").text(), 10) > 0) && $("#forth_fullscreen").is(":visible")) {
+            $("#msg-count").text($("#profile_control_unread_message_count").text()); // Show the number of new messages
+            $("#div_unreadMessages").show();
+        } else {
+            $("#div_unreadMessages").hide();
+        }
+    }
+    //}
 
     /**** BUTTON QUICK LINKS START ******************************************************************************************
      * - Hide all quick links to gain space
@@ -112,7 +127,17 @@ $(document).ready(function () {
 
         // Evenement
         $('#bt_lockscreen').click(function () {
-            if ($("#forth_fullscreen").css("display") == "none") { // Locked screen
+            //if ($("#forth_fullscreen").css("display") == "none") { // Locked screen
+            //if (!$("#forth_fullscreen").is(":visible")) { // Locked screen
+            if ($("#forth_fullscreen").is(":visible")) { // Unlocked screen
+                $("#forth_fullscreen").hide(); // Background
+                $("#floating_game_holder").removeClass("game_ahead");
+                $(this).removeClass("locked");
+                jCSSRule("body", "overflow", "");
+                jCSSRule("#floating_game_holder", "padding-top", "4px");
+                $(this).setButton($.addIcon(icon_lockscreen_off), 'Lock screen');
+                $.setCookieGame('LockScreen', 'false');
+            } else { // Locked screen
                 $("#forth_fullscreen").show(); // Background
                 $("#floating_game_holder").addClass("game_ahead"); // Put the game ahead
                 $(this).addClass("locked"); // Change the style of the button
@@ -121,14 +146,9 @@ $(document).ready(function () {
                 $(this).setButton($.addIcon(icon_lockscreen_on), 'Unlock screen');
                 $("#floating_game_holder").centrerElementAbsolu(); // Center the game
                 $.setCookieGame('LockScreen', 'true');
-            } else { // Unlocked screen
-                $("#forth_fullscreen").hide(); // Background
-                $("#floating_game_holder").removeClass("game_ahead");
-                $(this).removeClass("locked");
-                jCSSRule("body", "overflow", "");
-                jCSSRule("#floating_game_holder", "padding-top", "4px");
-                $(this).setButton($.addIcon(icon_lockscreen_off), 'Lock screen');
-                $.setCookieGame('LockScreen', 'false');
+            }
+            if (aFeatures['unreadMessages']['display']) {
+                actionUnreadMessage();
             }
         });
 
@@ -148,28 +168,29 @@ $(document).ready(function () {
         let pos = aFeatures['onlineplayers']['position'];
         // Create the button
         let value = '';
-        if (cookieShowPlayers == 'true') { // Show
+        if (cookieShowPlayers) { // Show
             value = new Button('bt_onlineplayers', 'Hide online players', $.addIcon(icon_onlinep_on)).html;
         } else { // Hide
             value = new Button('bt_onlineplayers', 'Show online players', $.addIcon(icon_onlinep_off)).html;
-            jCSSRule(".chat_room_template > .users_in_room", "display", "none");
+            jCSSRule(".chat_room_template > .users_in_room", "display", "none"); // Hide don't work here
         }
         $(`#forth_feature_${pos}`).append($.createDiv('forth_onlineplayers', value));
 
         // Evenement
         $('#bt_onlineplayers').click(function () {
             $(".chat_room_template > .users_in_room").toggle(500, function () {
-                if (jQuery(".chat_room_template > .users_in_room").css("display") == "none") {
-                    // Hide
-                    $('#bt_onlineplayers').html($.addIcon(icon_onlinep_off));
-                    $('#bt_onlineplayers').prop('title', 'Show online players');
-                    // Update the cookie to save setting after refreshs
-                    $.setCookieAll('ShowPlayers', 'false');
-                } else { // Show
+                //if (jQuery(".chat_room_template > .users_in_room").css("display") == "none") {
+                //if (!jQuery(".chat_room_template > .users_in_room").is(":visible")) {
+                if ($(".chat_room_template > .users_in_room").is(":visible")) { // Show
                     $('#bt_onlineplayers').html($.addIcon(icon_onlinep_on));
                     $('#bt_onlineplayers').prop('title', 'Hide online players');
                     // Update the cookie to save setting after refreshs
                     $.setCookieAll('ShowPlayers', 'true');
+                } else { // Hide
+                    $('#bt_onlineplayers').html($.addIcon(icon_onlinep_off));
+                    $('#bt_onlineplayers').prop('title', 'Show online players');
+                    // Update the cookie to save setting after refreshs
+                    $.setCookieAll('ShowPlayers', 'false');
                 }
                 $("#chat_rooms_container .chat_message_window").scrollBottom();
             });
@@ -306,7 +327,8 @@ $(document).ready(function () {
                 $("#quicklinks").hide(); // Hide quicklinks
                 $("#tr_features").show(); // Show tr_features
                 $('#forth_features').prependTo('#tr_features > td'); // Move buttons in tr_features
-                if ($("#forth_fullscreen").css("display") == "block") // Center the chat/game if fullscreen
+                //if ($("#forth_fullscreen").css("display") == "block") // Center the chat/game if fullscreen
+                if ($("#forth_fullscreen").is(":visible")) // Center the chat/game if fullscreen
                     $("#floating_game_holder").centrerElementAbsolu();
                 gameOrChatHided = true;
             }
@@ -325,9 +347,9 @@ $(document).ready(function () {
 
                 // Resize box
                 $.log(10, "gameiframe= " + $("#gameiframe").css("width"));
-                while( $("#gameiframe").css("width") == 0 ) {
+                while ($("#gameiframe").css("width") == 0) {
                     setTimeout(function () {
-                        
+
                     }, 1000);
                 }
                 $.setHeightBoth(`calc(${iDefaultBothHeight} + ${menuButtonsHeight2})`);
@@ -445,10 +467,10 @@ $(document).ready(function () {
                 $.log(10, "onHide launched !");
                 $.setWidthChat(modif_chat_width);
             });*/
-            
+
             //$("#chat_rooms_container").on('show', function () {
-            
-            $.initialize("#chat_rooms_container", function() {
+
+            $.initialize("#chat_rooms_container", function () {
                 $.log(10, "chat_rooms_container ready launched !");
                 $.setWidthChat(modif_chat_width);
                 let width_nameGame = $("#maingame").width() - $(".user_connection").width() - 20;
@@ -470,13 +492,67 @@ $(document).ready(function () {
             click_gameNchat();
         });
     }
-});
 
-if (aFeatures['lockscreen']['display']) {
-    /** Each time the window is resized, we keep the game centered */
-    $(window).resize(function () {
-        if ($("#forth_fullscreen").css("display") == "block") {
-            $("#floating_game_holder").centrerElementAbsolu();
-        }
-    });
-}
+    if (aFeatures['lockscreen']['display'] && aFeatures['unreadMessages']['display']) {
+
+        // Create the button with the icone & span for unread messages count
+        $.addButton('div', 'div_unreadMessages', 'bt_unreadMessages', 'Read new message', $.addIcon(icon_unreadMessage) + '<span id="msg-count"></span>').appendTo("body");
+
+        // Actions did when the number of unread messages change
+        /*function actionUnreadMessage() {
+            $.log(10, "Call function actionUnreadMessage()");
+            
+            // If message unread and lockScreen on
+            if ((parseInt($("#profile_control_unread_message_count").text(), 10) > 0) && $("#forth_fullscreen").is(":visible")) {
+                $("#msg-count").text($("#profile_control_unread_message_count").text()); // Show the number of new messages
+                $("#div_unreadMessages").show();
+            } else {
+                $("#div_unreadMessages").hide();
+            }
+        }*/
+
+        //actionUnreadMessage(); // No needed, observer is called once when the page is loading
+
+        //$("#forth_fullscreen").css("display")
+        $.log(20, "#forth_fullscreen is visible ? " + $("#forth_fullscreen").is(":visible"));
+
+        // create a new instance of `MutationObserver` named `observer`,
+        // passing it a callback function
+        const observer = new MutationObserver(function () {
+            console.log('callback that runs when observer is triggered');
+            actionUnreadMessage();
+        });
+
+        // call `observe()` on that MutationObserver instance,
+        // passing it the element to observe, and the options object
+        observer.observe($("#profile_control_unread_message_count")[0], {
+            //observer.observe(document.getElementById("profile_control_unread_message_count"), {
+            childList: true
+        });
+
+        // Hide darkMode button when the height of the page is too low
+        $(window).resize(function () {
+            if ($(window).height() < (parseInt($("#maingame").css("height"), 10) + 60 /* height button */ + 20 /* padding gamebox */ )) {
+                $("#div_unreadMessages").hide();
+            } else {
+                $("#div_unreadMessages").show();
+            }
+        });
+
+        // Click on the button
+        $('#bt_unreadMessages').click(function () {
+            $("#div_unreadMessages").hide(); // Hide the div with the button
+            window.open($("#my-messages-link").attr('href')); // Open a new page to show new messages
+        });
+    }
+
+    if (aFeatures['lockscreen']['display']) {
+        /** Each time the window is resized, we keep the game centered */
+        $(window).resize(function () {
+            //if ($("#forth_fullscreen").css("display") == "block") {
+            if ($("#forth_fullscreen").is(":visible")) {
+                $("#floating_game_holder").centrerElementAbsolu();
+            }
+        });
+    }
+});
