@@ -20,7 +20,8 @@
 - Fixed resize correctly gameOnly & chatOnly
 - Fixed boolean values of cookies
 - Fixed bg hover unread message
-
+- Fixed bg stickers
+- Fixed a random bug when stickers were not show
 
 CSS à corriger
 https://www.kongregate.com/accounts/Blondasse/points

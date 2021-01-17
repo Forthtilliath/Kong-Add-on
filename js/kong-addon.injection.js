@@ -166,6 +166,7 @@ if (aFeatures['ping']['display'] || aFeatures['botsblocker']['display']) {
     s.append("        g && e.push('is_self');");
     s.append("        if (c = 'string' === typeof b ? null : b.stickerId) d.template = ChatDialogue.STICKER_MESSAGE_TEMPLATE, d.stickerId = c, d.stickerVariant = b.stickerVariant, d.stickerPackName = b.stickerPackName, d.stickerLevel = b.level, d.stickerQuality = 100 <= b.level ? b.quality + ' is-ranked' : b.quality, d.stickerUrl = this._sticker_manager.url(c, d.stickerVariant, 72);");
     if (aFeatures["urlrewriter"]["display"]) {
+        s.append("console.log('c = '+c)");
         s.append("        b = urlRewritter(b);"); // URL Rewritter
     }
     s.append("        a = this.messageContent({");

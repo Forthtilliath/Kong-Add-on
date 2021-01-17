@@ -210,10 +210,25 @@ const aFeatures = {
         'display': true
     }
 };
+
+
+const aFeatures2 = {
+    'lockscreen': new Feature('lockscreen', true, 0, '#forth_lockscreen'),
+    'onlineplayers': new Feature('onlineplayers', true, 1, '#forth_onlineplayers'),
+    'displayMode': new Feature('displayMode', true, 2, '#forth_displayMode'),
+    'textsize': new Feature('textsize', true, 3, '#forth_fontsize'),
+    'brightness': new Feature('brightness', true, 4, '#forth_brightness'),
+    'ping': new Feature('ping', true, 5, '#forth_volume'),
+    'darkMode': new Feature('darkMode', true, -1, '#div_darkmode'),
+    'unreadMessages': new Feature('unreadMessages', true, -1, '#div_unreadMessages'),
+    'botsblocker': new Feature('botsblocker', true, -1, ''),
+    'urlrewriter': new Feature('urlrewriter', true, -1, ''),
+    'notifications': new Feature('notifications', true, -1, '')
+};
 $.log(20, aFeatures);
 
 let darkMode = aFeatures['darkMode']['display'] ? $.parseBool($.getCookieAll('DarkMode', 'true')) : false;
-$.log(20, "darkMode= "+darkMode);
+$.log(20, "darkMode= " + darkMode);
 
 const nbFeatures = $.getNbFeatures(aFeatures);
 let gameOrChatHided = false;

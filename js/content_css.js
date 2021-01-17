@@ -288,6 +288,11 @@ function loadCSS() {
         jCSSRule("#user_description .mini_about_me p", "color", color_grey_00); // Favorite Games
         jCSSRule("#user_mini_profile_contents #user_info ul.user_actions li", "filter", "invert(1)"); // Icons Unfriend / Mute / Report
         jCSSRule("#user_mini_profile_contents #user_info ul.user_actions li a", "color", linkColor_red_invert); // Labels Unfriend / Mute / Report
+        // Stickers
+        
+        jCSSRule(".chat-msg-sticker__tooltip", "background-color", bgColor_grey_09);
+        jCSSRule(".chat-msg-sticker__tooltip::before", "border-color", `transparent ${bgColor_grey_09} transparent transparent`);
+        jCSSRule(".chat-sticker-tab__normal, .chat-sticker-tab__shiny", "background-color", bgColor_grey_00);
 
         // Input
         jCSSRule("#kong_game_ui .chat_controls .chat_input", "background-color", bgColor_grey_00);

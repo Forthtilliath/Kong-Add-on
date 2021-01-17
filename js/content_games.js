@@ -53,10 +53,15 @@ $(document).ready(function () {
 
         // If message unread and lockScreen on
         if ((parseInt($("#profile_control_unread_message_count").text(), 10) > 0) && $("#forth_fullscreen").is(":visible")) {
-            $("#msg-count").text($("#profile_control_unread_message_count").text()); // Show the number of new messages
-            $("#div_unreadMessages").show();
+            //$("#msg-count").text($("#profile_control_unread_message_count").text()); // Show the number of new messages
+            $.copyText('#msg-count','#profile_control_unread_message_count'); //// Show the number of new messages
+            //$("#div_unreadMessages").show();
+            //$(aFeatures['unreadMessages']['divname']).show();
+            $.getFeatureDivByName('unreadMessages').show();
         } else {
-            $("#div_unreadMessages").hide();
+            //$("#div_unreadMessages").hide();
+            //$(aFeatures['unreadMessages']['divname']).hide();
+            $.getFeatureDivByName('unreadMessages').hide();
         }
     }
     //}
@@ -116,7 +121,8 @@ $(document).ready(function () {
      * - Add evenement on click
      ****/
 
-    if (aFeatures['lockscreen']['display']) {
+    //if (aFeatures['lockscreen']['display']) {
+    if ($.isFeatureActive('lockscreen')) {
         let pos = aFeatures['lockscreen']['position'];
         // Add the fullscreen mode in hide
         $('<div id="forth_fullscreen"></div>').appendTo("body");
@@ -164,7 +170,8 @@ $(document).ready(function () {
      * - Add evenement on click
      ****/
 
-    if (aFeatures['onlineplayers']['display']) {
+    //if (aFeatures['onlineplayers']['display']) {
+    if ($.isFeatureActive('onlineplayers')) {
         let pos = aFeatures['onlineplayers']['position'];
         // Create the button
         let value = '';
@@ -204,7 +211,8 @@ $(document).ready(function () {
      * - Add evenement on change
      ****/
 
-    if (aFeatures['textsize']['display']) {
+    //if (aFeatures['textsize']['display']) {
+    if ($.isFeatureActive('textsize')) {
         let pos = aFeatures['textsize']['position'];
         // Create the select menu
         let sOptionsSize = '';
@@ -239,7 +247,8 @@ $(document).ready(function () {
      * - Add evenement on change
      ****/
 
-    if (aFeatures['brightness']['display']) {
+    //if (aFeatures['brightness']['display']) {
+    if ($.isFeatureActive('brightness')) {
         let pos = aFeatures['brightness']['position'];
         // Create select menu
         let sOptionsBrightness = '';
@@ -269,7 +278,8 @@ $(document).ready(function () {
      * - Add evenement on click on icon
      ****/
 
-    if (aFeatures['ping']['display']) {
+    //if (aFeatures['ping']['display']) {
+    if ($.isFeatureActive('ping')) {
         let pos = aFeatures['ping']['position'];
         // Create the select menu
         let sOptionsVolume = '';
@@ -307,7 +317,8 @@ $(document).ready(function () {
 
     /**** BUTTON CHAT ONLY END */
 
-    if (aFeatures['displayMode']['display']) {
+    //if (aFeatures['displayMode']['display']) {
+    if ($.isFeatureActive('displayMode')) {
         let pos = aFeatures['displayMode']['position'];
         // Create the buttons
         let bt_gameOnly = new Button('bt_gameOnly', 'Show only the game', $.addIcon(icon_gameonly));
@@ -328,7 +339,7 @@ $(document).ready(function () {
                 $("#tr_features").show(); // Show tr_features
                 $('#forth_features').prependTo('#tr_features > td'); // Move buttons in tr_features
                 //if ($("#forth_fullscreen").css("display") == "block") // Center the chat/game if fullscreen
-                if ($("#forth_fullscreen").is(":visible")) // Center the chat/game if fullscreen
+                if (aFeatures['lockscreen']['display'] && $("#forth_fullscreen").is(":visible")) // Center the chat/game if fullscreen
                     $("#floating_game_holder").centrerElementAbsolu();
                 gameOrChatHided = true;
             }
@@ -493,7 +504,8 @@ $(document).ready(function () {
         });
     }
 
-    if (aFeatures['lockscreen']['display'] && aFeatures['unreadMessages']['display']) {
+    //if (aFeatures['lockscreen']['display'] && aFeatures['unreadMessages']['display']) {
+    if ($.isFeatureActive('lockscreen') && $.isFeatureActive('unreadMessages')) {
 
         // Create the button with the icone & span for unread messages count
         $.addButton('div', 'div_unreadMessages', 'bt_unreadMessages', 'Read new message', $.addIcon(icon_unreadMessage) + '<span id="msg-count"></span>').appendTo("body");
@@ -533,20 +545,24 @@ $(document).ready(function () {
         // Hide darkMode button when the height of the page is too low
         $(window).resize(function () {
             if ($(window).height() < (parseInt($("#maingame").css("height"), 10) + 60 /* height button */ + 20 /* padding gamebox */ )) {
-                $("#div_unreadMessages").hide();
+                //$("#div_unreadMessages").hide();
+                $(aFeatures['unreadMessages']['divname']).hide();
             } else {
-                $("#div_unreadMessages").show();
+                //$("#div_unreadMessages").show();
+                $(aFeatures['unreadMessages']['divname']).show();
             }
         });
 
         // Click on the button
         $('#bt_unreadMessages').click(function () {
-            $("#div_unreadMessages").hide(); // Hide the div with the button
+            //$("#div_unreadMessages").hide(); // Hide the div with the button
+            $(aFeatures['unreadMessages']['divname']).hide();
             window.open($("#my-messages-link").attr('href')); // Open a new page to show new messages
         });
     }
 
-    if (aFeatures['lockscreen']['display']) {
+    //if (aFeatures['lockscreen']['display']) {
+    if ($.isFeatureActive('lockscreen')) {
         /** Each time the window is resized, we keep the game centered */
         $(window).resize(function () {
             //if ($("#forth_fullscreen").css("display") == "block") {

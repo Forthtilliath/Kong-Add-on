@@ -22,4 +22,29 @@ class Button {
     get html() {
         return `<button id="${this.idbutton}" title="${this.title}">${this.value}</button>`;
     }
-}
+};
+
+class Feature {
+    constructor(id, active, position, divname) {
+        this.id = id;
+        this.active = active;
+        this.position = position;
+        this.divname = divname;
+    }
+
+    getId() {
+        return this.id;
+    }
+
+    getActive() {
+        return this.active;
+    }
+
+    getPosition() {
+        return this.position;
+    }
+
+    getDivname() {
+        return this.divname;
+    }
+};

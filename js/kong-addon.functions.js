@@ -264,11 +264,25 @@
         },
         /** Get the feature's div where a feature is 
          * @param {string} set the name of the feature
-         *
+         * @return {object} Div feature
          */
         getFeatureDiv: function (sName) {
             let pos = aFeatures[sName]['position'];
             return $(`#forth_feature_${pos}`);
+        },
+        /** Get the display of a feature
+         * @param {string} set the name of the feature
+         * @return {boolean} Display
+         */
+        isFeatureActive: function (sName) {
+            return aFeatures[sName]['display'];
+        },
+        /** Get the object of a feature
+         * @param {string} set the name of the feature
+         * @return {object} Divname feature
+         */
+        getFeatureDivByName: function (sName) {
+            return $(aFeatures[sName]['divname']);
         },
         /** Change the color of button and the cursor in function of the active mode
          *  @param {number} set the id of the mode
@@ -296,6 +310,9 @@
                 jCSSRule("#bt_chatOnly", "color", darkMode ? color_white : color_black);
                 jCSSRule("#bt_chatOnly", "cursor", "default");
             }
+        },
+        copyText: function (fromDiv, toDiv) {
+            $(fromDiv).text($(toDiv).text());
         }
     });
 
