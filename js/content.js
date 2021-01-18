@@ -14,15 +14,16 @@
 $(function () {
     // Clean pages (remove ads blocks)
     if ($(".adcontainer").length > 0) $(".adcontainer").remove();
-    if (isFirefox) $.removeElements(['div#div_darkmode', 'style#styles_css']);
+    if (isFirefox) $.removeElements2([features.get('darkMode').div,$('#forth_fullscreen')]);
 
-    //if (aFeatures['darkMode']['display']) {
     if ((features.get('darkMode') !== undefined) && features.get('darkMode').isActive()) {
         if (namePage != '') {
             if (darkMode) {
-                $.addButton('div', 'div_darkmode', 'bt_darkmode', title_darkmode_on, $.addIcon(icon_darkmode_on)).appendTo("body");
+                //$.createDiv('div_darkmode',new Button('bt_darkmode', title_darkmode_on,$.createIcon(icon_darkmode_on)).html).appendTo("body");
+                features.get('darkMode').addDiv(new Button('bt_darkmode', title_darkmode_on, $.createIcon(icon_darkmode_on)).html);
             } else {
-                $.addButton('div', 'div_darkmode', 'bt_darkmode', title_darkmode_off, $.addIcon(icon_darkmode_off)).appendTo("body");
+                //$.createDiv('div_darkmode',new Button('bt_darkmode', title_darkmode_off,$.createIcon(icon_darkmode_off)).html).appendTo("body");
+                features.get('darkMode').addDiv(new Button('bt_darkmode', title_darkmode_off, $.createIcon(icon_darkmode_off)).html);
             }
         }
 
@@ -38,9 +39,9 @@ $(function () {
         $('#bt_darkmode').click(function () {
             // Update the icon
             if (darkMode) {
-                $(this).setButton($.addIcon(icon_darkmode_off), title_darkmode_off);
+                $(this).setButton($.createIcon(icon_darkmode_off), title_darkmode_off);
             } else {
-                $(this).setButton($.addIcon(icon_darkmode_on), title_darkmode_on);
+                $(this).setButton($.createIcon(icon_darkmode_on), title_darkmode_on);
             }
 
             darkMode = !darkMode; // Update the value

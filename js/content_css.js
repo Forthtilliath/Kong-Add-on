@@ -480,10 +480,10 @@ function loadCSS() {
     /***********************************************************************************************************************/
     if (namePage != '') {
         if ((features.get('darkMode') !== undefined) && features.get('darkMode').isActive()) {
-            jCSSRule("#div_darkmode", "top", "5px");
-            jCSSRule("#div_darkmode", "left", "5px");
-            jCSSRule("#div_darkmode", "position", "fixed");
-            jCSSRule("#div_darkmode", "z-index", "10000");
+            jCSSRule("#forth_f_darkMode", "top", "5px");
+            jCSSRule("#forth_f_darkMode", "left", "5px");
+            jCSSRule("#forth_f_darkMode", "position", "fixed");
+            jCSSRule("#forth_f_darkMode", "z-index", "10000");
         }
         if ((features.get('unreadMessages') !== undefined) && features.get('unreadMessages').isActive()) {
             jCSSRule("#forth_unreadMessages", "top", "5px");
@@ -534,8 +534,8 @@ function loadCSS() {
         jCSSRule("#tr_features", "height", menuButtonsHeight2);
         jCSSRule("#tr_features", "display", "none");
         // All buttons
-        jCSSRule("#forth_displayMode, #forth_onlineplayers, #forth_hideChat, #forth_lockscreen, #forth_fontsize, #forth_fontsize, #forth_brightness, #forth_volume, #forth_chatOnly", "margin", "0 5px");
-        jCSSRule("forth_displayMode, #forth_onlineplayers, #forth_hideChat, #forth_lockscreen, #forth_fontsize, #forth_fontsize, #forth_brightness, #forth_volume, #forth_chatOnly", "height", "25px");
+        jCSSRule("#forth_displayMode, #forth_onlineplayers, #forth_hideChat, #forth_lockscreen, #forth_textsize, #forth_brightness, #forth_ping, #forth_chatOnly", "margin", "0 5px");
+        jCSSRule("forth_displayMode, #forth_onlineplayers, #forth_hideChat, #forth_lockscreen, #forth_textsize, #forth_brightness, #forth_ping, #forth_chatOnly", "height", "25px");
         jCSSRule("#quicklinks", "height", "25px");
         jCSSRule("#bt_gameOnly, #bt_gameNchat, #bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "height", "25px");
         jCSSRule("#bt_gameOnly, #bt_gameNchat, #bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "padding", "0 5px");
@@ -563,13 +563,13 @@ function loadCSS() {
             $.setStyleDisplayMode(displayMode);
         }
         // Select menus
-        jCSSRule("#forth_fontsize > span, #forth_brightness > span, #forth_volume > span", "color", color_white);
-        jCSSRule("#forth_fontsize > span, #forth_brightness > span, #forth_volume > span", "height", "25px");
-        jCSSRule("#forth_fontsize > span, #forth_brightness > span, #forth_volume > span", "width", "20px");
-        jCSSRule("#forth_fontsize > span, #forth_brightness > span, #forth_volume > span", "display", "inline-block");
-        jCSSRule("#forth_fontsize > span, #forth_brightness > span, #forth_volume > span", "font-size", "18px");
-        jCSSRule("#forth_fontsize > span, #forth_brightness > span, #forth_volume > span", "vertical-align", "sub");
-        jCSSRule("#forth_fontsize > span, #forth_brightness > span, #forth_volume > span", "padding-right", "5px");
+        jCSSRule("#forth_textsize > span, #forth_brightness > span, #forth_ping > span", "color", color_white);
+        jCSSRule("#forth_textsize > span, #forth_brightness > span, #forth_ping > span", "height", "25px");
+        jCSSRule("#forth_textsize > span, #forth_brightness > span, #forth_ping > span", "width", "20px");
+        jCSSRule("#forth_textsize > span, #forth_brightness > span, #forth_ping > span", "display", "inline-block");
+        jCSSRule("#forth_textsize > span, #forth_brightness > span, #forth_ping > span", "font-size", "18px");
+        jCSSRule("#forth_textsize > span, #forth_brightness > span, #forth_ping > span", "vertical-align", "sub");
+        jCSSRule("#forth_textsize > span, #forth_brightness > span, #forth_ping > span", "padding-right", "5px");
         jCSSRule("#forth_lockscreen > button:focus", "outline", "none");
         // Div lock screen
         jCSSRule("#forth_fullscreen", "height", "100%");
@@ -1127,4 +1127,5 @@ function loadCSS() {
     /***********************************************************************************************************************/
     /***********************************************************************************************************************/
 };
+jCSSReset();
 loadCSS();

@@ -29,9 +29,10 @@ class Feature {
     constructor(id, active, position) {
         this.id = id;
         this.active = active || false;
-        this.position = position >= 0 ? position : -1;
+        this.position = position >= 0 ? position : -1; // Position in the Feature's Div
     }
 
+    // Getters
     getId() {
         return this.id;
     }
@@ -48,49 +49,40 @@ class Feature {
         return `forth_${this.id}`;
     }
 
-    get div() {
-        return $(`#${this.divName}`);
+    get divName2() {
+        return `forth_f_${this.id}`;
     }
 
-    get featureDiv() {
-        return $(`#forth_feature_${this.position}`);
+    // Get the Div Element
+    get div() {
+        if (this.position == -1) {
+            return $(`#${this.divName2}`);
+        } else {
+            return $(`#forth_feature_${this.position}`);
+        }
     }
+
+    // Setters
+    setTitle(title) {
+        this.div.attr('title', title);
+    }
+
 
     show() {
-        $.log(10, "Position = " + this.position);
-        if (this.position == -1) {
-            return $(this.div).show();
-        } else {
-            return $(this.featureDiv).show();
-        }
+        this.div.show();
     }
 
     hide() {
-        $.log(10, "Position = " + this.position);
-        if (this.position == -1) {
-            return $(this.div).hide();
-        } else {
-            return $(this.featureDiv).hide();
-        }
+        this.div.hide();
     }
 
+    // Add the div to the DOM
     addDiv(content) {
         if (this.position == -1) {
-            $.log(10, "Call addDiv()");
-            $.log(10, $.createDiv(this.divName, content));
-            //$.createDiv(this.divName, content).appendTo('body');
-            $('body').append($.createDiv(this.divName, content));
+            $('body').append($.createDiv(this.divName2, content));
         } else {
-            this.featureDiv.append($.createDiv(this.divName, content));
+            this.div.append($.createDiv(this.divName, content));
         }
-    }
-
-    addSelect(container, idcontainer, idSelect, title, label, options, titleLabel, titleSelect) {
-        let a = '',
-            b = '';
-        if (typeof (titleLabel) != 'undefined') a = ` title="${titleLabel}"`;
-        if (typeof (titleSelect) != 'undefined') b = ` title="${titleSelect}"`;
-        this.featureDiv.append($(`<${container} id="${idcontainer}" title="${title}"><span${a}>${label}</span><select id="${idSelect}"${b}>${options}</select></${container}>`));
     }
 };
 
@@ -125,16 +117,6 @@ class ListFeatures {
     }
 
     // Return the number of feature displayed in the bar's features
-    /*get nbFeatures() {
-        let i = 0;
-        // For each feature
-        for (var c in aFeatures) {
-            if ((aFeatures[c]['display'] == true) && (aFeatures[c]['position'] >= 0)) {
-                i++;
-            }
-        };
-        return i;
-    }*/
     get nbFeatures() {
         let i = 0;
         // For each feature
@@ -151,6 +133,7 @@ class ListFeatures {
         return $(`#${this.containerId}`);
     }
 
+    // Return the feature by his id
     get(id) {
         return this.aFeatures[id];
     }

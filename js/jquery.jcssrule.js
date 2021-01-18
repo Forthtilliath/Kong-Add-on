@@ -113,7 +113,7 @@
         setSheet();
     };
     
-    // Add a function to remove all rules
+    // Forth : Add a function to remove all rules
     window.jCSSReset = function() {
         stylesheet.textContent = '';
     }

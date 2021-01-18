@@ -27,47 +27,38 @@
             $("#forth_messagedesc").text(message);
             $("#forth_messagebox").fadeIn("slow").delay(timer).fadeOut("slow");
         },
+
         /** Generate a code to display an icon
          *  @param {string} set the classes to the icon
          *  @return {string} Element i
          */
-        addIcon: function (classes) {
+        createIcon: function (classes) {
             return `<i class="${classes}"></i>`;
         },
-        /** Generate a code to display a button
-         *  @param container {string} set the element container (div, span...)
-         *  @param idcontainer {string} set the id of the container
-         *  @param idbutton {string} set the id of the button
-         *  @param title {string} set the title when hover
-         *  @param value {string} set the value of the button (can be an icon or just text if you want)
-         *  @return {object} Element with button and his value
+        /** Create a block div with classes, title and contenue
+         *  @param id {string} set the id of the div
+         *  @param value {string} set the value of the div
+         *  @param classes {string} set the classes style of the div
+         *  @param title {string} set the title of the div
+         *  @return {object} Element div
          */
-        addButton: function (container, idcontainer, idbutton, title, value) {
-            let bt = new Button(idbutton, title, value);
-            //return $(`<${container} id="${idcontainer}"><button id="${idbutton}" title="${title}">${value}</button></${container}>`);
-            return $(`<${container} id="${idcontainer}">${bt.html}</${container}>`);
+        createDiv: function (id, value, classes, title) {
+            if (typeof (value) == 'undefined') value = '';
+            if (typeof (classes) == 'undefined') classes = '';
+            if (typeof (title) == 'undefined') title = '';
+            let classHtml = (classes === '') ? '' : ` class="${classes}"`;
+            let titleHtml = (title === '') ? '' : ` title="${title}"`;
+            return $(`<div id="${id}"${classHtml}${titleHtml}>${value}</div>`)
         },
-        /** Generate a code to display a select
-         *  @param container {string} set the element container (div, span...)
-         *  @param idcontainer {string} set the id of the container
-         *  @param idSelect {string} set the id of the select
-         *  @param title {string|null} set the title when hover
-         *  @param label {string} set the label of the select
-         *  @param options {string} set the options of the select
-         *  @param title {string|null|undefined} set the title of the label when hover
-         *  @param title {string|null|undefined} set the title of the select when hover
-         *  @return {object} Element with select, his label and his values
+
+        /** Parse a string to boolean
+         * @param val {string} 'true' or 'false'
+         * @return {boolean}
          */
-        addSelect: function (container, idcontainer, idSelect, title, label, options, titleLabel, titleSelect) {
-            let a = '',
-                b = '';
-            if (typeof (titleLabel) != 'undefined') a = ` title="${titleLabel}"`;
-            if (typeof (titleSelect) != 'undefined') b = ` title="${titleSelect}"`;
-            return $(`<${container} id="${idcontainer}" title="${title}"><span${a}>${label}</span><select id="${idSelect}"${b}>${options}</select></${container}>`);
-        },
         parseBool: function (val) {
             return val === true || val === "true"
         },
+
         /** Return the value of a cookie, if this one doesn't exist, this return default value
          *  @param name {string} set the name of the cookie
          *  @param defaultValue {string|number|boolean} set the value returned if the cookie doesn't exist
@@ -152,21 +143,10 @@
                 path: sCookiePath
             });
         },
-        /** Create a block div with classes, title and contenue
-         *  @param id {string} set the id of the div
-         *  @param value {string} set the value of the div
-         *  @param classes {string} set the classes style of the div
-         *  @param title {string} set the title of the div
-         *  @return {object} Element div
+
+        /** Excute an active script in the page to affect the values of kong's vars
+         *  @param code {string} Code javasscript to execute
          */
-        createDiv: function (id, value, classes, title) {
-            if (typeof (value) == 'undefined') value = '';
-            if (typeof (classes) == 'undefined') classes = '';
-            if (typeof (title) == 'undefined') title = '';
-            let classHtml = (classes === '') ? '' : ` class="${classes}"`;
-            let titleHtml = (title === '') ? '' : ` title="${title}"`;
-            return $(`<div id="${id}"${classHtml}${titleHtml}>${value}</div>`)
-        },
         execScript: function (code) {
             let script = document.createElement('script');
             script.textContent = `${ code };`;
@@ -188,6 +168,12 @@
         removeElements: function (a) {
             a.forEach(function (b) {
                 if ($(b).length > 0) $(b).remove();
+            });
+        },
+        removeElements2: function (o) {
+            o.forEach(function (b) {
+                $.log(1,b);
+                if (b.length > 0) b.remove();
             });
         },
         /** Resize the game box
@@ -249,41 +235,6 @@
         log: function (nLevel, text) {
             if (debugLevel >= nLevel) console.log(text);
         },
-        getNbFeatures: function (a) {
-            let i = 0;
-
-            // For each feature
-            for (var c in a) {
-                $.log(20, a[c]['divname'] + " at position " + a[c]['position']);
-                if ((a[c]['display'] == true) && (a[c]['position'] >= 0)) {
-                    i++;
-                }
-            };
-            $.log(200, `Features number = ${i}`);
-            return i;
-        },
-        /** Get the feature's div where a feature is 
-         * @param {string} set the name of the feature
-         * @return {object} Div feature
-         */
-        getFeatureDiv: function (sName) {
-            let pos = aFeatures[sName]['position'];
-            return $(`#forth_feature_${pos}`);
-        },
-        /** Get the display of a feature
-         * @param {string} set the name of the feature
-         * @return {boolean} Display
-         */
-        isFeatureActive: function (sName) {
-            return aFeatures[sName]['display'];
-        },
-        /** Get the object of a feature
-         * @param {string} set the name of the feature
-         * @return {object} Divname feature
-         */
-        getFeatureDivByName: function (sName) {
-            return $(aFeatures[sName]['divname']);
-        },
         /** Change the color of button and the cursor in function of the active mode
          *  @param {number} set the id of the mode
          */
@@ -311,6 +262,19 @@
                 jCSSRule("#bt_chatOnly", "cursor", "default");
             }
         },
+        /** Remove all styles of the button message of the website when we click on it
+         *  Per default, when we open new messages on a new tab, the link doesn't change
+         */
+        removeStyleUnreadMessage: function () {
+            $("#profile_control_unread_message_count").text(''); // Remove the number of unread messages
+            $("#profile_control_unread_message_count").removeClass('has_messages mls'); // Remove the class
+            $("#profile_bar_messages").removeClass('alert_messages'); // Remove the class
+            $("#my-messages-link").attr('title', ''); // Remove the title
+        },
+        /** Copy the text of the div inside another div
+         *  @param fromDiv {string} Div origin
+         *  @param toDiv {string} Div target
+         */
         copyText: function (fromDiv, toDiv) {
             $(fromDiv).text($(toDiv).text());
         }

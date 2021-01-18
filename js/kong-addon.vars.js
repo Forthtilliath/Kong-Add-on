@@ -7,7 +7,7 @@
  * 
  * @fileoverview Variables used in the addon
  * @author Forth
- * @version 1
+ * @version 2
  */
 "use strict";
 
@@ -156,75 +156,9 @@ const regAccount = /[^<a href="]{1}(http[s]?:\/\/www\.kongregate\.com\/accounts\
 // Properties we don't want to change when darkmode is off
 const aPropRefused = ['color', 'background', 'background-color', 'background-image', 'border-color', 'border-color-top', 'border-color-right', 'border-color-bottom', 'border-color-left', 'filter', 'box-shadow'];
 // Properties we want to always change even when darkmode is off
-const aElemAlways = ["#forth_fullscreen", "#forth_messagebox", "#forth_messagebox #forth_messagetitle", "#forth_messagebox #forth_messagedesc", "#forth_fontsize > span, #forth_brightness > span, #forth_volume > span", "span.onlyGameOrChat", "#bt_gameOnly", "#bt_gameNchat", "#bt_chatOnly"];
+const aElemAlways = ["#forth_fullscreen", "#forth_messagebox", "#forth_messagebox #forth_messagetitle", "#forth_messagebox #forth_messagedesc", "#forth_textsize > span, #forth_brightness > span, #forth_ping > span", "span.onlyGameOrChat", "#bt_gameOnly", "#bt_gameNchat", "#bt_chatOnly"];
 
 const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-
-// Features displayed
-/*const aFeatures = {
-    'lockscreen': {
-        'display': true,
-        'position': 0,
-        'divname': '#forth_lockscreen'
-    },
-    'onlineplayers': {
-        'display': true,
-        'position': 1,
-        'divname': '#forth_onlineplayers'
-    },
-    'displayMode': { // gameOnly / chatOnly / both
-        'display': true,
-        'position': 2,
-        'divname': '#forth_displayMode'
-    },
-    'textsize': {
-        'display': true,
-        'position': 3,
-        'divname': '#forth_fontsize'
-    },
-    'brightness': {
-        'display': true,
-        'position': 4,
-        'divname': '#forth_brightness'
-    },
-    'ping': {
-        'display': true,
-        'position': 5,
-        'divname': '#forth_volume'
-    },
-    'darkMode': {
-        'display': true,
-        'divname': '#div_darkmode'
-    },
-    'unreadMessages': {
-        'display': true,
-        'divname': '#div_unreadMessages'
-    },
-    'botsblocker': {
-        'display': true
-    },
-    'urlrewriter': {
-        'display': true
-    },
-    'notifications': {
-        'display': true
-    }
-};*/
-
-
-/*const aFeatures2 = {
-    'lockscreen': new Feature('lockscreen', true, 0),
-    'onlineplayers': new Feature('onlineplayers', true, 1),
-    'displayMode': new Feature('displayMode', true, 2),
-    'textsize': new Feature('textsize', true, 3),
-    'brightness': new Feature('brightness', true, 4),
-    'ping': new Feature('ping', true, 5),
-    'darkMode': new Feature('darkMode', true, -1),
-    'unreadMessages': new Feature('unreadMessages', true, -1),
-    'botsblocker': new Feature('botsblocker', true, -1),
-    'urlrewriter': new Feature('urlrewriter', true, -1),
-    'notifications': new Feature('notifications', true, -1)
-};*/
 
 let features = new ListFeatures();
 features.add(new Feature('lockscreen', true, 0));
@@ -240,10 +174,7 @@ features.add(new Feature('urlrewriter', true, -1));
 features.add(new Feature('notifications', true, -1));
 
 $.log(20, features);
-//$.log(10, aFeatures2['unreadMessages'].getDivname());
 
 let darkMode = ((features.get('darkMode') !== undefined) && features.get('darkMode').isActive()) ? $.parseBool($.getCookieAll('DarkMode', 'true')) : false;
-$.log(20, "darkMode= " + darkMode);
 
-//const nbFeatures = $.getNbFeatures(aFeatures);
 let gameOrChatHided = false;

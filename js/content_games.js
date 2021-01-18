@@ -18,26 +18,62 @@ $(document).ready(function () {
     /* Check if each button already exist and delete them to avoid any double
      * when the extension is updated while running (had this issue on FF) */
     if (isFirefox) $.removeElements(['button#bt_showquicklinks', 'div#forth_features', 'div#forth_fullscreen']);
+    /*
+     div#forth_features
+     button#bt_showquicklinks
+     span.onlyGameOrChat
+     script_kong
+     div#forth_fullscreen
+     div#unreadMessages
+     tr#tr_features
+    */
 
+    // Name of the game
     let gameName = $(".gamepage_title_block > h1[itemprop='name']").text();
-    
+
+    /**** LIST OF FUNCTIONS START *******************************************************************************************
+     * - actionUnreadMessage() : Show/Hide button of unread messages
+     * - removeStyleUnreadMessage() : Remove style of unread messages link
+     * - changeVolume() : Change the volume and the button
+     ****/
+
     // Actions did when the number of unread messages change
     function actionUnreadMessage() {
         // If message unread and lockScreen on
         if ((parseInt($("#profile_control_unread_message_count").text(), 10) > 0) && $("#forth_fullscreen").is(":visible")) {
-            $.copyText('#msg-count', '#profile_control_unread_message_count'); //// Show the number of new messages
+            $.copyText('#msg-count', '#profile_control_unread_message_count'); // Copy the number of new messages in the button
             features.get('unreadMessages').show();
         } else {
             features.get('unreadMessages').hide();
         }
     }
 
-    function removeStyleUnreadMessage() {
+    /** Remove all styles of the button message of the website when we click on it
+     *  Per default, when we open new messages on a new tab, the link doesn't change
+     */
+    /*function removeStyleUnreadMessage() {
         $("#profile_control_unread_message_count").text(''); // Remove the number of unread messages
         $("#profile_control_unread_message_count").removeClass('has_messages mls'); // Remove the class
         $("#profile_bar_messages").removeClass('alert_messages'); // Remove the class
         $("#my-messages-link").attr('title', ''); // Remove the title
+    }*/
+
+    /** Change the volume of notifications and the button (icon + text)
+     *  And save the volume in the cookie
+     */
+    function changeVolume() {
+        $('#slt_volume').val(volumeValue); // Volume choosed
+
+        // Update the button with new icon & title
+        let iconVolume = (volumeValue == 0) ? icon_volume_off : (volumeValue < 0.5) ? icon_volume_down : icon_volume_up;
+        let textVolume = (volumeValue == 0) ? 'Click to unmute' : 'Click to mute';
+        $("#forth_volume > span").setButton($.createIcon(iconVolume), textVolume);
+
+        $.execScript(`songMsg.volume = ${ volumeValue };`); // Inject the code the change the volume
+        $.setCookieGame('VolumePing', volumeValue); // Update the cookie to save setting after refreshs
     }
+
+    /**** LIST OF FUNCTIONS END */
 
     /**** BUTTON QUICK LINKS START ******************************************************************************************
      * - Hide all quick links to gain space
@@ -46,7 +82,8 @@ $(document).ready(function () {
      ****/
 
     // Create the button
-    $("#quicklinks").prepend($.addButton('li', '', 'bt_showquicklinks', 'Show quick links', $.addIcon(icon_quicklinks_off)));
+    //$("#quicklinks").prepend($.addButton('li', '', 'bt_showquicklinks', 'Show quick links', $.createIcon(icon_quicklinks_off)));
+    $("#quicklinks").prepend('<li>' + new Button('bt_showquicklinks', 'Show quick links', $.createIcon(icon_quicklinks_off)).html + '</li>');
     // We remove the facebook button to gain space
     $("#quicklinks_facebook").remove();
 
@@ -54,9 +91,9 @@ $(document).ready(function () {
     $("#bt_showquicklinks").click(function () {
         $("#quicklinks > li:not(:first-child)").toggle();
         if ($("#quicklinks > li:not(:first-child)").css("display") == "list-item") {
-            $(this).setButton($.addIcon(icon_quicklinks_on), 'Hide quick links');
+            $(this).setButton($.createIcon(icon_quicklinks_on), 'Hide quick links');
         } else {
-            $(this).setButton($.addIcon(icon_quicklinks_off), 'Show quick links');
+            $(this).setButton($.createIcon(icon_quicklinks_off), 'Show quick links');
         }
     });
 
@@ -64,26 +101,14 @@ $(document).ready(function () {
 
 
     /**** BLOCK FEATURES START **********************************************************************************************
-     * - 
+     * - Create the box for all features
+     * - Create a sub-block for each feature
      ****/
-    // Create the box for all features
+
     features.addContainerIn('#cloud_save_info_template');
-    // Create a sub-block for each feature
     features.addSubContainers();
 
     /**** BLOCK FEATURES END */
-
-    function changeVolume() {
-        $('#slt_volume').val(volumeValue);
-        // Update the button with new icon & title
-        let iconVolume = (volumeValue == 0) ? icon_volume_off : (volumeValue < 0.5) ? icon_volume_down : icon_volume_up;
-        let textVolume = (volumeValue == 0) ? 'Click to unmute' : 'Click to mute';
-        $("#forth_volume > span").setButton($.addIcon(iconVolume), textVolume);
-        // Update the new volume
-        $.execScript(`songMsg.volume = ${ volumeValue };`);
-        // Update the cookie to save setting after refreshs
-        $.setCookieGame('VolumePing', volumeValue);
-    }
 
     /**** BUTTON LOCK SCREEN START ******************************************************************************************
      * - Add a background we can use to only show game & chat
@@ -96,8 +121,8 @@ $(document).ready(function () {
         $.log(20, "Feature Lockscreen");
         // Add the fullscreen mode in hide
         $('<div id="forth_fullscreen"></div>').appendTo("body");
-        // Create the button
-        features.get('lockscreen').addDiv(new Button('bt_lockscreen', 'Lock screen', $.addIcon(icon_lockscreen_off)).html);
+        // Create the button and put it in the features div
+        features.get('lockscreen').addDiv(new Button('bt_lockscreen', 'Lock screen', $.createIcon(icon_lockscreen_off)).html);
         // We remove the cinematic mode button
         $("#cinematic_mode_quicklink").remove();
 
@@ -109,7 +134,7 @@ $(document).ready(function () {
                 $(this).removeClass("locked");
                 jCSSRule("body", "overflow", "");
                 jCSSRule("#floating_game_holder", "padding-top", "4px");
-                $(this).setButton($.addIcon(icon_lockscreen_off), 'Lock screen');
+                $(this).setButton($.createIcon(icon_lockscreen_off), 'Lock screen');
                 $.setCookieGame('LockScreen', 'false');
             } else { // Locked screen
                 $("#forth_fullscreen").show(); // Background
@@ -117,10 +142,11 @@ $(document).ready(function () {
                 $(this).addClass("locked"); // Change the style of the button
                 jCSSRule("body", "overflow", "hidden"); // We remove scrollbars
                 jCSSRule("#floating_game_holder", "padding-top", "0px");
-                $(this).setButton($.addIcon(icon_lockscreen_on), 'Unlock screen');
+                $(this).setButton($.createIcon(icon_lockscreen_on), 'Unlock screen');
                 $("#floating_game_holder").centrerElementAbsolu(); // Center the game
                 $.setCookieGame('LockScreen', 'true');
             }
+            // If unreadMessages is active, hide/show the button if new unreaad messages
             if (features.get('unreadMessages').isActive()) {
                 actionUnreadMessage();
             }
@@ -142,23 +168,24 @@ $(document).ready(function () {
         // Create the button
         let value = '';
         if (cookieShowPlayers) { // Show
-            value = new Button('bt_onlineplayers', 'Hide online players', $.addIcon(icon_onlinep_on)).html;
+            value = new Button('bt_onlineplayers', 'Hide online players', $.createIcon(icon_onlinep_on)).html;
         } else { // Hide
-            value = new Button('bt_onlineplayers', 'Show online players', $.addIcon(icon_onlinep_off)).html;
-            jCSSRule(".chat_room_template > .users_in_room", "display", "none"); // Hide don't work here
+            value = new Button('bt_onlineplayers', 'Show online players', $.createIcon(icon_onlinep_off)).html;
+            jCSSRule(".chat_room_template > .users_in_room", "display", "none"); // Hide() doesn't work here
         }
+        // Put the button in the features div
         features.get('onlineplayers').addDiv(value);
 
         // Evenement
         $('#bt_onlineplayers').click(function () {
             $(".chat_room_template > .users_in_room").toggle(500, function () {
                 if ($(".chat_room_template > .users_in_room").is(":visible")) { // Show
-                    $('#bt_onlineplayers').html($.addIcon(icon_onlinep_on));
+                    $('#bt_onlineplayers').html($.createIcon(icon_onlinep_on));
                     $('#bt_onlineplayers').prop('title', 'Hide online players');
                     // Update the cookie to save setting after refreshs
                     $.setCookieAll('ShowPlayers', 'true');
                 } else { // Hide
-                    $('#bt_onlineplayers').html($.addIcon(icon_onlinep_off));
+                    $('#bt_onlineplayers').html($.createIcon(icon_onlinep_off));
                     $('#bt_onlineplayers').prop('title', 'Show online players');
                     // Update the cookie to save setting after refreshs
                     $.setCookieAll('ShowPlayers', 'false');
@@ -190,7 +217,9 @@ $(document).ready(function () {
             (i == cookieFontSize) ? sSelected = ' selected': sSelected = '';
             sOptionsSize += `<option value="${i}"${sSelected}>${i}px</option>`;
         }
-        features.get('textsize').addSelect('div', 'forth_fontsize', 'slt_fontsize', 'Select the text size of your choice', $.addIcon(icon_font), sOptionsSize);
+        // Put the select menu in the features div
+        features.get('textsize').addDiv(`<span>${$.createIcon(icon_font)}</span><select id="slt_fontsize">${sOptionsSize}</select>`);
+        features.get('textsize').setTitle('Select the text size of your choice');
         $.changeTextSize(cookieFontSize);
 
         // Evenement
@@ -217,7 +246,9 @@ $(document).ready(function () {
             ((i + "%") == cookieBrightness) ? sSelected = ' selected': sSelected = '';
             sOptionsBrightness += `<option value="${i}%"${sSelected}>${i}%</option>`;
         }
-        features.get('brightness').addSelect('div', 'forth_brightness', 'slt_brightness', 'Select the brightness of your choice', $.addIcon(icon_brightness), sOptionsBrightness);
+        // Put the select menu in the features div
+        features.get('brightness').addDiv(`<span>${$.createIcon(icon_brightness)}</span><select id="slt_brightness">${sOptionsBrightness}</select>`);
+        features.get('brightness').setTitle('Select the brightness of your choice');
 
         // Evenement change brightness start
         $('#slt_brightness').change(function () {
@@ -247,8 +278,11 @@ $(document).ready(function () {
             let labVolume = (i == 0) ? `Muted` : `${i}%`;
             sOptionsVolume += `<option value="${i/100}"${sSelected}>${labVolume}</option>`;
         }
+        // Adapt the icon of the volume
         let iconVolume = (volumeValue == 0) ? icon_volume_off : (volumeValue < 0.5) ? icon_volume_down : icon_volume_up;
-        features.get('ping').addSelect('div', 'forth_volume', 'slt_volume', '', $.addIcon(iconVolume), sOptionsVolume, 'Click to mute', 'Select the volume of your choice');
+        // Put the select menu in the features div
+        features.get('ping').addDiv(`<span>${$.createIcon(iconVolume)}</span><select id="slt_volume">${sOptionsVolume}</select>`);
+        features.get('ping').setTitle('Select the volume of your choice');
 
         // Evenement when sound choose on select menu
         $('#slt_volume').change(function () {
@@ -257,8 +291,8 @@ $(document).ready(function () {
             volumeValue = $(this).val();
             changeVolume();
         });
-        // Evenement when sound is muted/unmuted from icon
 
+        // Evenement when sound is muted/unmuted from icon
         $('#forth_volume > span').click(function () {
             // Swap old volume to new if mute
             if (volumeValue == 0) {
@@ -274,13 +308,13 @@ $(document).ready(function () {
     /**** MENU SELECT VOLUME END */
 
     /**** BUTTON CHAT ONLY END */
-    
+
     if ((features.get('displayMode') !== undefined) && features.get('displayMode').isActive()) {
         // Create the buttons
-        let bt_gameOnly = new Button('bt_gameOnly', 'Show only the game', $.addIcon(icon_gameonly));
-        let bt_gameNchat = new Button('bt_gameNchat', 'Show both', $.addIcon(icon_gameNchat));
-        let bt_chatOnly = new Button('bt_chatOnly', 'Show only the chat', $.addIcon(icon_chatonly));
-        //$(`#forth_feature_${pos}`).append($(`<div id="forth_displayMode">${bt_gameOnly.html}${bt_gameNchat.html}${bt_chatOnly.html}</div>`));
+        let bt_gameOnly = new Button('bt_gameOnly', 'Show only the game', $.createIcon(icon_gameonly));
+        let bt_gameNchat = new Button('bt_gameNchat', 'Show both', $.createIcon(icon_gameNchat));
+        let bt_chatOnly = new Button('bt_chatOnly', 'Show only the chat', $.createIcon(icon_chatonly));
+        // Put the 3 buttons in the features div
         features.get('displayMode').addDiv(bt_gameOnly.html + bt_gameNchat.html + bt_chatOnly.html);
 
         // Create a new line in the table between links_connect & chat (to have enough space to have all in one line)
@@ -431,8 +465,8 @@ $(document).ready(function () {
                 click_chatOnly();
             });
 
+            // Once chat_rooms_container is completely loaded
             $.initialize("#chat_rooms_container", function () {
-                $.log(10, "chat_rooms_container ready launched !");
                 $.setWidthChat(modif_chat_width);
                 let width_nameGame = $("#maingame").width() - $(".user_connection").width() - 20;
                 $("span.onlyGameOrChat").css("width", width_nameGame);
@@ -457,8 +491,8 @@ $(document).ready(function () {
     if ((features.get('lockscreen') !== undefined) && features.get('lockscreen').isActive() && (features.get('unreadMessages') !== undefined) && features.get('unreadMessages').isActive()) {
 
         // Create the button with the icone & span for unread messages count
-        features.get('unreadMessages').addDiv(new Button('bt_unreadMessages', 'Read new message(s)', $.addIcon(icon_unreadMessage) + '<span id="msg-count"></span>').html);
-        
+        features.get('unreadMessages').addDiv(new Button('bt_unreadMessages', 'Read new message(s)', $.createIcon(icon_unreadMessage) + '<span id="msg-count"></span>').html);
+
         $.initialize("#profile_control_unread_message_count", function () {
             actionUnreadMessage(); // No needed, observer is called once when the page is loading
         });
@@ -478,25 +512,25 @@ $(document).ready(function () {
 
         // Hide darkMode button when the height of the page is too low
         $(window).resize(function () {
-            if ($(window).height() < (parseInt($("#maingame").css("height"), 10) + 60 /* height button */ + 20 /* padding gamebox */ )) {
+            if ($(window).height() < (parseInt($("#maingame").css("height"), 10) + 60 /* height button */ + 20 /* padding gamebox */ ) || !$("#forth_fullscreen").is(":visible")) {
                 features.get('unreadMessages').hide();
             } else {
-                features.get('unreadMessages').show();
+                actionUnreadMessage();
             }
         });
 
         // Click on the button
         $('#bt_unreadMessages').click(function () {
             features.get('unreadMessages').hide(); // Hide the div with the button
-            removeStyleUnreadMessage();
+            $.removeStyleUnreadMessage();
             window.open($("#my-messages-link").attr('href')); // Open a new page to show new messages
         });
 
         $("a#my-messages-link").mousedown(function () {
-            removeStyleUnreadMessage();
+            $.removeStyleUnreadMessage();
         });
     }
-    
+
     if ((features.get('lockscreen') !== undefined) && features.get('lockscreen').isActive()) {
         // Each time the window is resized, we keep the game centered
         $(window).resize(function () {
