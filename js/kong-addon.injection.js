@@ -116,6 +116,16 @@ if (aFeatures['ping']['display'] || aFeatures['botsblocker']['display']) {
     /**********************************************************/
 
     s.append("ChatDialogue.prototype.displayUnsanitizedMessage = function (a, b, c, d) {");
+    if (debugLevel >= 50) {
+        s.append("    console.log('a= '+a);");
+        s.append("    if ('string' === typeof b) {");
+        s.append("        console.log('b= '+b);");
+        s.append("    } else {");
+        s.append("        console.log('b.stickerId= '+b.stickerId);");
+        s.append("    }");
+        s.append("    console.log('c= '+c);");
+        s.append("    console.log('d= '+d);");
+    }
     s.append("    c || (c = {});");
     s.append("    d || (d = {});");
     s.append("    allow_mutes = (active_room = this._holodeck.chatWindow().activeRoom()) && !active_room.canUserModerate(active_room.self()) || d.whisper;");
@@ -130,7 +140,7 @@ if (aFeatures['ping']['display'] || aFeatures['botsblocker']['display']) {
     /**********************************************************/
     /******************** Forth Code Start ********************/
     /**********************************************************/
-    if (aFeatures['botsblocker']['display']) {
+    if ( aFeatures['botsblocker']['display'] && ('string' === typeof b)) {
         // We check if the message content a website blocked
         s.append("        for( var i = 0 ; i  < websitesBlocked.length ; i++ ) {");
         // If YES
@@ -153,9 +163,7 @@ if (aFeatures['ping']['display'] || aFeatures['botsblocker']['display']) {
     if (aFeatures['notifications']['display']) {
         s.append("if (!hasFocus) {");
         s.append("    nbMessagesMissed++;");
-        s.append("console.log(document.title);");
         s.append("    document.title = nbMessagesMissed + ' 🔔 - ' + titlePage;");
-        s.append("console.log(document.title);");
         s.append("}");
     }
     /**********************************************************/
@@ -165,8 +173,7 @@ if (aFeatures['ping']['display'] || aFeatures['botsblocker']['display']) {
     s.append("        c['class'] && h.push(c['class']);");
     s.append("        g && e.push('is_self');");
     s.append("        if (c = 'string' === typeof b ? null : b.stickerId) d.template = ChatDialogue.STICKER_MESSAGE_TEMPLATE, d.stickerId = c, d.stickerVariant = b.stickerVariant, d.stickerPackName = b.stickerPackName, d.stickerLevel = b.level, d.stickerQuality = 100 <= b.level ? b.quality + ' is-ranked' : b.quality, d.stickerUrl = this._sticker_manager.url(c, d.stickerVariant, 72);");
-    if (aFeatures["urlrewriter"]["display"]) {
-        s.append("console.log('c = '+c)");
+    if (aFeatures["urlrewriter"]["display"] && ('string' === typeof b)) {
         s.append("        b = urlRewritter(b);"); // URL Rewritter
     }
     s.append("        a = this.messageContent({");

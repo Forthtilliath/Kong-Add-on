@@ -486,11 +486,11 @@ function loadCSS() {
             jCSSRule("#div_darkmode", "z-index", "10000");
         }
         if (aFeatures['unreadMessages']['display']) {
-            jCSSRule("#div_unreadMessages", "top", "5px");
-            jCSSRule("#div_unreadMessages", "right", "5px");
-            jCSSRule("#div_unreadMessages", "position", "fixed");
-            jCSSRule("#div_unreadMessages", "z-index", "10000");
-            jCSSRule("#div_unreadMessages", "display", "none");
+            jCSSRule("#forth_unreadMessages", "top", "5px");
+            jCSSRule("#forth_unreadMessages", "right", "5px");
+            jCSSRule("#forth_unreadMessages", "position", "fixed");
+            jCSSRule("#forth_unreadMessages", "z-index", "10000");
+            jCSSRule("#forth_unreadMessages", "display", "none");
         }
         if (aFeatures['darkMode']['display'] || aFeatures['unreadMessages']['display']) {
             jCSSRule("#bt_darkmode, #bt_unreadMessages", "width", "40px");
@@ -578,7 +578,7 @@ function loadCSS() {
         jCSSRule("#forth_fullscreen", "z-index", "9999");
         jCSSRule("#forth_fullscreen", "display", "none");
         // Locked
-        jCSSRule("button.locked", "background-color", bgColor_red_01);
+        jCSSRule("#bt_lockscreen.locked", "background-color", bgColor_red_01);
         // Game
         jCSSRule(".game_ahead", "position", "absolute");
         jCSSRule(".game_ahead", "z-index", "10000");

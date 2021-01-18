@@ -44,3 +44,6 @@ TO DO
 - Private messagerie
 
 - Hide/Show check if feature active or not
+
+
+Light around png : filter: drop-shadow(0 0 0.1rem white);

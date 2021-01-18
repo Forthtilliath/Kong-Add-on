@@ -213,19 +213,34 @@ const aFeatures = {
 
 
 const aFeatures2 = {
-    'lockscreen': new Feature('lockscreen', true, 0, '#forth_lockscreen'),
-    'onlineplayers': new Feature('onlineplayers', true, 1, '#forth_onlineplayers'),
-    'displayMode': new Feature('displayMode', true, 2, '#forth_displayMode'),
-    'textsize': new Feature('textsize', true, 3, '#forth_fontsize'),
-    'brightness': new Feature('brightness', true, 4, '#forth_brightness'),
-    'ping': new Feature('ping', true, 5, '#forth_volume'),
-    'darkMode': new Feature('darkMode', true, -1, '#div_darkmode'),
-    'unreadMessages': new Feature('unreadMessages', true, -1, '#div_unreadMessages'),
-    'botsblocker': new Feature('botsblocker', true, -1, ''),
-    'urlrewriter': new Feature('urlrewriter', true, -1, ''),
-    'notifications': new Feature('notifications', true, -1, '')
+    'lockscreen': new Feature('lockscreen', true, 0),
+    'onlineplayers': new Feature('onlineplayers', true, 1),
+    'displayMode': new Feature('displayMode', true, 2),
+    'textsize': new Feature('textsize', true, 3),
+    'brightness': new Feature('brightness', true, 4),
+    'ping': new Feature('ping', true, 5),
+    'darkMode': new Feature('darkMode', true, -1),
+    'unreadMessages': new Feature('unreadMessages', true, -1),
+    'botsblocker': new Feature('botsblocker', true, -1),
+    'urlrewriter': new Feature('urlrewriter', true, -1),
+    'notifications': new Feature('notifications', true, -1)
 };
+
+let features = new ListFeatures();
+features.add(new Feature('lockscreen', true, 0));
+features.add(new Feature('onlineplayers', true, 1));
+features.add(new Feature('displayMode', true, 2));
+features.add(new Feature('textsize', true, 3));
+features.add(new Feature('brightness', true, 4));
+features.add(new Feature('ping', true, 5));
+features.add(new Feature('darkMode', true, -1));
+features.add(new Feature('unreadMessages', true, -1));
+features.add(new Feature('botsblocker', true, -1));
+features.add(new Feature('urlrewriter', true, -1));
+features.add(new Feature('notifications', true, -1));
+
 $.log(20, aFeatures);
+//$.log(10, aFeatures2['unreadMessages'].getDivname());
 
 let darkMode = aFeatures['darkMode']['display'] ? $.parseBool($.getCookieAll('DarkMode', 'true')) : false;
 $.log(20, "darkMode= " + darkMode);

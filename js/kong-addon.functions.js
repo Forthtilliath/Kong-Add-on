@@ -218,7 +218,7 @@
          */
         setWidthChat: function (w) {
             if (typeof (w) == 'undefined') w = 0;
-            $.log(10, "iDefaultChatWidth= " + iDefaultChatWidth);
+            $.log(20, "iDefaultChatWidth= " + iDefaultChatWidth);
 
             $("#chat_container").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px )`);
             $("#chat_window").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px - 16px )`);
@@ -342,7 +342,7 @@
                     console.log(e);
                 }
             } else {
-                $.log(1, `Selector [${this}] not found`);
+                $.log(1, `Selector [${Object.values(this)}] not found`);
             }
         },
         /** The function will return a title for the Location object. With $(location), the function will return
