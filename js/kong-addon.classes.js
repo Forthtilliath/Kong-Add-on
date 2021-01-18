@@ -25,7 +25,6 @@ class Button {
 };
 
 class Feature {
-    content = '';
 
     constructor(id, active, position) {
         this.id = id;
@@ -37,13 +36,13 @@ class Feature {
         return this.id;
     }
 
+    getPosition() {
+        return this.position;
+    }
+
     isActive() {
         return this.active;
     }
-
-    /*getPosition() {
-        return this.position;
-    }*/
 
     get divName() {
         return `forth_${this.id}`;
@@ -58,7 +57,7 @@ class Feature {
     }
 
     show() {
-        $.log(10, "Position = "+this.position);
+        $.log(10, "Position = " + this.position);
         if (this.position == -1) {
             return $(this.div).show();
         } else {
@@ -67,7 +66,7 @@ class Feature {
     }
 
     hide() {
-        $.log(10, "Position = "+this.position);
+        $.log(10, "Position = " + this.position);
         if (this.position == -1) {
             return $(this.div).hide();
         } else {
@@ -96,18 +95,16 @@ class Feature {
 };
 
 class ListFeatures {
-    aFeatures = new Array;
-    containerId = 'forth_features';
+
+    constructor() {
+        this.aFeatures = new Array;
+        this.containerId = 'forth_features';
+    }
 
     /* Add a Feature to the list
      * @param oneFeature {Feature}
      */
     add(oneFeature) {
-        //ListFeatures[Feature.id] : Feature.active, Feature.position
-        let k = oneFeature.getId();
-        /*this.aFeatures.push({
-            k: oneFeature
-        });*/
         this.aFeatures[oneFeature.getId()] = oneFeature;
     }
 
@@ -128,11 +125,21 @@ class ListFeatures {
     }
 
     // Return the number of feature displayed in the bar's features
-    get nbFeatures() {
+    /*get nbFeatures() {
         let i = 0;
         // For each feature
         for (var c in aFeatures) {
             if ((aFeatures[c]['display'] == true) && (aFeatures[c]['position'] >= 0)) {
+                i++;
+            }
+        };
+        return i;
+    }*/
+    get nbFeatures() {
+        let i = 0;
+        // For each feature
+        for (var c in this.aFeatures) {
+            if ((this.aFeatures[c].isActive()) && (this.aFeatures[c].getPosition() >= 0)) {
                 i++;
             }
         };
@@ -147,7 +154,4 @@ class ListFeatures {
     get(id) {
         return this.aFeatures[id];
     }
-    /*isActive(id) {
-
-    }*/
 }

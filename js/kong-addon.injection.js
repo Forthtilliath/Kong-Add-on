@@ -11,7 +11,8 @@
  */
 "use strict";
 
-if (aFeatures['ping']['display'] || aFeatures['botsblocker']['display']) {
+//if (aFeatures['ping']['display'] || aFeatures['botsblocker']['display']) {
+if (((features.get('ping') !== undefined) && features.get('ping').isActive()) || ((features.get('botsblocker') !== undefined) && features.get('botsblocker').isActive())) {
     // We create a new script block
     var s = document.createElement("script");
     s.type = "text/javascript";
@@ -22,7 +23,8 @@ if (aFeatures['ping']['display'] || aFeatures['botsblocker']['display']) {
     /**********************************************************/
     /******************** Forth Code Start ********************/
     /**********************************************************/
-    if (aFeatures["urlrewriter"]["display"]) {
+    //if (aFeatures["urlrewriter"]["display"]) {
+    if ((features.get('urlrewriter') !== undefined) && features.get('urlrewriter').isActive()) {
         /** Transform an url to html url
          *  @param type {string} set the type of link (wiki, game or account)
          *  @param value {array} set the regexp result
@@ -84,15 +86,18 @@ if (aFeatures['ping']['display'] || aFeatures['botsblocker']['display']) {
         s.append("}");
     }
 
-    if (aFeatures['botsblocker']['display']) {
+    //if (aFeatures['botsblocker']['display']) {
+    if ((features.get('botsblocker') !== undefined) && features.get('botsblocker').isActive()) {
         s.append("var websitesBlocked = " + $.getArrayDoubleToString(aBots) + ";");
     }
-    if (aFeatures['ping']['display']) {
+    //if (aFeatures['ping']['display']) {
+    if ((features.get('ping') !== undefined) && features.get('ping').isActive()) {
         s.append("var songMsg = new Audio('" + chrome.runtime.getURL(songUrl) + "');");
         s.append("songMsg.volume = " + volumeValue + ";");
     }
 
-    if (aFeatures['notifications']['display']) {
+    //if (aFeatures['notifications']['display']) {
+    if ((features.get('notifications') !== undefined) && features.get('notifications').isActive()) {
 
         s.append("function changeTitlePage() {");
         s.append("    document.title = titlePage;");
@@ -140,7 +145,8 @@ if (aFeatures['ping']['display'] || aFeatures['botsblocker']['display']) {
     /**********************************************************/
     /******************** Forth Code Start ********************/
     /**********************************************************/
-    if ( aFeatures['botsblocker']['display'] && ('string' === typeof b)) {
+    //if (aFeatures['botsblocker']['display'] && ('string' === typeof b)) {
+    if ((features.get('botsblocker') !== undefined) && features.get('botsblocker').isActive() && ('string' === typeof b)) {
         // We check if the message content a website blocked
         s.append("        for( var i = 0 ; i  < websitesBlocked.length ; i++ ) {");
         // If YES
@@ -156,11 +162,13 @@ if (aFeatures['ping']['display'] || aFeatures['botsblocker']['display']) {
         s.append("            }"); // If end
         s.append("        }"); // For end
     }
-    if (aFeatures['ping']['display']) {
+    //if (aFeatures['ping']['display']) {
+    if ((features.get('ping') !== undefined) && features.get('ping').isActive()) {
         // Add a song when there are a new message
         s.append("        if( !g && !d.non_user ) songMsg.play();");
     }
-    if (aFeatures['notifications']['display']) {
+    //if (aFeatures['notifications']['display']) {
+    if ((features.get('notifications') !== undefined) && features.get('notifications').isActive()) {
         s.append("if (!hasFocus) {");
         s.append("    nbMessagesMissed++;");
         s.append("    document.title = nbMessagesMissed + ' 🔔 - ' + titlePage;");
@@ -173,7 +181,8 @@ if (aFeatures['ping']['display'] || aFeatures['botsblocker']['display']) {
     s.append("        c['class'] && h.push(c['class']);");
     s.append("        g && e.push('is_self');");
     s.append("        if (c = 'string' === typeof b ? null : b.stickerId) d.template = ChatDialogue.STICKER_MESSAGE_TEMPLATE, d.stickerId = c, d.stickerVariant = b.stickerVariant, d.stickerPackName = b.stickerPackName, d.stickerLevel = b.level, d.stickerQuality = 100 <= b.level ? b.quality + ' is-ranked' : b.quality, d.stickerUrl = this._sticker_manager.url(c, d.stickerVariant, 72);");
-    if (aFeatures["urlrewriter"]["display"] && ('string' === typeof b)) {
+    //if (aFeatures["urlrewriter"]["display"] && ('string' === typeof b)) {
+    if ((features.get('urlrewriter') !== undefined) && features.get('urlrewriter').isActive() && ('string' === typeof b)) {
         s.append("        b = urlRewritter(b);"); // URL Rewritter
     }
     s.append("        a = this.messageContent({");

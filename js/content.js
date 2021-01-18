@@ -16,7 +16,8 @@ $(function () {
     if ($(".adcontainer").length > 0) $(".adcontainer").remove();
     if (isFirefox) $.removeElements(['div#div_darkmode', 'style#styles_css']);
 
-    if (aFeatures['darkMode']['display']) {
+    //if (aFeatures['darkMode']['display']) {
+    if ((features.get('darkMode') !== undefined) && features.get('darkMode').isActive()) {
         if (namePage != '') {
             if (darkMode) {
                 $.addButton('div', 'div_darkmode', 'bt_darkmode', title_darkmode_on, $.addIcon(icon_darkmode_on)).appendTo("body");
@@ -41,7 +42,7 @@ $(function () {
             } else {
                 $(this).setButton($.addIcon(icon_darkmode_on), title_darkmode_on);
             }
-            
+
             darkMode = !darkMode; // Update the value
             $.setCookieAll('DarkMode', darkMode); // Update the cookie
             jCSSReset(); // Reset current styles

@@ -289,7 +289,7 @@ function loadCSS() {
         jCSSRule("#user_mini_profile_contents #user_info ul.user_actions li", "filter", "invert(1)"); // Icons Unfriend / Mute / Report
         jCSSRule("#user_mini_profile_contents #user_info ul.user_actions li a", "color", linkColor_red_invert); // Labels Unfriend / Mute / Report
         // Stickers
-        
+
         jCSSRule(".chat-msg-sticker__tooltip", "background-color", bgColor_grey_09);
         jCSSRule(".chat-msg-sticker__tooltip::before", "border-color", `transparent ${bgColor_grey_09} transparent transparent`);
         jCSSRule(".chat-sticker-tab__normal, .chat-sticker-tab__shiny", "background-color", bgColor_grey_00);
@@ -479,20 +479,20 @@ function loadCSS() {
     /***** FORTH ADDON *****************************************************************************************************/
     /***********************************************************************************************************************/
     if (namePage != '') {
-        if (aFeatures['darkMode']['display']) {
+        if ((features.get('darkMode') !== undefined) && features.get('darkMode').isActive()) {
             jCSSRule("#div_darkmode", "top", "5px");
             jCSSRule("#div_darkmode", "left", "5px");
             jCSSRule("#div_darkmode", "position", "fixed");
             jCSSRule("#div_darkmode", "z-index", "10000");
         }
-        if (aFeatures['unreadMessages']['display']) {
+        if ((features.get('unreadMessages') !== undefined) && features.get('unreadMessages').isActive()) {
             jCSSRule("#forth_unreadMessages", "top", "5px");
             jCSSRule("#forth_unreadMessages", "right", "5px");
             jCSSRule("#forth_unreadMessages", "position", "fixed");
             jCSSRule("#forth_unreadMessages", "z-index", "10000");
             jCSSRule("#forth_unreadMessages", "display", "none");
         }
-        if (aFeatures['darkMode']['display'] || aFeatures['unreadMessages']['display']) {
+        if (((features.get('darkMode') !== undefined) && features.get('darkMode').isActive()) || ((features.get('unreadMessages') !== undefined) && features.get('unreadMessages').isActive())) {
             jCSSRule("#bt_darkmode, #bt_unreadMessages", "width", "40px");
             jCSSRule("#bt_darkmode, #bt_unreadMessages", "height", "25px");
             jCSSRule("#bt_darkmode, #bt_unreadMessages", "padding", "5px");
@@ -558,7 +558,10 @@ function loadCSS() {
         jCSSRule("#bt_chatOnly", "border-radius", "0 5px 5px 0");
         jCSSRule("#bt_chatOnly", "border-left", "none");
         jCSSRule("#bt_gameOnly, #bt_chatOnly, #bt_gameNchat", "width", "30px");
-        $.setStyleDisplayMode(displayMode);
+
+        if ((features.get('displayMode') !== undefined) && features.get('displayMode').isActive()) {
+            $.setStyleDisplayMode(displayMode);
+        }
         // Select menus
         jCSSRule("#forth_fontsize > span, #forth_brightness > span, #forth_volume > span", "color", color_white);
         jCSSRule("#forth_fontsize > span, #forth_brightness > span, #forth_volume > span", "height", "25px");

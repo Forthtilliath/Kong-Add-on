@@ -161,7 +161,7 @@ const aElemAlways = ["#forth_fullscreen", "#forth_messagebox", "#forth_messagebo
 const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
 // Features displayed
-const aFeatures = {
+/*const aFeatures = {
     'lockscreen': {
         'display': true,
         'position': 0,
@@ -209,10 +209,10 @@ const aFeatures = {
     'notifications': {
         'display': true
     }
-};
+};*/
 
 
-const aFeatures2 = {
+/*const aFeatures2 = {
     'lockscreen': new Feature('lockscreen', true, 0),
     'onlineplayers': new Feature('onlineplayers', true, 1),
     'displayMode': new Feature('displayMode', true, 2),
@@ -224,7 +224,7 @@ const aFeatures2 = {
     'botsblocker': new Feature('botsblocker', true, -1),
     'urlrewriter': new Feature('urlrewriter', true, -1),
     'notifications': new Feature('notifications', true, -1)
-};
+};*/
 
 let features = new ListFeatures();
 features.add(new Feature('lockscreen', true, 0));
@@ -239,11 +239,11 @@ features.add(new Feature('botsblocker', true, -1));
 features.add(new Feature('urlrewriter', true, -1));
 features.add(new Feature('notifications', true, -1));
 
-$.log(20, aFeatures);
+$.log(20, features);
 //$.log(10, aFeatures2['unreadMessages'].getDivname());
 
-let darkMode = aFeatures['darkMode']['display'] ? $.parseBool($.getCookieAll('DarkMode', 'true')) : false;
+let darkMode = ((features.get('darkMode') !== undefined) && features.get('darkMode').isActive()) ? $.parseBool($.getCookieAll('DarkMode', 'true')) : false;
 $.log(20, "darkMode= " + darkMode);
 
-const nbFeatures = $.getNbFeatures(aFeatures);
+//const nbFeatures = $.getNbFeatures(aFeatures);
 let gameOrChatHided = false;
