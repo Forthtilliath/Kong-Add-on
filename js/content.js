@@ -14,7 +14,8 @@
 $(function () {
     // Clean pages (remove ads blocks)
     if ($(".adcontainer").length > 0) $(".adcontainer").remove();
-    if (isFirefox) $.removeElements2([features.get('darkMode').div,$('#forth_fullscreen')]);
+    if (isFirefox) $.removeElements2([features.get('darkMode').div, $('#forth_fullscreen')]);
+    if (isFirefox && !$('#forth_firefox').length) $('body').append($.createDiv('forth_firefox', '<span id="iDefaultBothHeight">' + iDefaultBothHeight + '</span>'));
 
     if ((features.get('darkMode') !== undefined) && features.get('darkMode').isActive()) {
         if (namePage != '') {
@@ -29,10 +30,10 @@ $(function () {
 
         // Hide darkMode button when the height of the page is too low
         $(window).resize(function () {
-            if ($(window).height() < (parseInt($("#maingame").css("height"), 10) + 60 /* height button */ + 20 /* padding gamebox */ )) {
-                $("#div_darkmode").hide();
+            if ($(window).height() < (parseInt($("#maingame").css("height"), 10) + 60 /* height button doubled */ + 20 /* padding gamebox */ )) {
+                features.get('darkMode').hide();
             } else {
-                $("#div_darkmode").show();
+                features.get('darkMode').show();
             }
         });
 

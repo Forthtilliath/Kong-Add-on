@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Kong Add-on",
-    "version": "1.6.1.25",
+    "version": "1.6.1.26",
     "author": "Forth",
 
     "description": "Kong Add-on adds some features to Kongregate, including a blocker of bot messages, a dark mode, a brighness adjustment, and more.",
@@ -14,8 +14,6 @@
         {
             "matches": ["*://www.kongregate.com/*"],
             "run_at": "document_end",
-            "css": [
-                "css/font-awesome.all.min.css"],
             "js": [
 				"js/jquery.min.js",
 				"js/jquery.cssrule.js",
@@ -37,19 +35,5 @@
                 "js/content_games.js"]
 		}
 	],
-    "web_accessible_resources": [
-		"webfonts/fa-regular-400.eot",
-		"webfonts/fa-regular-400.svg",
-		"webfonts/fa-regular-400.ttf",
-		"webfonts/fa-regular-400.woff",
-		"webfonts/fa-regular-400.woff2",
-		"webfonts/fa-solid-900.eot",
-		"webfonts/fa-solid-900.svg",
-		"webfonts/fa-solid-900.ttf",
-		"webfonts/fa-solid-900.woff",
-		"webfonts/fa-solid-900.woff2",
-        "sound/*"
-	],
-
     "permissions": ["activeTab"]
 }

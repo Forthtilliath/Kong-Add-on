@@ -172,7 +172,6 @@
         },
         removeElements2: function (o) {
             o.forEach(function (b) {
-                $.log(1,b);
                 if (b.length > 0) b.remove();
             });
         },
@@ -204,13 +203,9 @@
          */
         setWidthChat: function (w) {
             if (typeof (w) == 'undefined') w = 0;
-            $.log(20, "iDefaultChatWidth= " + iDefaultChatWidth);
 
             $("#chat_container").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px )`);
-            $("#chat_window").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px - 16px )`);
-            $("#kong_game_ui .tabpane").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px )`);
-            $("#chat_tab_pane").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px - 16px )`);
-            $("#alert_tab_pane").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px - 16px )`);
+            $("#kong_game_ui>div").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px - 16px )`);
             $(".chat_input").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px - 16px - 8px )`);
             $(".chat_char_countdown").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px - 16px - 8px )`);
         },
@@ -239,27 +234,30 @@
          *  @param {number} set the id of the mode
          */
         setStyleDisplayMode: function (i) {
+            let bt_1 = '#' + features.get('displayMode').divName + ' button:first-child';
+            let bt_2 = '#' + features.get('displayMode').divName + ' button:not(:first-child):not(:last-child)';
+            let bt_3 = '#' + features.get('displayMode').divName + ' button:last-child';
             if (i == -1) {
-                jCSSRule("#bt_gameOnly", "color", darkMode ? color_white : color_black);
-                jCSSRule("#bt_gameOnly", "cursor", "default");
-                jCSSRule("#bt_gameNchat", "color", bgColor_grey_13);
-                jCSSRule("#bt_gameNchat", "cursor", "pointer");
-                jCSSRule("#bt_chatOnly", "color", bgColor_grey_13);
-                jCSSRule("#bt_chatOnly", "cursor", "pointer");
+                jCSSRule(bt_1, "color", darkMode ? color_white : color_black);
+                jCSSRule(bt_1, "cursor", "default");
+                jCSSRule(bt_2, "color", bgColor_grey_13);
+                jCSSRule(bt_2, "cursor", "pointer");
+                jCSSRule(bt_3, "color", bgColor_grey_13);
+                jCSSRule(bt_3, "cursor", "pointer");
             } else if (i == 0) {
-                jCSSRule("#bt_gameOnly", "color", bgColor_grey_13);
-                jCSSRule("#bt_gameOnly", "cursor", "pointer");
-                jCSSRule("#bt_gameNchat", "color", darkMode ? color_white : color_black);
-                jCSSRule("#bt_gameNchat", "cursor", "default");
-                jCSSRule("#bt_chatOnly", "color", bgColor_grey_13);
-                jCSSRule("#bt_chatOnly", "cursor", "pointer");
+                jCSSRule(bt_1, "color", bgColor_grey_13);
+                jCSSRule(bt_1, "cursor", "pointer");
+                jCSSRule(bt_2, "color", darkMode ? color_white : color_black);
+                jCSSRule(bt_2, "cursor", "default");
+                jCSSRule(bt_3, "color", bgColor_grey_13);
+                jCSSRule(bt_3, "cursor", "pointer");
             } else if (i == 1) {
-                jCSSRule("#bt_gameOnly", "color", bgColor_grey_13);
-                jCSSRule("#bt_gameOnly", "cursor", "pointer");
-                jCSSRule("#bt_gameNchat", "color", bgColor_grey_13);
-                jCSSRule("#bt_gameNchat", "cursor", "pointer");
-                jCSSRule("#bt_chatOnly", "color", darkMode ? color_white : color_black);
-                jCSSRule("#bt_chatOnly", "cursor", "default");
+                jCSSRule(bt_1, "color", bgColor_grey_13);
+                jCSSRule(bt_1, "cursor", "pointer");
+                jCSSRule(bt_2, "color", bgColor_grey_13);
+                jCSSRule(bt_2, "cursor", "pointer");
+                jCSSRule(bt_3, "color", darkMode ? color_white : color_black);
+                jCSSRule(bt_3, "cursor", "default");
             }
         },
         /** Remove all styles of the button message of the website when we click on it
@@ -292,8 +290,10 @@
         },
         /** Center an element in the middle of the screen  */
         centrerElementAbsolu: function () {
-            this.css('top', ($(window).height() - this.height()) / 2 + $(window).scrollTop());
-            this.css('left', ($(window).width() - this.width()) / 2 + $(window).scrollLeft());
+            //console.error("WHYYY");
+            $(window).scrollTop(0); // Move the page at the top to fix an issue when we refresh a page which not is at the top
+            this.css('top', ($(window).height() - this.height()) / 2);
+            this.css('left', ($(window).width() - this.width()) / 2);
         },
         /** Scroll down an element */
         scrollBottom: function () {

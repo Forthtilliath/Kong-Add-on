@@ -5,16 +5,21 @@
 /** @fileoverview A simple jQuery plugin to manipulate CSS styleSheet
  *	@see {@link https://www.w3.org/wiki/Dynamic_style_-_manipulating_CSS_with_JavaScript }
  *  @author  Jean-Marc VIGLINO
- *  @contributor Forth : setSheet()
+ *  @contributor Forth : setSheet(), $.jCSSReset()
  *  @version 1.0
  */
 "use strict";
 
 (function () {
+    // Remove styles_kong for FF to avoid to have several times this script
+    if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+        if ($('#styles_kong').length) $('#styles_kong').remove();
+    }
     // Create a new stylesheet in the bottom of the <body> 
     // or the <head> depending on the place of the file
     var stylesheet = document.createElement('style');
     stylesheet.setAttribute('type', 'text/css');
+    stylesheet.setAttribute('id', 'styles_kong');
     if (document.body) document.body.appendChild(stylesheet);
     else document.head.appendChild(stylesheet);
 
@@ -112,9 +117,9 @@
         }
         setSheet();
     };
-    
+
     // Forth : Add a function to remove all rules
-    window.jCSSReset = function() {
+    window.jCSSReset = function () {
         stylesheet.textContent = '';
     }
 

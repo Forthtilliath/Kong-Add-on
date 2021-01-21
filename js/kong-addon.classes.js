@@ -12,24 +12,30 @@
 "use strict";
 
 class Button {
-    constructor(idbutton, title, value) {
+    constructor(idbutton, title, value, classes) {
         this.idbutton = idbutton;
         this.title = title;
         this.value = value;
+        this.classes = classes || '';
     }
 
     /* To use it : unBouton.html */
     get html() {
-        return `<button id="${this.idbutton}" title="${this.title}">${this.value}</button>`;
+        if (this.classes != '') {
+            return `<button id="${this.idbutton}" title="${this.title}" class="${this.classes}">${this.value}</button>`;
+        } else {
+            return `<button id="${this.idbutton}" title="${this.title}">${this.value}</button>`;
+        }
     }
 };
 
 class Feature {
 
-    constructor(id, active, position) {
+    constructor(id, active, position, classes) {
         this.id = id;
         this.active = active || false;
         this.position = position >= 0 ? position : -1; // Position in the Feature's Div
+        this.classes = classes;
     }
 
     // Getters
@@ -67,6 +73,10 @@ class Feature {
         this.div.attr('title', title);
     }
 
+    setActive(b) {
+        this.active = $.parseBool(b);
+    }
+
 
     show() {
         this.div.show();
@@ -79,9 +89,9 @@ class Feature {
     // Add the div to the DOM
     addDiv(content) {
         if (this.position == -1) {
-            $('body').append($.createDiv(this.divName2, content));
+            $('body').append($.createDiv(this.divName2, content, this.classes));
         } else {
-            this.div.append($.createDiv(this.divName, content));
+            this.div.append($.createDiv(this.divName, content, this.classes));
         }
     }
 };
@@ -89,15 +99,25 @@ class Feature {
 class ListFeatures {
 
     constructor() {
-        this.aFeatures = new Array;
+        this.aFeatures = [];
+        this.aFeaturesTemp = [];
         this.containerId = 'forth_features';
     }
 
     /* Add a Feature to the list
      * @param oneFeature {Feature}
      */
-    add(oneFeature) {
-        this.aFeatures[oneFeature.getId()] = oneFeature;
+    add(id, active, position, classes) {
+        if (position >= 0 && active) { // Check if feature is active and has an interface position
+            this.aFeaturesTemp.push({ // Add to temp array to sort it and organize positions
+                id,
+                active,
+                position,
+                classes
+            });
+        } else if (active) { // Check if feature is active
+            this.aFeatures[id] = new Feature(id, active, position, classes); // Add to final array
+        }
     }
 
     /* Create the container for all features
@@ -136,5 +156,13 @@ class ListFeatures {
     // Return the feature by his id
     get(id) {
         return this.aFeatures[id];
+    }
+
+    // Order features
+    sort() {
+        this.aFeaturesTemp.sort((a, b) => a.position - b.position);
+        for (let i = 0; i < this.aFeaturesTemp.length; i++) { // Add features to final array
+            this.aFeatures[this.aFeaturesTemp[i].id] = new Feature(this.aFeaturesTemp[i].id, this.aFeaturesTemp[i].active, i, this.aFeaturesTemp[i].classes);
+        };
     }
 }

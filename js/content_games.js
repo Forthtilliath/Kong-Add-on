@@ -17,16 +17,7 @@ $(document).ready(function () {
 
     /* Check if each button already exist and delete them to avoid any double
      * when the extension is updated while running (had this issue on FF) */
-    if (isFirefox) $.removeElements(['button#bt_showquicklinks', 'div#forth_features', 'div#forth_fullscreen']);
-    /*
-     div#forth_features
-     button#bt_showquicklinks
-     span.onlyGameOrChat
-     script_kong
-     div#forth_fullscreen
-     div#unreadMessages
-     tr#tr_features
-    */
+    if (isFirefox) $.removeElements2([$('div#forth_features'), $('button#bt_showquicklinks'), $('span.onlyGameOrChat'), $('#script_kong'), $('div#forth_fullscreen'), $('tr#tr_features'), features.get('unreadMessages').div]);
 
     // Name of the game
     let gameName = $(".gamepage_title_block > h1[itemprop='name']").text();
@@ -62,16 +53,22 @@ $(document).ready(function () {
      *  And save the volume in the cookie
      */
     function changeVolume() {
-        $('#slt_volume').val(volumeValue); // Volume choosed
+        //$('#slt_volume').val(volumeValue); // Volume choosed
+        features.get('ping').div.find('select').val(volumeValue); // Volume choosed
 
         // Update the button with new icon & title
         let iconVolume = (volumeValue == 0) ? icon_volume_off : (volumeValue < 0.5) ? icon_volume_down : icon_volume_up;
         let textVolume = (volumeValue == 0) ? 'Click to unmute' : 'Click to mute';
-        $("#forth_volume > span").setButton($.createIcon(iconVolume), textVolume);
+        //$("#forth_volume > span").setButton($.createIcon(iconVolume), textVolume);
+        features.get('ping').div.find('span').setButton($.createIcon(iconVolume), textVolume);
 
         $.execScript(`songMsg.volume = ${ volumeValue };`); // Inject the code the change the volume
         $.setCookieGame('VolumePing', volumeValue); // Update the cookie to save setting after refreshs
     }
+
+    $.initialize("#signup_tab_pane", function () {
+        $.setWidthChat((cookieDisplayMode != 0) ? modif_chat_width : 0);
+    });
 
     /**** LIST OF FUNCTIONS END */
 
@@ -83,7 +80,7 @@ $(document).ready(function () {
 
     // Create the button
     //$("#quicklinks").prepend($.addButton('li', '', 'bt_showquicklinks', 'Show quick links', $.createIcon(icon_quicklinks_off)));
-    $("#quicklinks").prepend('<li>' + new Button('bt_showquicklinks', 'Show quick links', $.createIcon(icon_quicklinks_off)).html + '</li>');
+    $("#quicklinks").prepend('<li class="' + features.get('quickLinks').classes + '">' + new Button('bt_showquicklinks', 'Show quick links', $.createIcon(icon_quicklinks_off)).html + '</li>');
     // We remove the facebook button to gain space
     $("#quicklinks_facebook").remove();
 
@@ -105,8 +102,10 @@ $(document).ready(function () {
      * - Create a sub-block for each feature
      ****/
 
-    features.addContainerIn('#cloud_save_info_template');
-    features.addSubContainers();
+    if (features.nbFeatures > 0) {
+        features.addContainerIn('#cloud_save_info_template');
+        features.addSubContainers();
+    }
 
     /**** BLOCK FEATURES END */
 
@@ -118,7 +117,6 @@ $(document).ready(function () {
      ****/
 
     if ((features.get('lockscreen') !== undefined) && features.get('lockscreen').isActive()) {
-        $.log(20, "Feature Lockscreen");
         // Add the fullscreen mode in hide
         $('<div id="forth_fullscreen"></div>').appendTo("body");
         // Create the button and put it in the features div
@@ -178,21 +176,20 @@ $(document).ready(function () {
 
         // Evenement
         $('#bt_onlineplayers').click(function () {
-            $(".chat_room_template > .users_in_room").toggle(500, function () {
-                if ($(".chat_room_template > .users_in_room").is(":visible")) { // Show
-                    $('#bt_onlineplayers').html($.createIcon(icon_onlinep_on));
-                    $('#bt_onlineplayers').prop('title', 'Hide online players');
-                    // Update the cookie to save setting after refreshs
-                    $.setCookieAll('ShowPlayers', 'true');
-                } else { // Hide
-                    $('#bt_onlineplayers').html($.createIcon(icon_onlinep_off));
-                    $('#bt_onlineplayers').prop('title', 'Show online players');
-                    // Update the cookie to save setting after refreshs
-                    $.setCookieAll('ShowPlayers', 'false');
-                }
-                $.log(50, 'ONLINE PLAYERS');
-                $("#chat_rooms_container .chat_message_window").scrollBottom();
-            });
+            if ($(".chat_room_template > .users_in_room").css('display') == 'none') { // Show
+                $(".chat_room_template > .users_in_room").show(500);
+                $(this).html($.createIcon(icon_onlinep_on));
+                $(this).prop('title', 'Hide online players');
+                // Update the cookie to save setting after refreshs
+                $.setCookieAll('ShowPlayers', 'true');
+            } else { // Hide
+                $(".chat_room_template > .users_in_room").hide(500);
+                $(this).html($.createIcon(icon_onlinep_off));
+                $(this).prop('title', 'Show online players');
+                // Update the cookie to save setting after refreshs
+                $.setCookieAll('ShowPlayers', 'false');
+            }
+            $("#chat_rooms_container .chat_message_window").scrollBottom();
         });
     }
 
@@ -253,8 +250,8 @@ $(document).ready(function () {
         // Evenement change brightness start
         $('#slt_brightness').change(function () {
             // Add a cssrule to dynamise the text size
-            cookieBrightness = $(this).val();
-            jCSSRule("#maingamecontent #gameholder", "filter", "brightness(" + cookieBrightness + ")");
+            //cookieBrightness = $(this).val();
+            jCSSRule("#maingamecontent #gameholder", "filter", "brightness(" + $(this).val() + ")");
 
             // Update the cookie to save setting after refreshs
             $.setCookieGame('Brightness', $(this).val());
@@ -293,7 +290,7 @@ $(document).ready(function () {
         });
 
         // Evenement when sound is muted/unmuted from icon
-        $('#forth_volume > span').click(function () {
+        $('#forth_ping > span').click(function () {
             // Swap old volume to new if mute
             if (volumeValue == 0) {
                 volumeValue = volumeValueOld;
@@ -338,9 +335,15 @@ $(document).ready(function () {
         function click_gameOnly() {
             if (displayMode != -1) { // If already in gameMode, do nothing
                 // Hide/Show features when onlyGame
-                features.get('onlineplayers').hide(); // Hide onlineplayers button
-                features.get('textsize').hide(); // Hide textsize button
-                features.get('brightness').show(); // Show brightness button
+                if ((features.get('brightness') !== undefined) && features.get('brightness').isActive()) {
+                    features.get('brightness').show(); // Show brightness button
+                }
+                if ((features.get('onlineplayers') !== undefined) && features.get('onlineplayers').isActive()) {
+                    features.get('onlineplayers').hide(); // Hide onlineplayers button
+                }
+                if ((features.get('textsize') !== undefined) && features.get('textsize').isActive()) {
+                    features.get('textsize').hide(); // Hide textsize button
+                }
 
                 // Show game & hide chat
                 $("#gameholder").show(); // Show game
@@ -351,14 +354,13 @@ $(document).ready(function () {
                 while ($("#gameiframe").css("width") == 0) {
                     setTimeout(function () {
 
-                    }, 1000);
+                    }, 100);
                 }
                 $.setHeightBoth(`calc(${iDefaultBothHeight} + ${menuButtonsHeight2})`);
                 $.setWidthBoth($("#gameiframe").css("width"));
                 $.setWidthChat(); // Resize chat
                 $.setWidthGame($("#gameiframe").css("width"));
                 if (iDefaultGameLeft == -1) iDefaultGameLeft = $("#gameiframe").css("left");
-                $.log(10, "left= " + iDefaultGameLeft);
                 $("#gameiframe").css("left", 0);
 
                 // Show game name
@@ -367,9 +369,11 @@ $(document).ready(function () {
                 $("span.onlyGameOrChat").show();
 
                 // Mute pings
-                volumeValueOld = (volumeValue > 0) ? volumeValue : 0;
-                if (volumeValue > 0) volumeValue = 0;
-                changeVolume();
+                if ((features.get('ping') !== undefined) && features.get('ping').isActive()) {
+                    volumeValueOld = (volumeValue > 0) ? volumeValue : 0;
+                    if (volumeValue > 0) volumeValue = 0;
+                    changeVolume();
+                }
 
                 showOnlyGameOrChat();
                 $.setCookieGame('DisplayMode', -1);
@@ -381,9 +385,15 @@ $(document).ready(function () {
         function click_chatOnly() {
             if (displayMode != 1) { // If already in chatMode, do nothing
                 // Hide/Show features when onlyChat
-                features.get('brightness').hide(); // Hide brightness button
-                features.get('onlineplayers').show(); // Show onlineplayers button
-                features.get('textsize').show(); // Show textsize button
+                if ((features.get('brightness') !== undefined) && features.get('brightness').isActive()) {
+                    features.get('brightness').hide(); // Show brightness button
+                }
+                if ((features.get('onlineplayers') !== undefined) && features.get('onlineplayers').isActive()) {
+                    features.get('onlineplayers').show(); // Hide onlineplayers button
+                }
+                if ((features.get('textsize') !== undefined) && features.get('textsize').isActive()) {
+                    features.get('textsize').show(); // Hide textsize button
+                }
 
                 // Hide game & show chat
                 $("#gameholder").hide(); // Hide game
@@ -391,7 +401,7 @@ $(document).ready(function () {
 
                 // Resize box
                 $.setHeightBoth(`calc(${iDefaultBothHeight} + ${menuButtonsHeight2})`);
-                $.setWidthBoth(`calc( ${iDefaultChatWidth} + ${modif_chat_width}px )`); // Reduce game box
+                $.setWidthBoth(`calc( ${iDefaultChatWidth} + ${modif_chat_width}px - 3px )`); // Reduce game box
                 $.setWidthChat(modif_chat_width); // Resize chat enlarger
                 $("#gameiframe").css("left", iDefaultGameLeft);
 
@@ -401,10 +411,12 @@ $(document).ready(function () {
                 $("span.onlyGameOrChat").show();
 
                 // Unmute pings
-                if (volumeValueOld > 0) {
-                    volumeValue = volumeValueOld;
-                    volumeValueOld = 0;
-                    changeVolume();
+                if ((features.get('ping') !== undefined) && features.get('ping').isActive()) {
+                    if (volumeValueOld > 0) {
+                        volumeValue = volumeValueOld;
+                        volumeValueOld = 0;
+                        changeVolume();
+                    }
                 }
 
                 showOnlyGameOrChat();
@@ -424,9 +436,15 @@ $(document).ready(function () {
                 $("#tr_features").hide(); // Hide tr_features
 
                 // Show features
-                features.get('brightness').show(); // Hide brightness button
-                features.get('onlineplayers').show(); // Show onlineplayers button
-                features.get('textsize').show(); // Show textsize button
+                if ((features.get('brightness') !== undefined) && features.get('brightness').isActive()) {
+                    features.get('brightness').show(); // Show brightness button
+                }
+                if ((features.get('onlineplayers') !== undefined) && features.get('onlineplayers').isActive()) {
+                    features.get('onlineplayers').show(); // Hide onlineplayers button
+                }
+                if ((features.get('textsize') !== undefined) && features.get('textsize').isActive()) {
+                    features.get('textsize').show(); // Hide textsize button
+                }
 
                 // Show game & chat
                 $("#gameholder").show(); // Show game
@@ -442,10 +460,12 @@ $(document).ready(function () {
                 $("span.onlyGameOrChat").hide(); // Hide game name
 
                 // Unmute pings
-                if (volumeValueOld > 0) {
-                    volumeValue = volumeValueOld;
-                    volumeValueOld = 0;
-                    changeVolume();
+                if ((features.get('ping') !== undefined) && features.get('ping').isActive()) {
+                    if (volumeValueOld > 0) {
+                        volumeValue = volumeValueOld;
+                        volumeValueOld = 0;
+                        changeVolume();
+                    }
                 }
 
                 gameOrChatHided = false;
@@ -456,6 +476,7 @@ $(document).ready(function () {
         }
 
         // Initialisation
+        $.log(1, 'cookieDisplayMode= ' + cookieDisplayMode);
         if (cookieDisplayMode == '-1') {
             $("#gameiframe").ready(function () {
                 click_gameOnly();
@@ -467,13 +488,19 @@ $(document).ready(function () {
 
             // Once chat_rooms_container is completely loaded
             $.initialize("#chat_rooms_container", function () {
-                $.setWidthChat(modif_chat_width);
-                let width_nameGame = $("#maingame").width() - $(".user_connection").width() - 20;
-                $("span.onlyGameOrChat").css("width", width_nameGame);
+                if (cookieDisplayMode != 0) { // If not default mode
+                    $.setWidthChat(modif_chat_width); // Resize the chat
+                    let width_nameGame = $("#maingame").width() - $(".user_connection").width() - 20; // Resize the div for game name
+                    $("span.onlyGameOrChat").css("width", width_nameGame);
+                }
             });
 
         } else if (cookieDisplayMode == '0') {
-            click_gameNchat();
+            $.log(1, "iDefaultBothWidth=" + iDefaultBothWidth);
+            $.setWidthBoth(iDefaultBothWidth); // Resize game box per default
+            $("#gameiframe").ready(function () {
+                click_gameNchat();
+            });
         }
 
         // Evenements
@@ -526,7 +553,8 @@ $(document).ready(function () {
             window.open($("#my-messages-link").attr('href')); // Open a new page to show new messages
         });
 
-        $("a#my-messages-link").mousedown(function () {
+        //$("a#my-messages-link").mousedown(function () {
+        $("a#my-messages-link").mouseup(function () {
             $.removeStyleUnreadMessage();
         });
     }
@@ -537,6 +565,9 @@ $(document).ready(function () {
             if ($("#forth_fullscreen").is(":visible")) {
                 $("#floating_game_holder").centrerElementAbsolu();
             }
+        });
+        $.initialize("#floating_game_holder", function () {
+            $("#floating_game_holder").centrerElementAbsolu();
         });
     }
 });

@@ -218,9 +218,10 @@ function loadCSS() {
 
     if (namePage == 'games') {
         // Window game
-        let chatHeight = $("#chat_container").css("height");
+        //let chatHeight = $("#chat_container").css("height");
+        let menu1Height = gameOrChatHided ? menuButtonsHeight1 : "0px";
         let menu2Height = gameOrChatHided ? menuButtonsHeight2 : "0px";
-        $.setHeightBoth(`calc( ${chatHeight} + ${menuButtonsHeight1} + ${menu2Height} )`);
+        $.setHeightBoth(`calc( ${iDefaultBothHeight} + ${menu1Height} + ${menu2Height} )`);
         jCSSRule("#flashframecontent .game_table > tbody > tr:first-child", "height", menuButtonsHeight1);
 
         // Title of the game
@@ -276,6 +277,8 @@ function loadCSS() {
         jCSSRule("#kong_game_ui .chat_message_window p span", "vertical-align", "middle");
         jCSSRule("#kong_game_ui .chat_message_window p .username span", "vertical-align", "sub");
         jCSSRule("#kong_game_ui .chat_message_window", "max-height", "none");
+        jCSSRule("#chat_container", "margin-left", "0");
+
         // Clicked on user
         jCSSRule(".return_to_room a", "color", linkColor_red); // Return to game
         jCSSRule("#kong_game_ui .tabpane .contents_inner", "background-color", bgColor_grey_00);
@@ -289,10 +292,12 @@ function loadCSS() {
         jCSSRule("#user_mini_profile_contents #user_info ul.user_actions li", "filter", "invert(1)"); // Icons Unfriend / Mute / Report
         jCSSRule("#user_mini_profile_contents #user_info ul.user_actions li a", "color", linkColor_red_invert); // Labels Unfriend / Mute / Report
         // Stickers
-
         jCSSRule(".chat-msg-sticker__tooltip", "background-color", bgColor_grey_09);
         jCSSRule(".chat-msg-sticker__tooltip::before", "border-color", `transparent ${bgColor_grey_09} transparent transparent`);
         jCSSRule(".chat-sticker-tab__normal, .chat-sticker-tab__shiny", "background-color", bgColor_grey_00);
+        if (STICKERS_SHINNY && darkMode) {
+            jCSSRule(".chat-msg-sticker__img, .c-sticker-preview__img", "filter", `drop-shadow(0 0 1px ${color_white})`);
+        }
 
         // Input
         jCSSRule("#kong_game_ui .chat_controls .chat_input", "background-color", bgColor_grey_00);
@@ -479,6 +484,7 @@ function loadCSS() {
     /***** FORTH ADDON *****************************************************************************************************/
     /***********************************************************************************************************************/
     if (namePage != '') {
+        // Feature global buttons
         if ((features.get('darkMode') !== undefined) && features.get('darkMode').isActive()) {
             jCSSRule("#forth_f_darkMode", "top", "5px");
             jCSSRule("#forth_f_darkMode", "left", "5px");
@@ -503,10 +509,12 @@ function loadCSS() {
             jCSSRule("#bt_darkmode, #bt_unreadMessages", "color", color_white);
             jCSSRule("#bt_darkmode, #bt_unreadMessages", "border-radius", "5px");
             jCSSRule("#bt_darkmode, #bt_unreadMessages", "box-shadow", "1px 1px 3px " + color_white);
+
             jCSSRule("#bt_unreadMessages", "width", "auto");
             jCSSRule("#bt_unreadMessages", "min-width", "40px");
             jCSSRule("#bt_unreadMessages #msg-count", "padding", "0 5px");
         }
+        jCSSRule("#forth_firefox", "display", "none");
     }
     if (namePage == 'games') {
         jCSSRule("#maingamecontent .game_table .links_connect", "height", "25px");
@@ -519,6 +527,8 @@ function loadCSS() {
         jCSSRule("#forth_features.onlyGameOrChat", "float", "none");
         jCSSRule("#forth_features.onlyGameOrChat", "width", "420px");
         jCSSRule("#forth_features.onlyGameOrChat", "margin", "0 auto");
+        jCSSRule("#forth_features > div", "margin", "0 5px");
+        jCSSRule("#forth_features > div", "height", "25px");
         // Name of the game
         jCSSRule("span.onlyGameOrChat", "float", "left");
         jCSSRule("span.onlyGameOrChat", "color", color_white);
@@ -534,42 +544,42 @@ function loadCSS() {
         jCSSRule("#tr_features", "height", menuButtonsHeight2);
         jCSSRule("#tr_features", "display", "none");
         // All buttons
-        jCSSRule("#forth_displayMode, #forth_onlineplayers, #forth_hideChat, #forth_lockscreen, #forth_textsize, #forth_brightness, #forth_ping, #forth_chatOnly", "margin", "0 5px");
-        jCSSRule("forth_displayMode, #forth_onlineplayers, #forth_hideChat, #forth_lockscreen, #forth_textsize, #forth_brightness, #forth_ping, #forth_chatOnly", "height", "25px");
         jCSSRule("#quicklinks", "height", "25px");
-        jCSSRule("#bt_gameOnly, #bt_gameNchat, #bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "height", "25px");
-        jCSSRule("#bt_gameOnly, #bt_gameNchat, #bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "padding", "0 5px");
-        jCSSRule("#bt_gameOnly, #bt_gameNchat, #bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "border", "1px solid");
-        jCSSRule("#bt_gameOnly, #bt_gameNchat, #bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "border-color", color_grey_00);
-        jCSSRule("#bt_gameOnly, #bt_gameNchat, #bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "background-color", bgColor_grey_00);
-        jCSSRule("#bt_gameOnly, #bt_gameNchat, #bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "border-radius", "5px");
-        jCSSRule("#bt_gameOnly, #bt_gameNchat, #bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "width", "40px");
-        jCSSRule("#bt_gameOnly, #bt_gameNchat, #bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #bt_chatOnly, #slt_fontsize, #slt_brightness, #slt_volume", "height", "25px");
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #slt_brightness, #slt_volume", "color", color_white);
-        jCSSRule("#bt_onlineplayers, #bt_hideChat, #bt_lockscreen, #bt_showquicklinks, #slt_fontsize, #slt_brightness, #slt_volume", "cursor", "pointer");
-        jCSSRule("#slt_fontsize, #slt_brightness", "width", "65px");
-        jCSSRule("#slt_brightness", "width", "70px");
-        jCSSRule("#slt_volume", "width", "70px");
-        jCSSRule("#bt_gameOnly", "border-radius", "5px 0 0 5px");
-        jCSSRule("#bt_gameOnly", "border-right", "none");
-        jCSSRule("#bt_gameNchat", "border-radius", "0");
-        jCSSRule("#bt_gameNchat", "border-left", "1px " + color_grey_09 + " solid");
-        jCSSRule("#bt_gameNchat", "border-right", "1px " + color_grey_09 + " solid");
-        jCSSRule("#bt_chatOnly", "border-radius", "0 5px 5px 0");
-        jCSSRule("#bt_chatOnly", "border-left", "none");
-        jCSSRule("#bt_gameOnly, #bt_chatOnly, #bt_gameNchat", "width", "30px");
+
+        jCSSRule(".feature_aButton button, .feature_sevButtons button, .feature_aSelect select", "padding", "0 5px");
+        jCSSRule(".feature_aButton button, .feature_sevButtons button, .feature_aSelect select", "border", "1px solid");
+        jCSSRule(".feature_aButton button, .feature_sevButtons button, .feature_aSelect select", "border-color", color_grey_00);
+        jCSSRule(".feature_aButton button, .feature_sevButtons button, .feature_aSelect select", "background-color", bgColor_grey_00);
+        jCSSRule(".feature_aButton button, .feature_sevButtons button, .feature_aSelect select", "border-radius", "5px");
+        jCSSRule(".feature_aButton button, .feature_sevButtons button, .feature_aSelect select", "height", "25px");
+
+        jCSSRule(".feature_aButton button", "width", "40px");
+        jCSSRule(".feature_aSelect select", "width", "70px");
+        jCSSRule(".feature_aButton button, .feature_aSelect select", "color", color_white);
+        jCSSRule(".feature_aButton button, .feature_aSelect select", "cursor", "pointer");
+
+        // For multi buttons at one
+        jCSSRule(".feature_sevButtons button:first-child", "border-radius", "5px 0 0 5px");
+        jCSSRule(".feature_sevButtons button:first-child", "border-right", "none");
+        jCSSRule(".feature_sevButtons button:not(:first-child):not(:last-child)", "border-radius", "0");
+        jCSSRule(".feature_sevButtons button:not(:first-child):not(:last-child)", "border-left", "1px " + color_grey_09 + " solid");
+        jCSSRule(".feature_sevButtons button:not(:first-child):not(:last-child)", "border-right", "1px " + color_grey_09 + " solid");
+        jCSSRule(".feature_sevButtons button:last-child", "border-radius", "0 5px 5px 0");
+        jCSSRule(".feature_sevButtons button:last-child", "border-left", "none");
+        jCSSRule(".feature_sevButtons button", "width", "30px");
 
         if ((features.get('displayMode') !== undefined) && features.get('displayMode').isActive()) {
             $.setStyleDisplayMode(displayMode);
         }
         // Select menus
-        jCSSRule("#forth_textsize > span, #forth_brightness > span, #forth_ping > span", "color", color_white);
-        jCSSRule("#forth_textsize > span, #forth_brightness > span, #forth_ping > span", "height", "25px");
-        jCSSRule("#forth_textsize > span, #forth_brightness > span, #forth_ping > span", "width", "20px");
-        jCSSRule("#forth_textsize > span, #forth_brightness > span, #forth_ping > span", "display", "inline-block");
-        jCSSRule("#forth_textsize > span, #forth_brightness > span, #forth_ping > span", "font-size", "18px");
-        jCSSRule("#forth_textsize > span, #forth_brightness > span, #forth_ping > span", "vertical-align", "sub");
-        jCSSRule("#forth_textsize > span, #forth_brightness > span, #forth_ping > span", "padding-right", "5px");
+        jCSSRule(".feature_aSelect span", "color", color_white);
+        jCSSRule(".feature_aSelect span", "height", "18px");
+        jCSSRule(".feature_aSelect span", "width", "20px");
+        jCSSRule(".feature_aSelect span", "display", "inline-block");
+        jCSSRule(".feature_aSelect span", "font-size", "18px");
+        jCSSRule(".feature_aSelect span", "vertical-align", "middle");
+        jCSSRule(".feature_aSelect span", "padding-right", "5px");
+
         jCSSRule("#forth_lockscreen > button:focus", "outline", "none");
         // Div lock screen
         jCSSRule("#forth_fullscreen", "height", "100%");
@@ -581,7 +591,7 @@ function loadCSS() {
         jCSSRule("#forth_fullscreen", "z-index", "9999");
         jCSSRule("#forth_fullscreen", "display", "none");
         // Locked
-        jCSSRule("#bt_lockscreen.locked", "background-color", bgColor_red_01);
+        jCSSRule(".feature_aButton button.locked", "background-color", bgColor_red_01);
         // Game
         jCSSRule(".game_ahead", "position", "absolute");
         jCSSRule(".game_ahead", "z-index", "10000");

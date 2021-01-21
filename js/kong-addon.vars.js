@@ -30,7 +30,8 @@ const step_brightness = 10;
 const min_volume = 0;
 const max_volume = 100;
 
-const modif_chat_width = 185; // When chat only
+let modif_chat_width = 0; // When chat only
+if (!$('#forth_firefox').length) modif_chat_width = 185; // Except when extension updated on FF
 
 const songUrl = 'sound/pristine.flac';
 let volumeValue = $.getCookieGame('VolumePing', 0.1);
@@ -113,8 +114,9 @@ const regVolume = /(songMsg.volume = )([01]{1})(\.{1}\d{1})?(;)/i;
 const namePage = $(location).getIdCurrentPage();
 const titlePage = $(document).attr("title");
 
-const iDefaultBothWidth = (namePage == 'games') ? $("#maingame").css("width") : 0;
-const iDefaultBothHeight = (namePage == 'games') ? ($("#maingame").cssNumber("height") + 9) + 'px' : 0; // +9 because of our buttons
+$.log(1, "width=" + $("#maingame").css("width"));
+const iDefaultBothWidth = (namePage == 'games') ? ($("#maingame").cssNumber("width") - 3) + 'px' : 0;
+const iDefaultBothHeight = (namePage == 'games') ? ($('#forth_firefox').length) ? $('#iDefaultBothHeight').text() : ($("#maingame").cssNumber("height") + 9) + 'px' : 0; // +9 because of our buttons
 const iDefaultChatWidth = (namePage == 'games') ? $("#chat_container_cell").css("width") : 0;
 const iDefaultGameWidth = (namePage == 'games') ? $("#gameholder").css("width") : 0;
 const iDefaultGameRealWidth = (namePage == 'games') ? $("#gameiframe").css("width") : 0;
@@ -161,20 +163,24 @@ const aElemAlways = ["#forth_fullscreen", "#forth_messagebox", "#forth_messagebo
 const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 
 let features = new ListFeatures();
-features.add(new Feature('lockscreen', true, 0));
-features.add(new Feature('onlineplayers', true, 1));
-features.add(new Feature('displayMode', true, 2));
-features.add(new Feature('textsize', true, 3));
-features.add(new Feature('brightness', true, 4));
-features.add(new Feature('ping', true, 5));
-features.add(new Feature('darkMode', true, -1));
-features.add(new Feature('unreadMessages', true, -1));
-features.add(new Feature('botsblocker', true, -1));
-features.add(new Feature('urlrewriter', true, -1));
-features.add(new Feature('notifications', true, -1));
-
-$.log(20, features);
+features.add('lockscreen', true, 0, 'feature_aButton');
+features.add('onlineplayers', true, 1, 'feature_aButton');
+features.add('displayMode', true, 2, 'feature_sevButtons');
+features.add('textsize', true, 3, 'feature_aSelect');
+features.add('brightness', true, 4, 'feature_aSelect');
+features.add('ping', true, 5, 'feature_aSelect');
+features.add('settings', false, 6, 'feature_aButton');
+// no interface features
+features.add('darkMode', true, -1, 'feature_global_button');
+features.add('unreadMessages', true, -1, 'feature_global_button');
+features.add('quickLinks', true, -1, 'feature_aButton');
+features.add('botsblocker', true, -1, '');
+features.add('urlrewriter', true, -1, '');
+features.add('notifications', true, -1, '');
+features.sort();
 
 let darkMode = ((features.get('darkMode') !== undefined) && features.get('darkMode').isActive()) ? $.parseBool($.getCookieAll('DarkMode', 'true')) : false;
+let featuresSettings = $.parseBool($.getCookieAll('Settings', 'false')); // Feature Settings to active or not each features
 
 let gameOrChatHided = false;
+const STICKERS_SHINNY = true;

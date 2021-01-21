@@ -4,16 +4,21 @@
     - All buttons are on new row
 - New feature : Notifications
     - When the window of the chat is not on focus, the title of the page add the number of new messages
+    - Click on the button
+        - Open a new window
+        - Hide the button
 - Modification array aFeatures to objects
 - Now center correctly the game/chat in x
 - Show game name when game or chat is hide
 - Renames of files
 - Optimisation of code
+    - Code ready to add a new button to be able to active or not a feature
 - Optimisation of cookies (instead to have 1 cookie by feature, we have now 1 cookie for website + 1 cookie / game)
     - kong_addon on kongregate.com :
         darkMode/onlineplayers/textsize
     - kong_addon_games on kongregate.com/games
         lockscreen/displayMode/volume/brightness
+- Added shinny option for stickers when DarkMode on
 - Added darkMode as feature to be able to unable it easily if needed
 - Reset styles instead of add new styles when darkmode change
 - Fixed when DarkMode button hide
@@ -22,6 +27,8 @@
 - Fixed bg hover unread message
 - Fixed bg stickers
 - Fixed a random bug when stickers were not show
+- Fixed center maingame when the page were not at the top
+- Fixed button showplayers 
 
 CSS à corriger
 https://www.kongregate.com/accounts/Blondasse/points
@@ -32,18 +39,18 @@ Relog chat
 
 -------------------
 TO DO
--------------------
-- New button for messagerie when new message
-    - Show the button only if > 0 message on the box & lockscreen
-    - Click on the button
-        - Open a new window
-        - Hide the button
-    - Check if new message
-        
+-------------------       
         
 - Private messagerie
 
 - Hide/Show check if feature active or not
 
+Languages
 
-Light around png : filter: drop-shadow(0 0 0.1rem white);
+
+Light around png : 
+    filter: drop-shadow(0 0 0.1rem white);
+    filter: drop-shadow(0 0 1px white);
+    
+.chat-msg-sticker__img
+.c-sticker-preview__img
