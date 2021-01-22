@@ -90,11 +90,12 @@ if (((features.get('ping') !== undefined) && features.get('ping').isActive()) ||
     if ((features.get('botsblocker') !== undefined) && features.get('botsblocker').isActive()) {
         s.append("var websitesBlocked = " + $.getArrayDoubleToString(aBots) + ";");
     }
-    //if (aFeatures['ping']['display']) {
+
     if ((features.get('ping') !== undefined) && features.get('ping').isActive()) {
         s.append("var songMsg = new Audio('" + chrome.runtime.getURL(songUrl) + "');");
         s.append("songMsg.volume = " + volumeValue + ";");
     }
+
 
     //if (aFeatures['notifications']['display']) {
     if ((features.get('notifications') !== undefined) && features.get('notifications').isActive()) {
@@ -146,21 +147,26 @@ if (((features.get('ping') !== undefined) && features.get('ping').isActive()) ||
     /******************** Forth Code Start ********************/
     /**********************************************************/
     //if (aFeatures['botsblocker']['display'] && ('string' === typeof b)) {
-    if ((features.get('botsblocker') !== undefined) && features.get('botsblocker').isActive() && ('string' === typeof b)) {
+    $.log(1, "Condition 1 = " + (features.get('botsblocker') !== undefined));
+    $.log(1, "Condition 2 = " + features.get('botsblocker').isActive());
+    $.log(1, "Condition 3 = " + ('string' === typeof b));
+    if ((features.get('botsblocker') !== undefined) && features.get('botsblocker').isActive()) {
         // We check if the message content a website blocked
-        s.append("        for( var i = 0 ; i  < websitesBlocked.length ; i++ ) {");
+        s.append("        if ('string' === typeof b) {");
+        s.append("            for( var i = 0 ; i  < websitesBlocked.length ; i++ ) {");
         // If YES
-        s.append("            if( b.search(websitesBlocked[i][0]) >= 0 ) {");
+        s.append("                if( b.search(websitesBlocked[i][0]) >= 0 ) {");
         // We log in the console
         if (debugLevel >= 50) {
-            s.append("                console.log(`${d.formatted_timestamp} : Bot detected [${a}] with the pattern [${websitesBlocked[i][0]}]`);");
+            s.append("                    console.log(`${d.formatted_timestamp} : Bot detected [${a}] with the pattern [${websitesBlocked[i][0]}]`);");
         }
         // We count it
-        s.append("                websitesBlocked[i][1]++;");
+        s.append("                    websitesBlocked[i][1]++;");
         // And cancel the adding of the message
-        s.append("                return;");
-        s.append("            }"); // If end
-        s.append("        }"); // For end
+        s.append("                    return;");
+        s.append("                }"); // If end
+        s.append("            }"); // For end
+        s.append("        }"); // If end
     }
     //if (aFeatures['ping']['display']) {
     if ((features.get('ping') !== undefined) && features.get('ping').isActive()) {
@@ -182,8 +188,10 @@ if (((features.get('ping') !== undefined) && features.get('ping').isActive()) ||
     s.append("        g && e.push('is_self');");
     s.append("        if (c = 'string' === typeof b ? null : b.stickerId) d.template = ChatDialogue.STICKER_MESSAGE_TEMPLATE, d.stickerId = c, d.stickerVariant = b.stickerVariant, d.stickerPackName = b.stickerPackName, d.stickerLevel = b.level, d.stickerQuality = 100 <= b.level ? b.quality + ' is-ranked' : b.quality, d.stickerUrl = this._sticker_manager.url(c, d.stickerVariant, 72);");
     //if (aFeatures["urlrewriter"]["display"] && ('string' === typeof b)) {
-    if ((features.get('urlrewriter') !== undefined) && features.get('urlrewriter').isActive() && ('string' === typeof b)) {
-        s.append("        b = urlRewritter(b);"); // URL Rewritter
+    if ((features.get('urlrewriter') !== undefined) && features.get('urlrewriter').isActive()) {
+        s.append("        if ('string' === typeof b) {");
+        s.append("            b = urlRewritter(b);"); // URL Rewritter
+        s.append("        }"); // If end
     }
     s.append("        a = this.messageContent({");
     s.append("            prefix: l,");

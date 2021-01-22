@@ -1120,6 +1120,7 @@ function loadCSS() {
     jCSSRule("#user_progress_bar_container .user-progress", "background-color", bgColor_kartridge);
     jCSSRule(".user-progress .steps .prev--klient, .user-progress .steps .next--klient", "background-color", bgColor_kartridge);
     jCSSRule(".user-progress .steps .prev, .user-progress .steps .next", "color", color_kartridge_Main);
+    jCSSRule(".user-progress .steps .prev, .user-progress .steps .next", "background-color", bgColor_kartridge);
     jCSSRule(".user-progress .steps .prev, .user-progress .steps .next", "box-shadow", "0px 0px 5px " + color_kartridge_Sec_tr);
     jCSSRule("span#klient_progress_bar_message svg path:nth-child(5)", "fill", color_kartridge_Sec);
     jCSSRule("span#klient_progress_bar_message svg path:nth-child(7)", "fill", color_kartridge_Sec);

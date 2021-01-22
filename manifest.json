@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Kong Add-on",
-    "version": "1.6.1.26",
+    "version": "1.6.1.27",
     "author": "Forth",
 
     "description": "Kong Add-on adds some features to Kongregate, including a blocker of bot messages, a dark mode, a brighness adjustment, and more.",
@@ -34,6 +34,9 @@
                 "js/kong-addon.injection.js",
                 "js/content_games.js"]
 		}
+	],
+    "web_accessible_resources": [
+        "sound/*"
 	],
     "permissions": ["activeTab"]
 }
