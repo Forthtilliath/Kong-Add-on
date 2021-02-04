@@ -1,56 +1,51 @@
-- Correction title of buttons
-- New button to hide game
-    - The chat box is enlarged
-    - All buttons are on new row
+# Patch note
+
+## Changes
+- Removed the button game only
+- New Feature : Added the button DisplayMode
+    - Show game only, chat only or both
+    - When chat only, the chat is enlarger
+- When game only or chat only is choosed
+    - New bar to show buttons
+    - Show the name of the game
 - New feature : Notifications
     - When the window of the chat is not on focus, the title of the page add the number of new messages
     - Click on the button
         - Open a new window
         - Hide the button
-- Modification array aFeatures to objects
-- Now center correctly the game/chat in x
-- Show game name when game or chat is hide
-- Renames of files
-- Optimisation of code
+        - Reset the counter of unread messages of the website (but you still need to reset the page to check if you have new messages)
+
+## Code improvements
+- Features are now in an object
+- Files renamed
+- Optimization of code
     - Code ready to add a new button to be able to active or not a feature
-- Optimisation of cookies (instead to have 1 cookie by feature, we have now 1 cookie for website + 1 cookie / game)
-    - kong_addon on kongregate.com :
-        darkMode/onlineplayers/textsize
-    - kong_addon_games on kongregate.com/games
-        lockscreen/displayMode/volume/brightness
+- Optimization of cookies (instead to have 1 cookie by feature, we have now 1 cookie for website + 1 cookie / game)
+    - kong_addon on kongregate.com : darkMode/onlineplayers/textsize
+    - kong_addon_games on kongregate.com/games : lockscreen/displayMode/volume/brightness
 - Added shinny option for stickers when DarkMode on
 - Added darkMode as feature to be able to unable it easily if needed
 - Reset styles instead of add new styles when darkmode change
-- Fixed when DarkMode button hide
-- Fixed resize correctly gameOnly & chatOnly
-- Fixed boolean values of cookies
-- Fixed bg hover unread message
-- Fixed bg stickers
-- Fixed a random bug when stickers were not show
-- Fixed center maingame when the page were not at the top
-- Fixed button showplayers 
 
-CSS à corriger
+## Fixes
+- Titles of some buttons
+- Center correctly the game/chat
+- DarkMode button hide correctly with the height of the page is too low
+- Resize correctly gameOnly & chatOnly
+- Boolean values of cookies
+- Background hover of unread messages
+- Background of stickers
+- Stickers are back
+
+## TODO      
+### CSS to fix
 https://www.kongregate.com/accounts/Blondasse/points
 https://www.kongregate.com/forums/2-off-topic
 https://www.kongregate.com/users/2623156/posts
-https://www.kongregate.com/accounts/darkfang77
-Relog chat
+https://www.kongregate.com/accounts/darkfang77     
 
--------------------
-TO DO
--------------------       
-        
-- Private messagerie
+### Private messagerie
 
-- Hide/Show check if feature active or not
+### Hide/Show check if feature active or not
 
-Languages
-
-
-Light around png : 
-    filter: drop-shadow(0 0 0.1rem white);
-    filter: drop-shadow(0 0 1px white);
-    
-.chat-msg-sticker__img
-.c-sticker-preview__img
+### Languages

@@ -4,7 +4,7 @@
  *
  * Copyright 2020 Forth
  * Released under the MIT license
- * 
+ *
  * @fileoverview All the CSS partitioned by page
  * @author Forth
  * @version 6
@@ -15,7 +15,7 @@ function loadCSS() {
     /***********************************************************************************************************************/
     /***** ALL PAGES *******************************************************************************************************/
     /***********************************************************************************************************************/
-    if (namePage != '') {
+    if (PAGE_NAME != '') {
         // Header
         jCSSRule("#header #header_logo", "bottom", "20px"); // Logo
         jCSSRule("#headerwrap", "background-color", bgColor_red_01); // Header bg color
@@ -91,7 +91,7 @@ function loadCSS() {
     /***********************************************************************************************************************/
     /***** MAIN PAGE *******************************************************************************************************/
     /***********************************************************************************************************************/
-    if (namePage == 'accueil') {
+    if (PAGE_NAME == 'accueil') {
         // Slider
         jCSSRule("#home .home_feat_roll .home_feat_nav .prev, #home .home_feat_roll .home_feat_nav .next", "background-color", bgColor_grey_01);
         jCSSRule("#home .home_feat_roll .home_feat_nav .prev, #home .home_feat_roll .home_feat_nav .next", "border", "1px solid");
@@ -165,7 +165,7 @@ function loadCSS() {
         jCSSRule(".game_hover:hover, .game_hover.game_hover_active", "background-color", bgColor_grey_01 + "!important");
         jCSSRule("#browsebycategory .category .viewall, #extra_games .category .viewall", "color", linkColor_red);
 
-        // 
+        //
         jCSSRule("#game_spotlights_pod h6", "color", color_white);
         jCSSRule(".pod_container", "background-color", bgColor_grey_04);
         jCSSRule("#home #kongregate_social_connect_pod .twitter_container", "background-color", bgColor_grey_04);
@@ -181,7 +181,7 @@ function loadCSS() {
     /***********************************************************************************************************************/
     /***** GAMES PAGES *****************************************************************************************************/
     /***********************************************************************************************************************/
-    if ((namePage == 'allgames') || (namePage == 'accounts')) {
+    if ((PAGE_NAME == 'allgames') || (PAGE_NAME == 'accounts')) {
         jCSSRule("#feature > h1", "color", color_white);
         jCSSRule("#category.game_browser .category_listing_header", "background-color", bgColor_grey_07);
         jCSSRule("#category.game_browser .browser_outer", "background-color", bgColor_grey_00);
@@ -206,23 +206,24 @@ function loadCSS() {
         jCSSRule("#category.game_browser .category_listing .pagination li.info, .promotion-type--browser .category_listing .pagination li.info", "color", color_white);
         jCSSRule("#category .category_listing ul.simple_pagination li a", "color", linkColor_red);
         jCSSRule("#category.game_browser #tag_filter_autocompleter input", "background-color", bgColor_grey_07); // Search by tag
-        jCSSRule("#category.game_browser #tag_filter_autocompleter input", "color", color_grey_00); // 
+        jCSSRule("#category.game_browser #tag_filter_autocompleter input", "color", color_grey_00); //
         jCSSRule("#category.game_browser .ui-autocomplete", "background-color", bgColor_grey_07); // Search by tag
-        jCSSRule("#category.game_browser .ui-autocomplete", "color", color_grey_00); // 
+        jCSSRule("#category.game_browser .ui-autocomplete", "color", color_grey_00); //
         jCSSRule("#category.game_browser #game_browser_filters", "background-color", bgColor_grey_07); // Sort / filter
-        jCSSRule("#category.game_browser #game_browser_filters", "color", color_grey_00); // 
+        jCSSRule("#category.game_browser #game_browser_filters", "color", color_grey_00); //
         jCSSRule("#category.game_browser #game_browser_filters li", "background-color", bgColor_grey_08); // Sort / filter
-        jCSSRule("#category.game_browser #game_browser_filters li", "color", color_grey_00); // 
+        jCSSRule("#category.game_browser #game_browser_filters li", "color", color_grey_00); //
         jCSSRule("#category.game_browser #game_browser_filters li:hover, #category.game_browser #game_browser_filters li.selected", "color", color_black); // Hover
     }
 
-    if (namePage == 'games') {
+    if (PAGE_NAME == 'games') {
         // Window game
         //let chatHeight = $("#chat_container").css("height");
-        let menu1Height = gameOrChatHided ? menuButtonsHeight1 : "0px";
-        let menu2Height = gameOrChatHided ? menuButtonsHeight2 : "0px";
-        $.setHeightBoth(`calc( ${iDefaultBothHeight} + ${menu1Height} + ${menu2Height} )`);
-        jCSSRule("#flashframecontent .game_table > tbody > tr:first-child", "height", menuButtonsHeight1);
+        let menu1Height = gameOrChatHided ? HEIGHT_MENU_BUTTONS_1 : "0px";
+        let menu2Height = gameOrChatHided ? HEIGHT_MENU_BUTTONS_2 : "0px";
+        //$.setHeightBoth(`calc( ${HEIGHT_BOTH_DEFAULT} + ${menu1Height} + ${menu2Height} )`);
+        $.setHeightBoth(`calc( ${HEIGHT_BOTH_DEFAULT} + ${menu2Height} )`);
+        jCSSRule("#flashframecontent .game_table > tbody > tr:first-child", "height", HEIGHT_MENU_BUTTONS_1);
 
         // Title of the game
         jCSSRule("#play .gamepage_header_outer h1", "width", "100%");
@@ -240,7 +241,7 @@ function loadCSS() {
         jCSSRule(".upper_gamepage", "background-color", bgColor_grey_00); // Bg of top of the page
         jCSSRule("#maingamecontent #gameholder", "filter", "brightness(" + cookieBrightness + ")"); // Game div
 
-        // Chat        
+        // Chat
         jCSSRule("#kong_game_ui .user_row .rank_icon, #kong_game_ui .user_row .friend_icon, #kong_game_ui .user_row .mobile_icon", "filter", "invert(0.9)"); // Icon in online players
         jCSSRule("#kong_game_ui .user_row.muted .username", "color", color_red_00); // Users muter in online players
         jCSSRule("#kong_game_ui .tabpane", "background-color", bgColor_grey_01); // Conturn chat
@@ -277,7 +278,7 @@ function loadCSS() {
         jCSSRule("#kong_game_ui .chat_message_window p span", "vertical-align", "middle");
         jCSSRule("#kong_game_ui .chat_message_window p .username span", "vertical-align", "sub");
         jCSSRule("#kong_game_ui .chat_message_window", "max-height", "none");
-        jCSSRule("#chat_container", "margin-left", "0");
+        //jCSSRule("#chat_container", "margin-left", "0");
 
         // Clicked on user
         jCSSRule(".return_to_room a", "color", linkColor_red); // Return to game
@@ -483,7 +484,7 @@ function loadCSS() {
     /***********************************************************************************************************************/
     /***** FORTH ADDON *****************************************************************************************************/
     /***********************************************************************************************************************/
-    if (namePage != '') {
+    if (PAGE_NAME != '') {
         // Feature global buttons
         if ((features.get('darkMode') !== undefined) && features.get('darkMode').isActive()) {
             jCSSRule("#forth_f_darkMode", "top", "5px");
@@ -516,7 +517,7 @@ function loadCSS() {
         }
         jCSSRule("#forth_firefox", "display", "none");
     }
-    if (namePage == 'games') {
+    if (PAGE_NAME == 'games') {
         jCSSRule("#maingamecontent .game_table .links_connect", "height", "25px");
         // Main box
         jCSSRule("#forth_features", "display", "flex");
@@ -541,7 +542,7 @@ function loadCSS() {
         jCSSRule("span.onlyGameOrChat", "text-align", "left");
         jCSSRule("span.onlyGameOrChat", "display", "none");
         // Tr with all buttons (when game hide)
-        jCSSRule("#tr_features", "height", menuButtonsHeight2);
+        jCSSRule("#tr_features", "height", HEIGHT_MENU_BUTTONS_2);
         jCSSRule("#tr_features", "display", "none");
         // All buttons
         jCSSRule("#quicklinks", "height", "25px");
@@ -616,11 +617,19 @@ function loadCSS() {
         jCSSRule("#forth_messagebox #forth_messagedesc", "text-align", "center");
         jCSSRule("#forth_messagebox #forth_messagedesc", "color", color_white);
         jCSSRule("#forth_messagebox #forth_messagedesc", "font-size", "12px");
+
+        // SVG
+        jCSSRule("span > svg, button > svg", "display", "inline-block");
+        jCSSRule("span > svg, button > svg", "font-size", "inherit");
+        jCSSRule("span > svg, button > svg", "height", "1em");
+        jCSSRule("span > svg, button > svg", "width", "1em");
+        jCSSRule("span > svg, button > svg", "overflow", "visible");
+        jCSSRule("span > svg, button > svg", "vertical-align", "-.125em");
     }
     /***********************************************************************************************************************/
     /***** ACCOUNTS PAGES **************************************************************************************************/
     /***********************************************************************************************************************/
-    if (namePage == 'accounts') {
+    if (PAGE_NAME == 'accounts') {
         jCSSRule("body#new_profile #profile_masthead #user_avatar", "background-color", bgColor_grey_00); //Avatar bg
         jCSSRule("#profile_bio textarea#user_about, #profile_comment_form textarea", "color", color_white); // Textarea desc & &activity feed
         jCSSRule("#profile_bio textarea#user_about, #profile_comment_form textarea", "background-color", bgColor_grey_07);
@@ -687,18 +696,18 @@ function loadCSS() {
         jCSSRule(".feed_item_add_comment, .feed_item_timestamp", "color", color_grey_00 + " !important");
         jCSSRule(".self_feed_items, .following_feed_items", "background-color", bgColor_grey_00);
         jCSSRule(".feed_item_user_followed .feed_item_icon, .feed_item_user_following .feed_item_icon", "filter", "invert(1)");
-        // Account page - Sidebar 
+        // Account page - Sidebar
         jCSSRule("#profile_aside .profile_pod .tab_group", "background-color", bgColor_grey_07); // Bg items
         jCSSRule("#profile_aside .tab_see_all", "background-color", bgColor_grey_07); // Footer "See all"
         jCSSRule("#profile_aside .tab_see_all a", "color", color_grey_06); // Footer "See all"
         jCSSRule(".tab_index, .game_tab_index", "background-color", bgColor_grey_00); // No tabs BG
-        jCSSRule(".tab_link, .game_tab_link", "background", bgColor_grey_00); // Tab not active BG       
+        jCSSRule(".tab_link, .game_tab_link", "background", bgColor_grey_00); // Tab not active BG
         jCSSRule(".tab_link.active", "background-color", bgColor_grey_07); // Tab active bg
         jCSSRule(".tab_link.active", "border-top-color", color_grey_00); // Tab active border top
         jCSSRule(".tab_link.active::before", "border-color", "transparent transparent " + bgColor_grey_07 + " " + bgColor_grey_07); // Tab active border right
         jCSSRule(".tab_link:not(.active):hover", "background-color", bgColor_grey_02); // Tab not active hover bg
         jCSSRule(".tab_link:not(.active):hover::before", "border-color", "transparent transparent " + bgColor_grey_02 + " " + bgColor_grey_02); // Tab not active border right
-        jCSSRule(".tab_link, .game_tab_link, .game_tab_link--link", "color", color_white + " !important"); // Tab title        
+        jCSSRule(".tab_link, .game_tab_link, .game_tab_link--link", "color", color_white + " !important"); // Tab title
         jCSSRule(".tab_group .pod_item:hover", "color", color_grey_00); // Hover Items text
         jCSSRule("#profile_aside #friends_pod .follow_name a", "color", linkColor_red); // Items links
         jCSSRule("#new_profile #badges_pod .badge_details a, #new_profile #mobile_badges_pod .badge_details a, #new_profile #connections_pod p a, #profile_aside .truncate_one_line a, #profile_aside a.truncate_one_line", "color", linkColor_red); // Items links
@@ -824,14 +833,14 @@ function loadCSS() {
         jCSSRule(".sticker-pack__meta", "background-color", bgColor_grey_00);
         jCSSRule(".sticker-header__count", "color", color_black); // Count stickers
         jCSSRule(".sticker-pack__earned", "color", color_white); // Date aquired
-        jCSSRule(".sticker-pack--shiny .sticker-pack__empty", "background-color", color_yellow); // Don't have yet 
+        jCSSRule(".sticker-pack--shiny .sticker-pack__empty", "background-color", color_yellow); // Don't have yet
         // Stickers - Unowned
         jCSSRule(".unearned-stickers", "background-color", bgColor_grey_01);
     }
     /***********************************************************************************************************************/
     /***** BADGES PAGES ****************************************************************************************************/
     /***********************************************************************************************************************/
-    if (namePage == 'badges') {
+    if (PAGE_NAME == 'badges') {
         //Align badges bc we removed ad
         jCSSRule("#category .badges_set1", "display", "flex");
         jCSSRule("#category .badges_set1", "flex-wrap", "wrap");
@@ -859,7 +868,7 @@ function loadCSS() {
     /***********************************************************************************************************************/
     /***** FORUMS PAGES ****************************************************************************************************/
     /***********************************************************************************************************************/
-    if ((namePage == 'forums') || (namePage == 'topics')) {
+    if ((PAGE_NAME == 'forums') || (PAGE_NAME == 'topics')) {
         jCSSRule(".crumbs a", "color", linkColor_red); // Forum
         jCSSRule("span.arrow", "color", color_grey_00); // Arrow
         jCSSRule("#forums .forum_header .forum_title", "color", color_white); // Title
@@ -872,11 +881,11 @@ function loadCSS() {
         jCSSRule("ul.pagination li.current", "color", color_white);
         jCSSRule("ul.pagination li a", "color", linkColor_red);
     }
-    if (namePage == 'forums') {
+    if (PAGE_NAME == 'forums') {
         // Forum - Main page
-        jCSSRule("body#forums h4.forum_group_title", "color", color_white); // Title About Kongregate 
+        jCSSRule("body#forums h4.forum_group_title", "color", color_white); // Title About Kongregate
         jCSSRule("table.forums tr td .title", "color", linkColor_red); // Title
-        jCSSRule("#featurewide p a", "color", linkColor_red); // 
+        jCSSRule("#featurewide p a", "color", linkColor_red); //
         jCSSRule(".rendered_markdown p", "color", color_grey_00);
         jCSSRule("table.forums .posts", "color", color_grey_09);
         jCSSRule("body#forums #featurewide>table tr th", "background-color", bgColor_grey_07);
@@ -894,7 +903,7 @@ function loadCSS() {
         jCSSRule("body#forums #forum_posts>table tr td a, body#forums #featurewide>table tr td a", "color", linkColor_red);
         jCSSRule("body#forums #featurewide>table tr:nth-child(even) td a", "color", linkColor_red);
     }
-    if (namePage == 'topics') {
+    if (PAGE_NAME == 'topics') {
         jCSSRule(".forum_info .forum_feed .bd", "color", color_grey_00); // Number of posts
         jCSSRule("#feature #forum_posts > div > p > img", "vertical-align", "bottom"); // Locket
         jCSSRule("body#forums #forum_posts>table tr td", "background-color", bgColor_grey_07);
@@ -930,20 +939,20 @@ function loadCSS() {
     /***********************************************************************************************************************/
     /***** DIVERS PAGES ****************************************************************************************************/
     /***********************************************************************************************************************/
-    if (namePage == 'awards') {
+    if (PAGE_NAME == 'awards') {
         jCSSRule("#feature h1", "color", color_white); // Account awards title
         jCSSRule("#feature h1 a", "color", linkColor_red); // Account awards title
         jCSSRule("ul.simple_pagination li.info", "color", color_white); // Current pagination
         jCSSRule("#feature.user_profile_see_all_page #see_all_items li a", "color", linkColor_red); // Link badge
         jCSSRule("#feature.user_profile_see_all_page #see_all_items li", "color", color_white); // Desc badge
     }
-    if (namePage == 'minus') {
+    if (PAGE_NAME == 'minus') {
         jCSSRule("#feature h1", "color", color_white); // Title
         jCSSRule(".kong_minus_page .hc", "color", color_white); // Title
         jCSSRule(".kong_minus_page #feature h2", "color", color_red_00); // Sub titles
         jCSSRule(".kong_minus_page #feature ul li > p", "color", color_grey_00); // Sub titles
     }
-    if (namePage == 'spellstone') {
+    if (PAGE_NAME == 'spellstone') {
         jCSSRule(".spellstone-lower", "background", "none");
         jCSSRule(".spellstone-lower", "background-color", bgColor_grey_00);
         jCSSRule("#spellstone .actions", "border-radius", "5px 5px 0 0");
@@ -955,19 +964,19 @@ function loadCSS() {
         jCSSRule("body.generic #main p, body.generic #main ul, body.generic #feature ul", "color", color_grey_03); // Text
         jCSSRule("#main div", "background-color", bgColor_grey_01 + "!important"); // Text
     }
-    if (namePage == 'privacy') {
+    if (PAGE_NAME == 'privacy') {
         jCSSRule("body.generic #main", "width", "100%");
         jCSSRule("body.generic #main h1", "color", color_white); // Title
         jCSSRule("#main h2", "color", color_white); // Title
         jCSSRule("body.generic #main p, body.generic #main ul, body.generic #feature ul, body.generic #main ol, body.generic #feature ol", "color", color_grey_00);
         jCSSRule("body.generic #main p a, body.generic #main ul a, body.generic #feature ul a, body.generic #main ol a, body.generic #feature ol a", "color", linkColor_red);
     }
-    if (namePage == 'kreds') {
+    if (PAGE_NAME == 'kreds') {
         jCSSRule("#feature h1", "color", color_white); // Title
         jCSSRule("#feature .kreds_copy p", "color", color_grey_00); // Desc
         jCSSRule("a.kred-game__more-link", "color", linkColor_red); // Show more
     }
-    if (namePage == 'newaccount') {
+    if (PAGE_NAME == 'newaccount') {
         jCSSRule("body.featureform #feature h1", "color", color_white); // Title
         jCSSRule(".bright", "color", color_red_00 + "!important"); // Title right
         jCSSRule("body#register.featureform #feature #sidebar dd", "filter", "invert(1)"); // Text right & icon
@@ -983,7 +992,7 @@ function loadCSS() {
         jCSSRule("#register .form_outer form .checkbox label", "color", color_white);
         jCSSRule("#register .form_outer form .checkbox label a", "color", linkColor_red);
     }
-    if (namePage == 'about') {
+    if (PAGE_NAME == 'about') {
         jCSSRule("#feature h1", "color", color_white); // Title
         jCSSRule("body.generic ul#tabs--index, body.generic #tabs--list", "background-color", bgColor_grey_01); // Bg central div
         jCSSRule("body.generic ul#tabs--index, body.generic #tabs--list", "color", color_grey_00);
@@ -994,26 +1003,26 @@ function loadCSS() {
         jCSSRule("#exec-team h3", "color", color_grey_00);
         jCSSRule("#contact-us dl dt + dd a, #contact-us dl dd + dd a", "color", linkColor_red_02);
     }
-    if (namePage == 'adspecs') {
+    if (PAGE_NAME == 'adspecs') {
         jCSSRule(".header", "padding", "0 10px");
         jCSSRule(".header", "width", "calc( 100% - 20px)");
         jCSSRule(".logo", "filter", "grayscale(0.6)"); // Logo dark
         jCSSRule("a:link, a:visited", "color", linkColor_red);
         jCSSRule("table.main-specs td a", "color", linkColor_red_02);
     }
-    if (namePage == 'conduct') {
+    if (PAGE_NAME == 'conduct') {
         jCSSRule("#feature h1", "color", color_white); // Title
         jCSSRule(".help-page--langs dt, #feature p, #feature li, body.generic #main p", "color", color_grey_00); // Text
         jCSSRule(".help-page--langs dd a, #feature li a, #main h2 a", "color", linkColor_red);
         jCSSRule(".size2of3", "width", "100%");
         jCSSRule("font", "color", linkColor_red);
     }
-    if (namePage == 'logos') {
+    if (PAGE_NAME == 'logos') {
         jCSSRule("#feature h1", "color", color_white); // Title
         jCSSRule("body.branding #feature p, body.branding #feature ul, body.branding #feature dl", "color", color_grey_00);
         jCSSRule("a.download-link", "color", linkColor_red);
     }
-    if (namePage == 'feedbacks') {
+    if (PAGE_NAME == 'feedbacks') {
         jCSSRule("#feature h1, body#feedback .sidebar dt", "color", color_white); // Title
         jCSSRule("body#feedback #feature p, body#feedback .sidebar dd", "color", color_grey_00 + "!important");
         jCSSRule("body#feedback .sidebar dd a", "color", linkColor_red);
@@ -1023,7 +1032,7 @@ function loadCSS() {
         jCSSRule("#feedback_form span.feedback_desc", "color", color_grey_05);
         jCSSRule(".bright a", "color", color_red_00);
     }
-    if (namePage == 'gamesexport') {
+    if (PAGE_NAME == 'gamesexport') {
         jCSSRule("body#gamesponsorship #feature h1", "filter", "invert(0.9)"); // Title
         jCSSRule("body#gamesponsorship #main p", "color", color_grey_00); // Desc
         jCSSRule("body#gamesponsorship #main p a", "color", linkColor_red);
@@ -1036,10 +1045,10 @@ function loadCSS() {
         jCSSRule("ul.simple_pagination li.info", "color", color_white);
         jCSSRule("ul.simple_pagination li a", "color", linkColor_red);
     }
-    if (namePage == 'jobs') {
+    if (PAGE_NAME == 'jobs') {
         // No modifications since the page is in an iframe
     }
-    if (namePage == 'comments') {
+    if (PAGE_NAME == 'comments') {
         jCSSRule("#feature h1", "color", color_white);
         jCSSRule(".regtext a", "color", linkColor_red);
         jCSSRule(".messages_table", "background-color", bgColor_grey_07); // Conturn
@@ -1059,7 +1068,7 @@ function loadCSS() {
         jCSSRule(".comment .comment_body .under_rating_threshold", "color", color_grey_00);
         jCSSRule(".comment .comment_body .under_rating_threshold a", "color", linkColor_red);
     }
-    if (namePage == 'posts') {
+    if (PAGE_NAME == 'posts') {
         jCSSRule("#feature h1", "color", color_white); // Number of posts
         jCSSRule(".forum_info .forum_feed .bd", "color", color_grey_00); // Number of posts
         jCSSRule("body#forums #forum_posts>table tr td", "background-color", bgColor_grey_07);
@@ -1086,7 +1095,7 @@ function loadCSS() {
         jCSSRule(".forum--entry blockquote, .CodeMirror blockquote, .editor-preview-side blockquote", "border-color", color_white);
         jCSSRule(".forum--entry blockquote, .CodeMirror blockquote, .editor-preview-side blockquote", "border-left-color", color_grey_13);
     }
-    if (namePage == 'search') {
+    if (PAGE_NAME == 'search') {
         jCSSRule("body.generic #main h1", "color", color_white); // Title
         jCSSRule("ul.simple_pagination li.info", "color", color_white);
         jCSSRule("ul.simple_pagination li a", "color", linkColor_red);
@@ -1096,7 +1105,7 @@ function loadCSS() {
         jCSSRule(".search-spotlight", "background-color", bgColor_grey_01);
         jCSSRule(".game .thumb", "background-color", bgColor_grey_00);
     }
-    if (namePage == 'findfriends') {
+    if (PAGE_NAME == 'findfriends') {
         jCSSRule("body#plugs.featureform h1", "color", color_white);
         jCSSRule("body.generic #main p, body.generic #main ul, body.generic #feature ul", "color", color_grey_05);
         jCSSRule("body#plugs.featureform #main form .import_contacts", "color", color_white);
@@ -1105,7 +1114,7 @@ function loadCSS() {
         jCSSRule("body.generic #sidebar p, body.generic #sidebar ul, body.generic #sidebar dl", "color", color_white);
         jCSSRule("body.featureform #feature a", "color", linkColor_red);
     }
-    if (namePage == 'forum_search') {
+    if (PAGE_NAME == 'forum_search') {
         jCSSRule("body.generic #main h1", "color", color_white);
         jCSSRule("#searchresults #main .search-result .title a", "color", linkColor_red);
         jCSSRule("#searchresults #main .search-result .result-body", "color", color_grey_00);
@@ -1116,23 +1125,23 @@ function loadCSS() {
     /***********************************************************************************************************************/
     /***** KARTRIDGE *******************************************************************************************************/
     /***********************************************************************************************************************/
-    jCSSRule("#user_progress_bar_container .user-progress", "color", color_kartridge_Main);
-    jCSSRule("#user_progress_bar_container .user-progress", "background-color", bgColor_kartridge);
-    jCSSRule(".user-progress .steps .prev--klient, .user-progress .steps .next--klient", "background-color", bgColor_kartridge);
-    jCSSRule(".user-progress .steps .prev, .user-progress .steps .next", "color", color_kartridge_Main);
-    jCSSRule(".user-progress .steps .prev, .user-progress .steps .next", "background-color", bgColor_kartridge);
-    jCSSRule(".user-progress .steps .prev, .user-progress .steps .next", "box-shadow", "0px 0px 5px " + color_kartridge_Sec_tr);
-    jCSSRule("span#klient_progress_bar_message svg path:nth-child(5)", "fill", color_kartridge_Sec);
-    jCSSRule("span#klient_progress_bar_message svg path:nth-child(7)", "fill", color_kartridge_Sec);
-    jCSSRule(".user-progress .step-list .step--klient a", "color", color_kartridge_Sec);
-    jCSSRule(".user-progress .step-list .step--klient strong", "color", color_kartridge_Sec);
-    jCSSRule(".user-progress .step-list--klient", "background-color", bgColor_kartridge);
-    jCSSRule(".user-progress .steps .prev:hover, .user-progress .steps .next:hover, .user-progress .steps .step a:hover", "color", color_kartridge_Sec);
-    jCSSRule(".user-progress .steps .prev:hover, .user-progress .steps .next:hover, .user-progress .steps .step a:hover", "border-color", color_kartridge_Sec);
-    jCSSRule(".user-progress .steps .prev:hover, .user-progress .steps .next:hover, .user-progress .steps .step a:hover", "box-shadow", "0 0 5px " + color_kartridge_Sec);
-    jCSSRule(".user-progress .progress-box .progress .bar--klient", "background-color", color_kartridge_Sec);
+    jCSSRule("#user_progress_bar_container .user-progress", "color", KARTRIDGE_COLOR_MAIN);
+    jCSSRule("#user_progress_bar_container .user-progress", "background-color", KARTRIDGE_BGCOLOR);
+    jCSSRule(".user-progress .steps .prev--klient, .user-progress .steps .next--klient", "background-color", KARTRIDGE_BGCOLOR);
+    jCSSRule(".user-progress .steps .prev, .user-progress .steps .next", "color", KARTRIDGE_COLOR_MAIN);
+    jCSSRule(".user-progress .steps .prev, .user-progress .steps .next", "background-color", KARTRIDGE_BGCOLOR);
+    jCSSRule(".user-progress .steps .prev, .user-progress .steps .next", "box-shadow", "0px 0px 5px " + KARTRIDGE_COLOR_SEC_TR);
+    jCSSRule("span#klient_progress_bar_message svg path:nth-child(5)", "fill", KARTRIDGE_COLOR_SEC);
+    jCSSRule("span#klient_progress_bar_message svg path:nth-child(7)", "fill", KARTRIDGE_COLOR_SEC);
+    jCSSRule(".user-progress .step-list .step--klient a", "color", KARTRIDGE_COLOR_SEC);
+    jCSSRule(".user-progress .step-list .step--klient strong", "color", KARTRIDGE_COLOR_SEC);
+    jCSSRule(".user-progress .step-list--klient", "background-color", KARTRIDGE_BGCOLOR);
+    jCSSRule(".user-progress .steps .prev:hover, .user-progress .steps .next:hover, .user-progress .steps .step a:hover", "color", KARTRIDGE_COLOR_SEC);
+    jCSSRule(".user-progress .steps .prev:hover, .user-progress .steps .next:hover, .user-progress .steps .step a:hover", "border-color", KARTRIDGE_COLOR_SEC);
+    jCSSRule(".user-progress .steps .prev:hover, .user-progress .steps .next:hover, .user-progress .steps .step a:hover", "box-shadow", "0 0 5px " + KARTRIDGE_COLOR_SEC);
+    jCSSRule(".user-progress .progress-box .progress .bar--klient", "background-color", KARTRIDGE_COLOR_SEC);
     jCSSRule(".user-progress .progress-box .progress .bar--klient", "border", "1px solid");
-    jCSSRule(".user-progress .progress-box .progress .bar--klient", "border-color", color_kartridge_Sec_op);
+    jCSSRule(".user-progress .progress-box .progress .bar--klient", "border-color", KARTRIDGE_COLOR_SEC_OP);
 
     /***********************************************************************************************************************/
     /***********************************************************************************************************************/

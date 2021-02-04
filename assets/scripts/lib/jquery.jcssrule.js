@@ -1,4 +1,4 @@
-/*	Copyright (c) 2017 Jean-Marc VIGLINO, 
+/*	Copyright (c) 2017 Jean-Marc VIGLINO,
   released under MIT license
   (http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt).
 */
@@ -15,7 +15,7 @@
     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
         if ($('#styles_kong').length) $('#styles_kong').remove();
     }
-    // Create a new stylesheet in the bottom of the <body> 
+    // Create a new stylesheet in the bottom of the <body>
     // or the <head> depending on the place of the file
     var stylesheet = document.createElement('style');
     stylesheet.setAttribute('type', 'text/css');
@@ -52,11 +52,11 @@
         var css = '\n';
         var lastSelector = "";
         rules.forEach(function (r) {
-            if ((!darkMode && ($.inArray(r.property, aPropRefused) == -1)) || darkMode || ($.inArray(r.selector, aElemAlways) != -1)) {
+            if ((!darkMode && ($.inArray(r.property, JCSS_PROPERTIES_DARKMODE) == -1)) || darkMode || ($.inArray(r.selector, JCSS_ELEMENTS_IMMUTABLE) != -1)) {
                 if (lastSelector != r.selector) { // If different selector
                     if (lastSelector != "") // If not the first selector
                         css += '}\n'; // We close last selector
-                    css += r.selector + ' {'; // We create a new rule   
+                    css += r.selector + ' {'; // We create a new rule
                 }
                 css += r.property + ':' + r.value + ';'; // We add the rule
                 if (lastSelector != r.selector)
@@ -68,11 +68,11 @@
         stylesheet.textContent = css;
     }
 
-    /** Manipulate CSS styleSheet. 
+    /** Manipulate CSS styleSheet.
      *	The function will add a new property for the selector in a style sheet.
      *	The style sheet will be inserted where the js is placed and will override other css style sheets placed before.
      *
-     *	@example 
+     *	@example
      *	jCSSRule("body", "background","red");  // Change background color of the body
      *	jCSSRule("body", "background");			  // return "red"
      *	jCSSRule("body", {"background":"red", "color":"blue"});

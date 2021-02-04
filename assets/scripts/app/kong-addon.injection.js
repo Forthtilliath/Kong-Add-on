@@ -4,14 +4,13 @@
  *
  * Copyright 2020 Forth
  * Released under the MIT license
- * 
+ *
  * @fileoverview Script injected to modify kong script and be able to block bots and add a ping when someone post a message
  * @author Forth
  * @version 2
  */
 "use strict";
 
-//if (aFeatures['ping']['display'] || aFeatures['botsblocker']['display']) {
 if (((features.get('ping') !== undefined) && features.get('ping').isActive()) || ((features.get('botsblocker') !== undefined) && features.get('botsblocker').isActive())) {
     // We create a new script block
     var s = document.createElement("script");
@@ -19,11 +18,6 @@ if (((features.get('ping') !== undefined) && features.get('ping').isActive()) ||
     // We give an id to be able to set songVolume
     s.id = "script_kong";
 
-    // And we had manually all the code
-    /**********************************************************/
-    /******************** Forth Code Start ********************/
-    /**********************************************************/
-    //if (aFeatures["urlrewriter"]["display"]) {
     if ((features.get('urlrewriter') !== undefined) && features.get('urlrewriter').isActive()) {
         /** Transform an url to html url
          *  @param type {string} set the type of link (wiki, game or account)
@@ -65,17 +59,17 @@ if (((features.get('ping') !== undefined) && features.get('ping').isActive()) ||
         s.append("    let m;");
         s.append("    let msgOut = msg;");
         // For each wiki's link in the msg
-        s.append("    let regWiki = " + regWiki + ";");
+        s.append("    let regWiki = " + REGEX_WIKI + ";");
         s.append("    while ((m = regWiki.exec(msg)) !== null) {");
         s.append("        msgOut = msgOut.replaceAll(m[0], getHtmlLink('wiki', m));");
         s.append("    }");
         // For each game's link in the msg
-        s.append("    let regGame = " + regGame + ";");
+        s.append("    let regGame = " + REGEX_GAME + ";");
         s.append("    while ((m = regGame.exec(msg)) !== null) {");
         s.append("        msgOut = msgOut.replace(m[0], getHtmlLink('game', m));");
         s.append("    }");
         // For each account"s link in the msg
-        s.append("    let regAccount = " + regAccount + ";");
+        s.append("    let regAccount = " + REGEX_ACCOUNT + ";");
         s.append("    while ((m = regAccount.exec(msg)) !== null) {");
         s.append("        msgOut = msgOut.replace(m[0], getHtmlLink('account', m));");
         s.append("    }");
@@ -86,9 +80,8 @@ if (((features.get('ping') !== undefined) && features.get('ping').isActive()) ||
         s.append("}");
     }
 
-    //if (aFeatures['botsblocker']['display']) {
     if ((features.get('botsblocker') !== undefined) && features.get('botsblocker').isActive()) {
-        s.append("var websitesBlocked = " + $.getArrayDoubleToString(aBots) + ";");
+        s.append("var websitesBlocked = " + $.getArrayDoubleToString(BOTS_TO_BLOCK) + ";");
     }
 
     if ((features.get('ping') !== undefined) && features.get('ping').isActive()) {
@@ -97,9 +90,7 @@ if (((features.get('ping') !== undefined) && features.get('ping').isActive()) ||
     }
 
 
-    //if (aFeatures['notifications']['display']) {
     if ((features.get('notifications') !== undefined) && features.get('notifications').isActive()) {
-
         s.append("function changeTitlePage() {");
         s.append("    document.title = titlePage;");
         s.append("    nbMessagesMissed = 0;");
@@ -107,7 +98,7 @@ if (((features.get('ping') !== undefined) && features.get('ping').isActive()) ||
 
         s.append("window.addEventListener('focus', function() {");
         s.append("    hasFocus = true;");
-        s.append("    setTimeout(changeTitlePage, 1500);");
+        s.append("    setTimeout(changeTitlePage, 1200);");
         s.append("});");
         s.append("window.addEventListener('blur', function() {");
         s.append("    hasFocus = false;");
@@ -115,14 +106,11 @@ if (((features.get('ping') !== undefined) && features.get('ping').isActive()) ||
 
         s.append("var nbMessagesMissed = 0;");
         s.append("var hasFocus = true;");
-        s.append("var titlePage = '" + titlePage + "';");
+        s.append("var titlePage = '" + PAGE_TITLE + "';");
     }
-    /**********************************************************/
-    /********************* Forth Code End *********************/
-    /**********************************************************/
 
     s.append("ChatDialogue.prototype.displayUnsanitizedMessage = function (a, b, c, d) {");
-    if (debugLevel >= 50) {
+    if (DEBUG_LEVEL >= 50) {
         s.append("    console.log('a= '+a);");
         s.append("    if ('string' === typeof b) {");
         s.append("        console.log('b= '+b);");
@@ -143,13 +131,7 @@ if (((features.get('ping') !== undefined) && features.get('ping').isActive()) ||
     s.append("        var l = d['private'] ? 'To ' : '';");
     s.append("        d.timestamp = d.timestamp ? new Date(d.timestamp) : new Date;");
     s.append("        d.formatted_timestamp = d.timestamp.format('mmm d - h:MMTT');");
-    /**********************************************************/
-    /******************** Forth Code Start ********************/
-    /**********************************************************/
-    //if (aFeatures['botsblocker']['display'] && ('string' === typeof b)) {
-    $.log(1, "Condition 1 = " + (features.get('botsblocker') !== undefined));
-    $.log(1, "Condition 2 = " + features.get('botsblocker').isActive());
-    $.log(1, "Condition 3 = " + ('string' === typeof b));
+
     if ((features.get('botsblocker') !== undefined) && features.get('botsblocker').isActive()) {
         // We check if the message content a website blocked
         s.append("        if ('string' === typeof b) {");
@@ -157,7 +139,7 @@ if (((features.get('ping') !== undefined) && features.get('ping').isActive()) ||
         // If YES
         s.append("                if( b.search(websitesBlocked[i][0]) >= 0 ) {");
         // We log in the console
-        if (debugLevel >= 50) {
+        if (DEBUG_LEVEL >= 50) {
             s.append("                    console.log(`${d.formatted_timestamp} : Bot detected [${a}] with the pattern [${websitesBlocked[i][0]}]`);");
         }
         // We count it
@@ -168,26 +150,24 @@ if (((features.get('ping') !== undefined) && features.get('ping').isActive()) ||
         s.append("            }"); // For end
         s.append("        }"); // If end
     }
-    //if (aFeatures['ping']['display']) {
+
     if ((features.get('ping') !== undefined) && features.get('ping').isActive()) {
         // Add a song when there are a new message
         s.append("        if( !g && !d.non_user ) songMsg.play();");
     }
-    //if (aFeatures['notifications']['display']) {
+
     if ((features.get('notifications') !== undefined) && features.get('notifications').isActive()) {
         s.append("if (!hasFocus) {");
         s.append("    nbMessagesMissed++;");
         s.append("    document.title = nbMessagesMissed + ' 🔔 - ' + titlePage;");
         s.append("}");
     }
-    /**********************************************************/
-    /********************* Forth Code End *********************/
-    /**********************************************************/
+
     s.append("        this._messages_count % 2 && h.push('even');");
     s.append("        c['class'] && h.push(c['class']);");
     s.append("        g && e.push('is_self');");
     s.append("        if (c = 'string' === typeof b ? null : b.stickerId) d.template = ChatDialogue.STICKER_MESSAGE_TEMPLATE, d.stickerId = c, d.stickerVariant = b.stickerVariant, d.stickerPackName = b.stickerPackName, d.stickerLevel = b.level, d.stickerQuality = 100 <= b.level ? b.quality + ' is-ranked' : b.quality, d.stickerUrl = this._sticker_manager.url(c, d.stickerVariant, 72);");
-    //if (aFeatures["urlrewriter"]["display"] && ('string' === typeof b)) {
+
     if ((features.get('urlrewriter') !== undefined) && features.get('urlrewriter').isActive()) {
         s.append("        if ('string' === typeof b) {");
         s.append("            b = urlRewritter(b);"); // URL Rewritter

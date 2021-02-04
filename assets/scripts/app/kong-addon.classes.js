@@ -4,7 +4,7 @@
  *
  * Copyright 2020 Forth
  * Released under the MIT license
- * 
+ *
  * @fileoverview List of classes used
  * @author Forth
  * @version 1
@@ -28,6 +28,45 @@ class Button {
         }
     }
 };
+
+class Button2 {
+    constructor(id, title, value, classes) {
+        this.id = $.getArg(id, '');
+        this.title = $.getArg(title, '');
+        this.value = $.getArg(value, '');
+        this.classes = $.getArg(classes, '');
+        this.element = $('<button>');
+
+        this.initialize();
+    }
+
+    initialize() {
+        if (this.id !== '') this.element.prop('id', this.id);
+        if (this.classes !== '') this.element.addClass(this.classes);
+        this.set(this.value, this.title);
+    }
+
+    get() {
+        return this.element;
+    }
+
+    getHtml() {
+        return this.element[0].outerHTML;
+    }
+
+    set(content, title) {
+        if (title !== '') this.element.prop('title', title);
+        if (typeof content === 'string') {
+            this.element.html(content); // On ajoute le texte
+            //this.element.text(content); // On ajoute le texte
+        }
+        if (typeof content === 'object') {
+            this.element.empty(); // On vide le bouton avant d'ajouter le nouveau contenu
+            this.element.append(content); // On ajoute l'élément
+        }
+    }
+
+}
 
 class Feature {
 
@@ -148,7 +187,7 @@ class ListFeatures {
         return i;
     }
 
-    // Return the container 
+    // Return the container
     get container() {
         return $(`#${this.containerId}`);
     }

@@ -4,7 +4,7 @@
  *
  * Copyright 2020 Forth
  * Released under the MIT license
- * 
+ *
  * @fileoverview List of functions used
  * @author Forth
  * @version 2
@@ -23,6 +23,8 @@
             if (typeof (message) == 'undefined') message = '';
             // If not existing, we add the box
             if (!$('#forth_messagebox').length) $('<div id="forth_messagebox"><div id="forth_messagetitle"></div></div>').appendTo("body");
+            //if (!$('#forth_messagebox').length) $('<div').prop('id', 'forth_messagetitle').appendTo($('<div').prop('id', 'forth_messagebox')).appendTo("body");
+            //if (!$('#forth_messagebox').length) $.createDiv('forth_messagebox').append($.createDiv('forth_messagetitle')).appendTo("body");
             $("#forth_messagetitle").text(title);
             $("#forth_messagedesc").text(message);
             $("#forth_messagebox").fadeIn("slow").delay(timer).fadeOut("slow");
@@ -33,7 +35,7 @@
          *  @return {string} Element i
          */
         createIcon: function (classes) {
-            return `<i class="${classes}"></i>`;
+            return $('<i>').addClass(classes).prop('outerHTML');
         },
         /** Create a block div with classes, title and contenue
          *  @param id {string} set the id of the div
@@ -43,12 +45,11 @@
          *  @return {object} Element div
          */
         createDiv: function (id, value, classes, title) {
-            if (typeof (value) == 'undefined') value = '';
-            if (typeof (classes) == 'undefined') classes = '';
-            if (typeof (title) == 'undefined') title = '';
-            let classHtml = (classes === '') ? '' : ` class="${classes}"`;
-            let titleHtml = (title === '') ? '' : ` title="${title}"`;
-            return $(`<div id="${id}"${classHtml}${titleHtml}>${value}</div>`)
+            if (typeof id == 'undefined') id = '';
+            if (typeof value == 'undefined') value = '';
+            if (typeof classes == 'undefined') classes = '';
+            if (typeof title == 'undefined') title = '';
+            return $('<div>').prop('id', id).html(value).addClass(classes).prop('title', title);
         },
 
         /** Parse a string to boolean
@@ -73,12 +74,12 @@
         getCookie: function (name, defaultValue, iCatCookie) {
             let sCookieName, iCookieTime, sCookiePath;
             if (iCatCookie == 0) { // All
-                sCookieName = sCookieNameAll;
-                iCookieTime = iCookiesTimeAll;
+                sCookieName = COOKIE_NAME_ALL;
+                iCookieTime = COOKIE_TIME_ALL;
                 sCookiePath = '/';
             } else if (iCatCookie == 1) { // Game
-                sCookieName = sCookieNameGame;
-                iCookieTime = iCookiesTimeGame;
+                sCookieName = COOKIE_NAME_GAME;
+                iCookieTime = COOKIE_TIME_GAME;
                 sCookiePath = window.location.pathname;
             }
 
@@ -111,12 +112,12 @@
         setCookie: function (name, value, iCatCookie) {
             let sCookieName, iCookieTime, sCookiePath;
             if (iCatCookie == 0) { // All
-                sCookieName = sCookieNameAll;
-                iCookieTime = iCookiesTimeAll;
+                sCookieName = COOKIE_NAME_ALL;
+                iCookieTime = COOKIE_TIME_ALL;
                 sCookiePath = '/';
             } else if (iCatCookie == 1) { // Game
-                sCookieName = sCookieNameGame;
-                iCookieTime = iCookiesTimeGame;
+                sCookieName = COOKIE_NAME_GAME;
+                iCookieTime = COOKIE_TIME_GAME;
                 sCookiePath = window.location.pathname;
             }
 
@@ -197,6 +198,7 @@
             $("#maingame").css("height", h);
             $("#maingamecontent").css("height", h);
             $("#flashframecontent").css("height", h);
+            debugger;
         },
         /** Resize the chat box
          *  @param {number} add the width of the box
@@ -204,13 +206,13 @@
         setWidthChat: function (w) {
             if (typeof (w) == 'undefined') w = 0;
 
-            $("#chat_container").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px )`);
-            $("#kong_game_ui>div").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px - 16px )`);
-            $(".chat_input").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px - 16px - 8px )`);
-            $(".chat_char_countdown").css("width", `calc( ${iDefaultChatWidth} + ${w}px - 3px - 16px - 8px )`);
+            $("#chat_container").css("width", `calc( ${WIDTH_CHAT_DEFAULT} + ${w}px - 3px )`);
+            $("#kong_game_ui>div").css("width", `calc( ${WIDTH_CHAT_DEFAULT} + ${w}px - 3px - 16px )`);
+            $(".chat_input").css("width", `calc( ${WIDTH_CHAT_DEFAULT} + ${w}px - 3px - 16px - 8px )`);
+            $(".chat_char_countdown").css("width", `calc( ${WIDTH_CHAT_DEFAULT} + ${w}px - 3px - 16px - 8px )`);
         },
         /** Transform an array ['a','b','c'] to [['a',0],['b',0],['c',0]] usable in script function
-         *  @param a {array} set the array to become a double array 
+         *  @param a {array} set the array to become a double array
          *  @param d {number} set the default value
          */
         getArrayDoubleToString: function (a, d) {
@@ -228,7 +230,7 @@
          *  @param text {string} set the text to display
          */
         log: function (nLevel, text) {
-            if (debugLevel >= nLevel) console.log(text);
+            if (DEBUG_LEVEL >= nLevel) console.log(text);
         },
         /** Change the color of button and the cursor in function of the active mode
          *  @param {number} set the id of the mode
@@ -237,28 +239,13 @@
             let bt_1 = '#' + features.get('displayMode').divName + ' button:first-child';
             let bt_2 = '#' + features.get('displayMode').divName + ' button:not(:first-child):not(:last-child)';
             let bt_3 = '#' + features.get('displayMode').divName + ' button:last-child';
-            if (i == -1) {
-                jCSSRule(bt_1, "color", darkMode ? color_white : color_black);
-                jCSSRule(bt_1, "cursor", "default");
-                jCSSRule(bt_2, "color", bgColor_grey_13);
-                jCSSRule(bt_2, "cursor", "pointer");
-                jCSSRule(bt_3, "color", bgColor_grey_13);
-                jCSSRule(bt_3, "cursor", "pointer");
-            } else if (i == 0) {
-                jCSSRule(bt_1, "color", bgColor_grey_13);
-                jCSSRule(bt_1, "cursor", "pointer");
-                jCSSRule(bt_2, "color", darkMode ? color_white : color_black);
-                jCSSRule(bt_2, "cursor", "default");
-                jCSSRule(bt_3, "color", bgColor_grey_13);
-                jCSSRule(bt_3, "cursor", "pointer");
-            } else if (i == 1) {
-                jCSSRule(bt_1, "color", bgColor_grey_13);
-                jCSSRule(bt_1, "cursor", "pointer");
-                jCSSRule(bt_2, "color", bgColor_grey_13);
-                jCSSRule(bt_2, "cursor", "pointer");
-                jCSSRule(bt_3, "color", darkMode ? color_white : color_black);
-                jCSSRule(bt_3, "cursor", "default");
-            }
+
+            jCSSRule(bt_1, "color", (i == -1) ? (darkMode ? color_white : color_black) : bgColor_grey_13);
+            jCSSRule(bt_1, "cursor", (i == -1) ? "default" : "pointer");
+            jCSSRule(bt_2, "color", (i == 0) ? (darkMode ? color_white : color_black) : bgColor_grey_13);
+            jCSSRule(bt_2, "cursor", (i == 0) ? "default" : "pointer");
+            jCSSRule(bt_3, "color", (i == 1) ? (darkMode ? color_white : color_black) : bgColor_grey_13);
+            jCSSRule(bt_3, "cursor", (i == 1) ? "default" : "pointer");
         },
         /** Remove all styles of the button message of the website when we click on it
          *  Per default, when we open new messages on a new tab, the link doesn't change
@@ -275,6 +262,46 @@
          */
         copyText: function (fromDiv, toDiv) {
             $(fromDiv).text($(toDiv).text());
+        },
+        /** Create a element svg
+         *  @param href {string} Link of the svg
+         *  @param width {number} Width to display
+         *  @param height {number} Height to display
+         *  @return {Element} SVG
+         */
+        createElementSVG: function (href /*, width, height*/ ) {
+            var svgElem = document.createElementNS('http://www.w3.org/2000/svg', 'svg'),
+                useElem = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+            //svgElem.setAttribute("width", width);
+            //svgElem.setAttribute("height", height);
+
+            useElem.setAttributeNS('http://www.w3.org/1999/xlink', 'href', href);
+            svgElem.appendChild(useElem);
+
+            return svgElem;
+        },
+        /** Load sprites to be able to display svg
+         */
+        loadSpritesSvg: function () {
+            $.get(chrome.runtime.getURL("assets/images/sprites/buttons.svg"), function (data) {
+                var div = document.createElement("div");
+                div.style.display = 'none';
+                div.innerHTML = new XMLSerializer().serializeToString(data.documentElement);
+                document.body.insertBefore(div, document.body.childNodes[0]);
+            });
+        },
+        /**
+         * Verifie si un argument existe
+         * @param arg : Argument à vérifier
+         * @param def : Valeur par defaut à retourner
+         * @return Soit la valeur de l'argument si l'existe, sinon la valeur par defaut
+         */
+        getArg: function (arg, def) {
+            if (typeof arg !== 'undefined') {
+                return arg;
+            } else {
+                return def;
+            }
         }
     });
 
@@ -314,12 +341,12 @@
          *  return {string} title of the page
          */
         getIdCurrentPage: function () {
-            let m = regURL.exec(this.attr('href'));
+            let m = REGEX_URL.exec(this.attr('href'));
 
             if (m[2] != null) {
 
                 let aUrl = m[2].substr(1).split("/");
-                $.log(1, aUrl);
+                $.log(20, aUrl);
 
                 let nSplitUrl = aUrl.length;
 
@@ -377,7 +404,6 @@
         },
         /* Not working well */
         removeAll: function () {
-            console.log($(this));
             while ($(this).length >= 1) {
                 $(this).remove();
             }

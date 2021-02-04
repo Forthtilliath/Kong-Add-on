@@ -1,4 +1,4 @@
-/*	Copyright (c) 2017 Jean-Marc VIGLINO, 
+/*	Copyright (c) 2017 Jean-Marc VIGLINO,
 	released under MIT license
 	(http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt).
 */
@@ -12,11 +12,11 @@
  */
 (function ($) {
 
-    /** Manipulate CSS styleSheet. 
+    /** Manipulate CSS styleSheet.
      *  The function will add a new property for the selector in a style sheet.
      *  The style sheet will be inserted where the js is placed and will override other css style sheets placed before.
      *
-     *  @example 
+     *  @example
      *  $("body").cssRule("background","red");	// Change background color of the body
      *  $("body").cssRule("background");			// return "red"
      *  $("body").cssRule({background":"red", "color":"blue"});
