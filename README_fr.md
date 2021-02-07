@@ -4,11 +4,11 @@
 1. [Informations générales](#informations-generales)
 1. [Langues](#langues)
 1. [Description](#description)
-<!--1. [Liste des fonctionnalités](#liste des fonctionnalités)-->
 1. [Cookies](#cookies)
 1. [Liens utiles](#liens utiles)
 1. [Liste des differents versions](#liste-des-differents-versions)
 1. [Licence](#licence)
+<!--1. [Liste des fonctionnalités](#liste des fonctionnalités)-->
 
 ### Informations générales
 

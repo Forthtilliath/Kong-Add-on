@@ -457,6 +457,7 @@ function loadCSS() {
         jCSSRule("#high_scores_container .bucket", "background-color", bgColor_grey_00);
         jCSSRule("#high_scores_container .pagination", "background-color", bgColor_grey_00);
         jCSSRule("div#highscores_board li.current", "color", color_grey_06);
+        jCSSRule("div#highscores_select", "color", color_grey_06);
         jCSSRule("select#statistic_id, select#stat_selector", "background-color", bgColor_grey_00);
         jCSSRule("select#statistic_id, select#stat_selector", "color", color_white);
         jCSSRule("#kong_game_ui #accomplishments_pane_title", "color", color_white);
@@ -493,27 +494,29 @@ function loadCSS() {
             jCSSRule("#forth_f_darkMode", "z-index", "10000");
         }
         if ((features.get('unreadMessages') !== undefined) && features.get('unreadMessages').isActive()) {
-            jCSSRule("#forth_unreadMessages", "top", "5px");
-            jCSSRule("#forth_unreadMessages", "right", "5px");
-            jCSSRule("#forth_unreadMessages", "position", "fixed");
-            jCSSRule("#forth_unreadMessages", "z-index", "10000");
-            jCSSRule("#forth_unreadMessages", "display", "none");
+            jCSSRule("#forth_f_unreadMessages", "top", "5px");
+            jCSSRule("#forth_f_unreadMessages", "right", "5px");
+            jCSSRule("#forth_f_unreadMessages", "position", "fixed");
+            jCSSRule("#forth_f_unreadMessages", "z-index", "10000");
+            jCSSRule("#forth_f_unreadMessages", "display", "none");
         }
         if (((features.get('darkMode') !== undefined) && features.get('darkMode').isActive()) || ((features.get('unreadMessages') !== undefined) && features.get('unreadMessages').isActive())) {
-            jCSSRule("#bt_darkmode, #bt_unreadMessages", "width", "40px");
-            jCSSRule("#bt_darkmode, #bt_unreadMessages", "height", "25px");
-            jCSSRule("#bt_darkmode, #bt_unreadMessages", "padding", "5px");
-            jCSSRule("#bt_darkmode, #bt_unreadMessages", "cursor", "pointer");
-            jCSSRule("#bt_darkmode, #bt_unreadMessages", "border", "1px solid");
-            jCSSRule("#bt_darkmode, #bt_unreadMessages", "border-color", color_grey_00);
-            jCSSRule("#bt_darkmode, #bt_unreadMessages", "background-color", bgColor_grey_00);
-            jCSSRule("#bt_darkmode, #bt_unreadMessages", "color", color_white);
-            jCSSRule("#bt_darkmode, #bt_unreadMessages", "border-radius", "5px");
-            jCSSRule("#bt_darkmode, #bt_unreadMessages", "box-shadow", "1px 1px 3px " + color_white);
+            jCSSRule(".feature_global_button > button", "width", "40px");
+            jCSSRule(".feature_global_button > button", "height", "25px");
+            jCSSRule(".feature_global_button > button", "padding", "5px");
+            jCSSRule(".feature_global_button > button", "cursor", "pointer");
+            jCSSRule(".feature_global_button > button", "border", "1px solid");
+            jCSSRule(".feature_global_button > button", "border-color", color_grey_00);
+            jCSSRule(".feature_global_button > button", "background-color", bgColor_grey_00);
+            jCSSRule(".feature_global_button > button", "color", color_white);
+            jCSSRule(".feature_global_button > button", "border-radius", "5px");
+            jCSSRule(".feature_global_button > button", "box-shadow", "1px 1px 3px " + color_white);
 
             jCSSRule("#bt_unreadMessages", "width", "auto");
             jCSSRule("#bt_unreadMessages", "min-width", "40px");
-            jCSSRule("#bt_unreadMessages #msg-count", "padding", "0 5px");
+            jCSSRule("#bt_unreadMessages", "height", "30px");
+            //jCSSRule("#bt_unreadMessages #msg-count", "padding", "0 5px");
+            jCSSRule("#bt_unreadMessages > *", "padding", "0 5px");
         }
         jCSSRule("#forth_firefox", "display", "none");
     }
@@ -617,15 +620,15 @@ function loadCSS() {
         jCSSRule("#forth_messagebox #forth_messagedesc", "text-align", "center");
         jCSSRule("#forth_messagebox #forth_messagedesc", "color", color_white);
         jCSSRule("#forth_messagebox #forth_messagedesc", "font-size", "12px");
-
-        // SVG
-        jCSSRule("span > svg, button > svg", "display", "inline-block");
-        jCSSRule("span > svg, button > svg", "font-size", "inherit");
-        jCSSRule("span > svg, button > svg", "height", "1em");
-        jCSSRule("span > svg, button > svg", "width", "1em");
-        jCSSRule("span > svg, button > svg", "overflow", "visible");
-        jCSSRule("span > svg, button > svg", "vertical-align", "-.125em");
     }
+    // SVG
+    jCSSRule("span > svg, button > svg", "display", "inline-block");
+    jCSSRule("span > svg, button > svg", "font-size", "inherit");
+    jCSSRule("span > svg, button > svg", "height", "1em");
+    jCSSRule("span > svg, button > svg", "width", "1em");
+    jCSSRule("span > svg, button > svg", "overflow", "visible");
+    jCSSRule("span > svg, button > svg", "vertical-align", "-.125em");
+
     /***********************************************************************************************************************/
     /***** ACCOUNTS PAGES **************************************************************************************************/
     /***********************************************************************************************************************/

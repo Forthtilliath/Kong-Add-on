@@ -12,6 +12,9 @@
 "use strict";
 
 $(function () {
+    // Load sprites
+    $.loadSpritesSvg();
+
     // Clean pages (remove ads blocks)
     if ($(".adcontainer").length > 0) $(".adcontainer").remove();
     if (PAGE_NAME == 'allgames') $("article.callout_listing").remove();

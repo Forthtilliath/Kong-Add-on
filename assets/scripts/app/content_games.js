@@ -15,9 +15,6 @@
 $(document).ready(function () {
     /* Initialisation start */
 
-    // Load sprites
-    $.loadSpritesSvg();
-
     /* Check if each button already exist and delete them to avoid any double
      * when the extension is updated while running (had this issue on FF) */
     if (IS_FIREFOX) $.removeElements2([$('div#forth_features'), $('button#bt_showquicklinks'), $('span.onlyGameOrChat'), $('#script_kong'), $('div#forth_fullscreen'), $('tr#tr_features'), features.get('unreadMessages').div]);
@@ -85,8 +82,13 @@ $(document).ready(function () {
      ****/
 
     // Create the button
-    $("#quicklinks").prepend($('<li>').addClass(features.get('quickLinks').classes).html(new Button('bt_showquicklinks', 'Show quick links', $.createIcon(ICON_QUICKLINKS_OFF)).html));
+    // $("#quicklinks").prepend($('<li>').addClass(features.get('quickLinks').classes).html(new Button('bt_showquicklinks', 'Show quick links', $.createIcon(ICON_QUICKLINKS_OFF)).html));
     //$("#quicklinks").prepend('<li class="' + features.get('quickLinks').classes + '">' + new Button('bt_showquicklinks', 'Show quick links', $.createIcon(ICON_QUICKLINKS_OFF)).html + '</li>');
+
+    let button = new Button2('bt_showquicklinks', 'Show quick links', $.createElementSVG('#__toggle_off'));
+    $("#quicklinks").prepend($('<li>').addClass(features.get('quickLinks').classes).html(button.getHtml()));
+    //features.get('lockscreen').addDiv(button.getHtml());
+
     // We remove the facebook button to gain space
     $("#quicklinks_facebook").remove();
 
@@ -94,9 +96,9 @@ $(document).ready(function () {
     $("#bt_showquicklinks").click(function () {
         $("#quicklinks > li:not(:first-child)").toggle();
         if ($("#quicklinks > li:not(:first-child)").css("display") == "list-item") {
-            $(this).setButton($.createIcon(ICON_QUICKLINKS_ON), 'Hide quick links');
+            $(this).setButton($.createElementSVG('#__toggle_on'), 'Hide quick links');
         } else {
-            $(this).setButton($.createIcon(ICON_QUICKLINKS_OFF), 'Show quick links');
+            $(this).setButton($.createElementSVG('#__toggle_off'), 'Show quick links');
         }
     });
 
@@ -128,7 +130,7 @@ $(document).ready(function () {
         // Create the button and put it in the features div
         let aTitle = ['Lock screen', 'Unlock screen'];
         let aSvg = [$.createElementSVG('#__unlocked'), $.createElementSVG('#__locked')];
-        let button = new Button2('bt_lockscreen', aTitle[cookieLockScreen?1:0], aSvg[cookieLockScreen?1:0]);
+        let button = new Button2('bt_lockscreen', aTitle[cookieLockScreen ? 1 : 0], aSvg[cookieLockScreen ? 1 : 0]);
         if (cookieLockScreen) $('#bt_lockscreen').addClass("locked"); // Change the style of the button
 
         features.get('lockscreen').addDiv(button.getHtml());
@@ -179,7 +181,7 @@ $(document).ready(function () {
         // Create the button
         let aTitle = ['Show online players', 'Hide online players'];
         let aSvg = [$.createElementSVG('#__onlineplayers_on'), $.createElementSVG('#__onlineplayers_off')];
-        let button = new Button2('bt_onlineplayers', aTitle[cookieShowPlayers?0:1], aSvg[cookieShowPlayers?0:1]);
+        let button = new Button2('bt_onlineplayers', aTitle[cookieShowPlayers ? 0 : 1], aSvg[cookieShowPlayers ? 0 : 1]);
         if (!cookieShowPlayers) jCSSRule(".chat_room_template > .users_in_room", "display", "none"); // Hide() doesn't work here
 
         features.get('onlineplayers').addDiv(button.getHtml());
@@ -228,7 +230,7 @@ $(document).ready(function () {
         }
         // Put the select menu in the features div
         //features.get('textsize').addDiv(`<span>${$.createIcon(ICON_FONTSIZE)}</span><select id="slt_fontsize">${sOptionsSize}</select>`);
-        features.get('textsize').addDiv($('<span>').append($.createElementSVG('#__fontsize'))[0].outerHTML + $('<select>').prop('id','slt_fontsize').html(sOptionsSize)[0].outerHTML);
+        features.get('textsize').addDiv($('<span>').append($.createElementSVG('#__fontsize'))[0].outerHTML + $('<select>').prop('id', 'slt_fontsize').html(sOptionsSize)[0].outerHTML);
         features.get('textsize').setTitle('Select the text size of your choice');
         $.changeTextSize(cookieFontSize);
 
@@ -258,7 +260,7 @@ $(document).ready(function () {
         }
         // Put the select menu in the features div
         /*features.get('brightness').addDiv(`<span>${$.createIcon(ICON_BRIGHTNESS)}</span><select id="slt_brightness">${sOptionsBrightness}</select>`);*/
-        features.get('brightness').addDiv($('<span>').append($.createElementSVG('#__brightness'))[0].outerHTML + $('<select>').prop('id','slt_brightness').html(sOptionsBrightness)[0].outerHTML);
+        features.get('brightness').addDiv($('<span>').append($.createElementSVG('#__brightness'))[0].outerHTML + $('<select>').prop('id', 'slt_brightness').html(sOptionsBrightness)[0].outerHTML);
         features.get('brightness').setTitle('Select the brightness of your choice');
 
         // Evenement change brightness start
@@ -293,7 +295,7 @@ $(document).ready(function () {
         let iconVolume = (volumeValue == 0) ? $.createElementSVG('#__volume_off') : (volumeValue < 0.5) ? $.createElementSVG('#__volume_down') : $.createElementSVG('#__volume_up');
         // Put the select menu in the features div
         /*features.get('ping').addDiv(`<span>${$.createIcon(iconVolume)}</span><select id="slt_volume">${sOptionsVolume}</select>`);*/
-        features.get('ping').addDiv($('<span>').append(iconVolume)[0].outerHTML + $('<select>').prop('id','slt_volume').html(sOptionsVolume)[0].outerHTML);
+        features.get('ping').addDiv($('<span>').append(iconVolume)[0].outerHTML + $('<select>').prop('id', 'slt_volume').html(sOptionsVolume)[0].outerHTML);
         features.get('ping').setTitle('Select the volume of your choice');
 
         // Evenement when sound choose on select menu
@@ -332,7 +334,7 @@ $(document).ready(function () {
         let bt_chatOnly = new Button2('bt_chatOnly', 'Show only the chat', $.createElementSVG('#__chat_only'));
 
         // Put the 3 buttons in the features div
-        features.get('displayMode').addDiv(bt_gameOnly.getHtml() + bt_gameNchat.getHtml()  + bt_chatOnly.getHtml() );
+        features.get('displayMode').addDiv(bt_gameOnly.getHtml() + bt_gameNchat.getHtml() + bt_chatOnly.getHtml());
 
         // Create a new line in the table between links_connect & chat (to have enough space to have all in one line)
         $('<tr id="tr_features"><td colspan="2"></td></tr>').insertAfter("#flashframecontent > table.game_table > tbody > tr:nth-of-type(1)");
@@ -370,7 +372,7 @@ $(document).ready(function () {
                 $("#chat_container_cell").hide(); // Hide chat
 
                 // Resize box
-                $.log(10, "gameiframe= " + $("#gameiframe").css("width"));
+                $.log(20, "gameiframe= " + $("#gameiframe").css("width"));
                 while ($("#gameiframe").css("width") == 0) {
                     setTimeout(function () {
 
@@ -517,7 +519,6 @@ $(document).ready(function () {
             });
 
         } else if (cookieDisplayMode == '0') {
-            $.log(1, "WIDTH_BOTH_DEFAULT=" + WIDTH_BOTH_DEFAULT);
             $.setWidthBoth(WIDTH_BOTH_DEFAULT); // Resize game box per default
             $("#gameiframe").ready(function () {
                 click_gameNchat();
@@ -539,7 +540,16 @@ $(document).ready(function () {
     if ((features.get('lockscreen') !== undefined) && features.get('lockscreen').isActive() && (features.get('unreadMessages') !== undefined) && features.get('unreadMessages').isActive()) {
 
         // Create the button with the icone & span for unread messages count
-        features.get('unreadMessages').addDiv(new Button('bt_unreadMessages', 'Read new message(s)', $.createIcon(ICON_UNREAD_MESSAGE) + '<span id="msg-count"></span>').html);
+        //features.get('unreadMessages').addDiv(new Button('bt_unreadMessages', 'Read new message(s)', $.createIcon(ICON_UNREAD_MESSAGE) + '<span id="msg-count"></span>').html);
+        let aTitle = ['Show online players', 'Hide online players'];
+        let aSvg = [, $.createElementSVG('#__onlineplayers_off')];
+        console.log($.createElementSVG('#__message') + $('<span>'));
+        let button = new Button2('bt_unreadMessages', 'Read new message(s)', {
+            icon: $.createElementSVG('#__message'),
+            msgCount: $('<span>').prop('id', 'msg-count')
+        }); /* + '<span id="msg-count"></span>'*/
+
+        features.get('unreadMessages').addDiv(button.getHtml());
 
         $.initialize("#profile_control_unread_message_count", function () {
             actionUnreadMessage(); // No needed, observer is called once when the page is loading

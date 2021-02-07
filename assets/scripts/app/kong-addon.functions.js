@@ -198,7 +198,6 @@
             $("#maingame").css("height", h);
             $("#maingamecontent").css("height", h);
             $("#flashframecontent").css("height", h);
-            debugger;
         },
         /** Resize the chat box
          *  @param {number} add the width of the box

@@ -43,6 +43,9 @@ class Button2 {
     initialize() {
         if (this.id !== '') this.element.prop('id', this.id);
         if (this.classes !== '') this.element.addClass(this.classes);
+        /*if (this.id == 'bt_unreadMessages')
+            this.set2(this.value, this.title);
+        else*/
         this.set(this.value, this.title);
     }
 
@@ -54,15 +57,57 @@ class Button2 {
         return this.element[0].outerHTML;
     }
 
-    set(content, title) {
+    /*set(content, title) {
         if (title !== '') this.element.prop('title', title);
+
+        //console.log(typeof content);
         if (typeof content === 'string') {
             this.element.html(content); // On ajoute le texte
             //this.element.text(content); // On ajoute le texte
+        } else if (typeof content === 'object') {
+            let contentOfObjects = true;
+            for (let i in content) {
+                if (typeof content[i] !== 'object') {
+                    contentOfObjects = false;
+                    break;
+                }
+                //console.log(content[i]);
+            }
+            if (contentOfObjects) {
+                console.log("Content of objects !");
+
+            } else {
+                this.element.empty(); // On vide le bouton avant d'ajouter le nouveau contenu
+                this.element.append(content); // On ajoute l'élément
+            }
         }
-        if (typeof content === 'object') {
-            this.element.empty(); // On vide le bouton avant d'ajouter le nouveau contenu
-            this.element.append(content); // On ajoute l'élément
+    }*/
+
+    set(content, title) {
+        if (title !== '') this.element.prop('title', title);
+
+        if (typeof content === 'string') {
+            this.element.html(content); // On ajoute le texte
+            //this.element.text(content); // On ajoute le texte
+        } else if (typeof content === 'object') {
+            let contentOfObjects = true;
+            for (let i in content) {
+                if (typeof content[i] !== 'object') {
+                    contentOfObjects = false;
+                }
+                //console.log(content[i]);
+            }
+
+            if (contentOfObjects) {
+                for (let i in content) {
+                    if (content.hasOwnProperty(i)) {
+                        this.set(content[i]);
+                    }
+                }
+            } else {
+                //this.element.empty(); // On vide le bouton avant d'ajouter le nouveau contenu
+                this.element.append(content); // On ajoute l'élément
+            }
         }
     }
 

@@ -4,11 +4,11 @@
 1. [General Info](#general-info)
 1. [Language](#language)
 1. [Description](#description)
-<!--1. [List of features](#list-of-features)-->
 1. [Cookies](#cookies)
 1. [Useful links](#useful-links)
 1. [List of different versions](#list-of-different-versions)
 1. [Licence](#faqs)
+<!--1. [List of features](#list-of-features)-->
 
 ### General Info
 Version: 1.6, Last updated: 2021-01-21
