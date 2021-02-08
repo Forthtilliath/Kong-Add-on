@@ -86,20 +86,19 @@ $(document).ready(function () {
      ****/
 
     // Create the button
-    // $("#quicklinks").prepend($('<li>').addClass(features.get('quickLinks').classes).html(new Button('bt_showquicklinks', 'Show quick links', $.createIcon(ICON_QUICKLINKS_OFF)).html));
-    //$("#quicklinks").prepend('<li class="' + features.get('quickLinks').classes + '">' + new Button('bt_showquicklinks', 'Show quick links', $.createIcon(ICON_QUICKLINKS_OFF)).html + '</li>');
-
     let button = new Button('bt_showquicklinks', 'Show quick links', $.createElementSVG('#__toggle_off'));
     $("#quicklinks").prepend($('<li>').addClass(features.get('quickLinks').classes).html(button.getHtml()));
-    //features.get('lockscreen').addDiv(button.getHtml());
 
     // We remove the facebook button to gain space
     $("#quicklinks_facebook").remove();
+    let links_visible = false;
 
     // Evenement
     $("#bt_showquicklinks").click(function (e) {
-        $("#quicklinks > li:not(:first-child)").toggle();
-        if ($("#quicklinks > li:not(:first-child)").css("display") == "list-item") {
+        // -n+3 means the 3 first (Button show/hide quicklink (always visible), bt cinematic mode (always hided) and fullscreen mode (always visible)
+        $("#quicklinks > li:not(:nth-child(-n+3)").toggle();
+
+        if ($("#quicklinks > li:not(:nth-child(-n+3)").css("display") == "list-item") {
             $(this).setButton($.createElementSVG('#__toggle_on'), 'Hide quick links');
         } else {
             $(this).setButton($.createElementSVG('#__toggle_off'), 'Show quick links');
@@ -140,7 +139,7 @@ $(document).ready(function () {
 
         features.get('lockscreen').addDiv(button.getHtml());
         // We remove the cinematic mode button
-        $("#cinematic_mode_quicklink").remove(); // Hide instant of remove to let Fullgregate works
+        $("#cinematic_mode_quicklink").hide(); // Hide instant of remove to let Fullgregate works
 
         // Evenement
         $('#bt_lockscreen').click(function (e) {

@@ -234,7 +234,7 @@ function loadCSS() {
         jCSSRule("#play #maingame .user_connection .logged_in_user", "margin-top", "2px"); // Username
         jCSSRule(".user_connection #chat_connected_indicator", "margin-top", "1px"); //Green logo
 
-        jCSSRule("#quicklinks > li:not(:first-child)", "display", "none");
+        jCSSRule("#quicklinks > li:not(:nth-child(-n+3))", "display", "none");
         jCSSRule("#quicklinks > li:not(:first-child)", "margin-top", "6px");
         jCSSRule("#quicklinks > li", "margin", "0 14px 0 0");
 
