@@ -1,0 +1,9 @@
+gulpfile.js
+node_modules/*
+package-lock.json
+package.json
+dev/*.bat
+*.bat
+*.txt
+archives/*
+dist/*

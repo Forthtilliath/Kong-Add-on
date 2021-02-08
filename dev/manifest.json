@@ -1,0 +1,40 @@
+{
+    "manifest_version": 2,
+    "name": "Kong Add-on",
+    "version": "1.6.2.33",
+    "author": "Forth",
+
+    "description": "Kong Add-on adds some features to Kongregate, including a blocker of bot messages, a dark mode, a brighness adjustment, and more.",
+    "icons": {
+        "16": "app/icons/icon_16.png",
+        "48": "app/icons/icon_48.png",
+        "128": "app/icons/icon_128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://www.kongregate.com/*"],
+            "run_at": "document_end",
+            "js": [
+                "assets/scripts/libs/jquery.min.js",
+                "assets/scripts/libs/jquery.cssrule.js",
+                "assets/scripts/libs/jquery.cookie.js",
+                "assets/scripts/libs/jquery.initialize.js",
+                "assets/scripts/libs/jquery.jcssrule.js",
+                "assets/scripts/app/kong-addon.classes.js",
+                "assets/scripts/app/kong-addon.functions.js",
+                "assets/scripts/app/kong-addon.vars.js",
+                "assets/scripts/app/content.js",
+                "assets/scripts/app/content_css.js"]
+        },
+        {
+            "matches": ["*://www.kongregate.com/games/*"],
+            "js": [
+                "assets/scripts/app/kong-addon.injection.js",
+                "assets/scripts/app/content_games.js"]
+        }
+    ],
+    "web_accessible_resources": [
+        "assets/sounds/*",
+        "assets/images/sprites/*.svg"
+    ]
+}
