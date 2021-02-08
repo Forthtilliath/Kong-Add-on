@@ -8,7 +8,8 @@
  * This is based on MutationObserver
  * https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
  */
-;(function ($) {
+;
+(function ($) {
 
     "use strict";
 
@@ -131,8 +132,12 @@
         });
 
         // Observe the target element.
-        var defaultObeserverOpts = { childList: true, subtree: true, attributes: msobserver.isComplex };
-        observer.observe(options.target, options.observer || defaultObeserverOpts );
+        var defaultObeserverOpts = {
+            childList: true,
+            subtree: true,
+            attributes: msobserver.isComplex
+        };
+        observer.observe(options.target, options.observer || defaultObeserverOpts);
 
         return observer;
     };

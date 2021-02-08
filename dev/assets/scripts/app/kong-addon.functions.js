@@ -45,11 +45,12 @@
          *  @return {object} Element div
          */
         createDiv: function (id, value, classes, title) {
-            if (typeof id == 'undefined') id = '';
-            if (typeof value == 'undefined') value = '';
-            if (typeof classes == 'undefined') classes = '';
-            if (typeof title == 'undefined') title = '';
-            return $('<div>').prop('id', id).html(value).addClass(classes).prop('title', title);
+            let div = $('<div>')
+            if (typeof id !== 'undefined') div.prop('id', id);
+            if (typeof value !== 'undefined') div.html(value);
+            if (typeof classes !== 'undefined') div.addClass(classes);
+            if (typeof title !== 'undefined') div.prop('title', title);
+            return div;
         },
 
         /** Parse a string to boolean

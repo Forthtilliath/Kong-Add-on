@@ -39,6 +39,10 @@ $(document).ready(function () {
         }
     }
 
+    const nothing = function (e) {
+        e.stopPropagation();
+    }
+
     /** Remove all styles of the button message of the website when we click on it
      *  Per default, when we open new messages on a new tab, the link doesn't change
      */
@@ -52,7 +56,7 @@ $(document).ready(function () {
     /** Change the volume of notifications and the button (icon + text)
      *  And save the volume in the cookie
      */
-    function changeVolume() {
+    const changeVolume = function () {
         //$('#slt_volume').val(volumeValue); // Volume choosed
         features.get('ping').div.find('select').val(volumeValue); // Volume choosed
 
@@ -85,7 +89,7 @@ $(document).ready(function () {
     // $("#quicklinks").prepend($('<li>').addClass(features.get('quickLinks').classes).html(new Button('bt_showquicklinks', 'Show quick links', $.createIcon(ICON_QUICKLINKS_OFF)).html));
     //$("#quicklinks").prepend('<li class="' + features.get('quickLinks').classes + '">' + new Button('bt_showquicklinks', 'Show quick links', $.createIcon(ICON_QUICKLINKS_OFF)).html + '</li>');
 
-    let button = new Button2('bt_showquicklinks', 'Show quick links', $.createElementSVG('#__toggle_off'));
+    let button = new Button('bt_showquicklinks', 'Show quick links', $.createElementSVG('#__toggle_off'));
     $("#quicklinks").prepend($('<li>').addClass(features.get('quickLinks').classes).html(button.getHtml()));
     //features.get('lockscreen').addDiv(button.getHtml());
 
@@ -93,13 +97,14 @@ $(document).ready(function () {
     $("#quicklinks_facebook").remove();
 
     // Evenement
-    $("#bt_showquicklinks").click(function () {
+    $("#bt_showquicklinks").click(function (e) {
         $("#quicklinks > li:not(:first-child)").toggle();
         if ($("#quicklinks > li:not(:first-child)").css("display") == "list-item") {
             $(this).setButton($.createElementSVG('#__toggle_on'), 'Hide quick links');
         } else {
             $(this).setButton($.createElementSVG('#__toggle_off'), 'Show quick links');
         }
+        e.stopPropagation();
     });
 
     /**** BUTTON QUICK LINKS END */
@@ -130,15 +135,15 @@ $(document).ready(function () {
         // Create the button and put it in the features div
         let aTitle = ['Lock screen', 'Unlock screen'];
         let aSvg = [$.createElementSVG('#__unlocked'), $.createElementSVG('#__locked')];
-        let button = new Button2('bt_lockscreen', aTitle[cookieLockScreen ? 1 : 0], aSvg[cookieLockScreen ? 1 : 0]);
+        let button = new Button('bt_lockscreen', aTitle[cookieLockScreen ? 1 : 0], aSvg[cookieLockScreen ? 1 : 0]);
         if (cookieLockScreen) $('#bt_lockscreen').addClass("locked"); // Change the style of the button
 
         features.get('lockscreen').addDiv(button.getHtml());
         // We remove the cinematic mode button
-        $("#cinematic_mode_quicklink").remove();
+        $("#cinematic_mode_quicklink").remove(); // Hide instant of remove to let Fullgregate works
 
         // Evenement
-        $('#bt_lockscreen').click(function () {
+        $('#bt_lockscreen').click(function (e) {
             if ($("#forth_fullscreen").is(":visible")) { // Unlocked screen
                 $("#forth_fullscreen").hide(); // Background
                 $("#floating_game_holder").removeClass("game_ahead");
@@ -163,6 +168,7 @@ $(document).ready(function () {
             if (features.get('unreadMessages').isActive()) {
                 actionUnreadMessage();
             }
+            e.stopPropagation();
         });
 
         if (cookieLockScreen) {
@@ -181,13 +187,13 @@ $(document).ready(function () {
         // Create the button
         let aTitle = ['Show online players', 'Hide online players'];
         let aSvg = [$.createElementSVG('#__onlineplayers_on'), $.createElementSVG('#__onlineplayers_off')];
-        let button = new Button2('bt_onlineplayers', aTitle[cookieShowPlayers ? 0 : 1], aSvg[cookieShowPlayers ? 0 : 1]);
+        let button = new Button('bt_onlineplayers', aTitle[cookieShowPlayers ? 0 : 1], aSvg[cookieShowPlayers ? 0 : 1]);
         if (!cookieShowPlayers) jCSSRule(".chat_room_template > .users_in_room", "display", "none"); // Hide() doesn't work here
 
         features.get('onlineplayers').addDiv(button.getHtml());
 
         // Evenement
-        $('#bt_onlineplayers').click(function () {
+        $('#bt_onlineplayers').click(function (e) {
             if ($(".chat_room_template > .users_in_room").css('display') == 'none') { // Show
                 $(".chat_room_template > .users_in_room").show(500);
                 //$(this).html($.createIcon(ICON_ONLINE_PLAYERS_ON));
@@ -204,6 +210,7 @@ $(document).ready(function () {
                 $.setCookieAll('ShowPlayers', 'false');
             }
             $("#chat_rooms_container .chat_message_window").scrollBottom();
+            e.stopPropagation();
         });
     }
 
@@ -241,6 +248,8 @@ $(document).ready(function () {
             // Update the cookie to save setting after refreshs
             $.setCookieAll('FontSize', $(this).val());
         });
+
+        document.querySelector('#forth_textsize > span').addEventListener('click', nothing);
     }
 
     /**** MENU SELECT SIZE TEXT END */
@@ -272,6 +281,8 @@ $(document).ready(function () {
             // Update the cookie to save setting after refreshs
             $.setCookieGame('Brightness', $(this).val());
         });
+
+        document.querySelector('#forth_brightness > span').addEventListener('click', nothing);
     }
 
     /**** MENU SELECT BRIGHTNESS END */
@@ -306,8 +317,7 @@ $(document).ready(function () {
             changeVolume();
         });
 
-        // Evenement when sound is muted/unmuted from icon
-        $('#forth_ping > span').click(function () {
+        const mute = function (e) {
             // Swap old volume to new if mute
             if (volumeValue == 0) {
                 volumeValue = volumeValueOld;
@@ -316,7 +326,11 @@ $(document).ready(function () {
                 volumeValue = 0;
             }
             changeVolume();
-        });
+            e.stopPropagation();
+        }
+
+        // Evenement when sound is muted/unmuted from icon
+        document.querySelector('#forth_ping > span').addEventListener('click', mute);
     }
 
     /**** MENU SELECT VOLUME END */
@@ -329,9 +343,9 @@ $(document).ready(function () {
         let bt_gameNchat = new Button('bt_gameNchat', 'Show both', $.createIcon(ICON_GAME_AND_CHAT));
         let bt_chatOnly = new Button('bt_chatOnly', 'Show only the chat', $.createIcon(ICON_CHAT_ONLY));*/
 
-        let bt_gameOnly = new Button2('bt_gameOnly', 'Show only the game', $.createElementSVG('#__game_only'));
-        let bt_gameNchat = new Button2('bt_gameNchat', 'Show both', $.createElementSVG('#__game_and_chat'));
-        let bt_chatOnly = new Button2('bt_chatOnly', 'Show only the chat', $.createElementSVG('#__chat_only'));
+        let bt_gameOnly = new Button('bt_gameOnly', 'Show only the game', $.createElementSVG('#__game_only'));
+        let bt_gameNchat = new Button('bt_gameNchat', 'Show both', $.createElementSVG('#__game_and_chat'));
+        let bt_chatOnly = new Button('bt_chatOnly', 'Show only the chat', $.createElementSVG('#__chat_only'));
 
         // Put the 3 buttons in the features div
         features.get('displayMode').addDiv(bt_gameOnly.getHtml() + bt_gameNchat.getHtml() + bt_chatOnly.getHtml());
@@ -526,14 +540,17 @@ $(document).ready(function () {
         }
 
         // Evenements
-        $('#bt_gameOnly').click(function () {
+        $('#bt_gameOnly').click(function (e) {
             click_gameOnly();
+            e.stopPropagation();
         });
-        $('#bt_chatOnly').click(function () {
+        $('#bt_chatOnly').click(function (e) {
             click_chatOnly();
+            e.stopPropagation();
         });
-        $('#bt_gameNchat').click(function () { // Default mode
+        $('#bt_gameNchat').click(function (e) { // Default mode
             click_gameNchat();
+            e.stopPropagation();
         });
     }
 
@@ -543,8 +560,7 @@ $(document).ready(function () {
         //features.get('unreadMessages').addDiv(new Button('bt_unreadMessages', 'Read new message(s)', $.createIcon(ICON_UNREAD_MESSAGE) + '<span id="msg-count"></span>').html);
         let aTitle = ['Show online players', 'Hide online players'];
         let aSvg = [, $.createElementSVG('#__onlineplayers_off')];
-        console.log($.createElementSVG('#__message') + $('<span>'));
-        let button = new Button2('bt_unreadMessages', 'Read new message(s)', {
+        let button = new Button('bt_unreadMessages', 'Read new message(s)', {
             icon: $.createElementSVG('#__message'),
             msgCount: $('<span>').prop('id', 'msg-count')
         }); /* + '<span id="msg-count"></span>'*/
@@ -578,10 +594,11 @@ $(document).ready(function () {
         });
 
         // Click on the button
-        $('#bt_unreadMessages').click(function () {
+        $('#bt_unreadMessages').click(function (e) {
             features.get('unreadMessages').hide(); // Hide the div with the button
             $.removeStyleUnreadMessage();
             window.open($("#my-messages-link").attr('href')); // Open a new page to show new messages
+            e.stopPropagation();
         });
 
         //$("a#my-messages-link").mousedown(function () {

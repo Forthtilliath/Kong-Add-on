@@ -11,25 +11,56 @@
  */
 "use strict";
 
-class Button {
-    constructor(idbutton, title, value, classes) {
-        this.idbutton = idbutton;
-        this.title = title;
-        this.value = value;
-        this.classes = classes || '';
-    }
+var Button = function (id, title, value, classes) {
+    this.id = $.getArg(id, '');
+    this.title = $.getArg(title, '');
+    this.value = $.getArg(value, '');
+    this.classes = $.getArg(classes, '');
+    this.element = $('<button>');
 
-    /* To use it : unBouton.html */
-    get html() {
-        if (this.classes != '') {
-            return `<button id="${this.idbutton}" title="${this.title}" class="${this.classes}">${this.value}</button>`;
+    this.initialize();
+}
+
+Button.prototype.initialize = function () {
+    if (this.id.length > 0) this.element.prop('id', this.id);
+    if (this.classes.length > 0) this.element.addClass(this.classes);
+    this.set(this.value, this.title);
+}
+
+Button.prototype.get = function () {
+    return this.element;
+}
+
+Button.prototype.getHtml = function () {
+    return this.element[0].outerHTML;
+}
+
+Button.prototype.set = function (content, title) {
+    if (title !== '') this.element.prop('title', title);
+
+    if (typeof content === 'string') {
+        this.element.html(content); // On ajoute le texte
+    } else if (typeof content === 'object') {
+        let contentOfObjects = true;
+        for (let i in content) {
+            if (typeof content[i] !== 'object') {
+                contentOfObjects = false;
+            }
+        }
+
+        if (contentOfObjects) {
+            for (let i in content) {
+                if (content.hasOwnProperty(i)) {
+                    this.set(content[i]);
+                }
+            }
         } else {
-            return `<button id="${this.idbutton}" title="${this.title}">${this.value}</button>`;
+            this.element.append(content); // On ajoute l'élément
         }
     }
-};
+}
 
-class Button2 {
+/*class Button {
     constructor(id, title, value, classes) {
         this.id = $.getArg(id, '');
         this.title = $.getArg(title, '');
@@ -43,9 +74,6 @@ class Button2 {
     initialize() {
         if (this.id !== '') this.element.prop('id', this.id);
         if (this.classes !== '') this.element.addClass(this.classes);
-        /*if (this.id == 'bt_unreadMessages')
-            this.set2(this.value, this.title);
-        else*/
         this.set(this.value, this.title);
     }
 
@@ -56,32 +84,6 @@ class Button2 {
     getHtml() {
         return this.element[0].outerHTML;
     }
-
-    /*set(content, title) {
-        if (title !== '') this.element.prop('title', title);
-
-        //console.log(typeof content);
-        if (typeof content === 'string') {
-            this.element.html(content); // On ajoute le texte
-            //this.element.text(content); // On ajoute le texte
-        } else if (typeof content === 'object') {
-            let contentOfObjects = true;
-            for (let i in content) {
-                if (typeof content[i] !== 'object') {
-                    contentOfObjects = false;
-                    break;
-                }
-                //console.log(content[i]);
-            }
-            if (contentOfObjects) {
-                console.log("Content of objects !");
-
-            } else {
-                this.element.empty(); // On vide le bouton avant d'ajouter le nouveau contenu
-                this.element.append(content); // On ajoute l'élément
-            }
-        }
-    }*/
 
     set(content, title) {
         if (title !== '') this.element.prop('title', title);
@@ -111,7 +113,7 @@ class Button2 {
         }
     }
 
-}
+}*/
 
 class Feature {
 
@@ -153,8 +155,11 @@ class Feature {
     }
 
     // Setters
+    /**
+     * @param {string} title
+     */
     setTitle(title) {
-        this.div.attr('title', title);
+        if (title.length > 0) this.div.attr('title', title);
     }
 
     setActive(b) {

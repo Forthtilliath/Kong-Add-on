@@ -603,7 +603,8 @@ function loadCSS() {
         jCSSRule("#forth_messagebox", "height", "100px");
         jCSSRule("#forth_messagebox", "width", "90%");
         jCSSRule("#forth_messagebox", "top", "0");
-        jCSSRule("#forth_messagebox", "left", "calc( 10% / 2)");
+        //jCSSRule("#forth_messagebox", "left", "calc( 10% / 2)");
+        jCSSRule("#forth_messagebox", "left", "5%");
         jCSSRule("#forth_messagebox", "background-color", bgColor_grey_07);
         jCSSRule("#forth_messagebox", "position", "absolute");
         jCSSRule("#forth_messagebox", "z-index", "10000");

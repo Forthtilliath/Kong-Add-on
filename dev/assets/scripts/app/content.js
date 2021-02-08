@@ -31,7 +31,7 @@ $(function () {
                 features.get('darkMode').addDiv(new Button('bt_darkmode', 'Activate dark mode', $.createIcon(ICON_DARKMODE_OFF)).html);
             }*/
 
-            let button = new Button2('bt_darkmode', aTitle[darkMode ? 1 : 0], aSvg[darkMode ? 1 : 0]);
+            let button = new Button('bt_darkmode', aTitle[darkMode ? 1 : 0], aSvg[darkMode ? 1 : 0]);
             features.get('darkMode').addDiv(button.getHtml());
         }
 
