@@ -11,7 +11,7 @@
 <!--1. [List of features](#list-of-features)-->
 
 ### General Info
-Version: 1.6, Last updated: 2021-01-21
+Version: 1.6, Last updated: 2021-02-08
 
 Kong Add-on is an extension for your browser which add a lot of new features on Kongregate website.
 
@@ -63,4 +63,4 @@ And thanks to report any bugs (bad colors or anything else) here: [Github issues
 **Microsoft Edge**: [https://microsoftedge.microsoft.com/addons/detail/kong-addon/](https://microsoftedge.microsoft.com/addons/detail/kong-addon/gcfldaicfjhopgahcjnobdcoppnejphc)
 
 ## Licence
-[MIT Licence](LICENSE)
+Disturbed under [MIT Licence](LICENSE)

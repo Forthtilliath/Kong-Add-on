@@ -12,7 +12,7 @@
 
 ### Informations générales
 
-Version : 1.6, Dernière mise à jour : 21 janvier 2021
+Version : 1.6, Dernière mise à jour : 8 février 2021
 
 Kong Add-on est une extension pour votre navigateur internet permet d'ajouter plusieurs fonctionnalités sur le site Kongregate.
 
@@ -69,4 +69,4 @@ Et n'hésitez pas à remonter tout bug que vous pourriez rencontrer (que ce soit
 **Microsoft Edge**: [https://microsoftedge.microsoft.com/addons/detail/kong-addon/](https://microsoftedge.microsoft.com/addons/detail/kong-addon/gcfldaicfjhopgahcjnobdcoppnejphc)
 
 ## Licence
-[Licence MIT](LICENSE)
+Distribué sous la [Licence MIT](LICENSE)
